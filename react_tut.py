@@ -137,16 +137,14 @@ COURSE_STRUCTURE = {
     "2. HTML & CSS": "html_css",
     "3. JavaScript": "javascript",
     "4. Introducere React": "intro_react",
+    "5.1 Componente Basic" :"components_basic",
     "5. Componente React": "components",
     "6. State și Props": "state_props",
     "7. Event Handling": "events",
     "8. Hooks React": "hooks",
     "9. Aplicația Blog": "blog_app",
     "10. Styling": "styling",
-    "11. Deploy": "deploy",
-    "Glosar": "glossary",
-    "Quiz": "quiz",
-    "Resurse": "resources"
+   
 }
 
 # Session State Initialization
@@ -12508,77 +12506,15356 @@ function AppRouter() {
 
     """, unsafe_allow_html=True)
 
-def state_props_page():
-    """State and Props"""
-    st.markdown('<h1 class="chapter-header">State și Props</h1>', unsafe_allow_html=True)
+def components_basic_page():
 
-    tab1, tab2 = st.tabs(["Props", "State"])
+        """React Components - Complete educational content"""
+        st.markdown('<h1 class="chapter-header">Componentele React</h1>', unsafe_allow_html=True)
+
+        st.markdown("""
+        <div class="info-box">
+            <h3>Components - Building blocks ale aplicațiilor React</h3>
+            <p>Componentele sunt fundamentul arhitecturii React. Ele încapsulează logica și interfața unei părți 
+            specifice din aplicație, permitând reutilizarea și mentenabilitatea codului. Acest capitol acoperă 
+            de la conceptele de bază până la patterns avansate folosite în aplicații enterprise de producție.</p>
+
+            <h4>Ce vei învăța:</h4>
+            <ul>
+                <li><strong>Cum să construiești prima ta componentă</strong> - pas cu pas pentru începători</li>
+                <li><strong>Tipurile de componente</strong> - Function vs Class Components</li>
+                <li><strong>Comunicarea între componente</strong> - Props și callbacks</li>
+                <li><strong>Patterns avansate</strong> - HOCs, Compound Components, Render Props</li>
+                <li><strong>Performance și optimizare</strong> - React.memo, useMemo, useCallback</li>
+                <li><strong>Testarea componentelor</strong> - React Testing Library</li>
+            </ul>
+        </div>
+        """, unsafe_allow_html=True)
+
+        # Components Tabs
+        components_tabs = st.tabs([
+            "Prima ta Componentă",
+            "Types & Fundamentals",
+
+        ])
+
+        with components_tabs[0]:
+            st.markdown("### Construim prima ta componentă React - Tutorial pas cu pas")
+
+            st.markdown("""
+            Acest tutorial este destinat celor care sunt noi în React sau doresc să înțeleagă 
+            în profunzime cum se construiește o componentă de la zero. Vei învăța conceptele 
+            fundamentale prin practică, construind o componentă reală pas cu pas.
+            """)
+
+            st.markdown("#### Pasul 1: Înțelegem conceptul de componentă")
+
+            st.markdown("""
+            <div class="concept-highlight">
+            O componentă React este o funcție JavaScript care returnează markup HTML (JSX)
+            </div>
+
+            **Analogia simplă:** O componentă este ca un șablon reutilizabil:
+            - Poți să o folosești în mai multe locuri din aplicație
+            - Poți să îi transmiți date diferite (proprietăți)
+            - Poți să o combini cu alte componente pentru a crea interfețe complexe
+
+            **De ce sunt importante componentele?**
+            - **Reutilizabilitate:** Scrii o dată, folosești oriunde
+            - **Mentenabilitate:** Modifici într-un loc, se actualizează peste tot
+            - **Modularitate:** Împarți aplicația în părți mici și ușor de gestionat
+            - **Testabilitate:** Poți testa fiecare componentă independent
+            """, unsafe_allow_html=True)
+
+            st.markdown("#### Pasul 2: Prima noastră componentă - Un buton simplu")
+
+            st.code("""
+    // Definim o componentă React simplă
+    function MyButton() {
+        // Această funcție returnează JSX (sintaxă similară HTML-ului)
+        return <button>Click me</button>;
+    }
+
+    // Cum folosim componenta într-o aplicație
+    function App() {
+        return (
+            <div>
+                <h1>Aplicația mea React</h1>
+                <MyButton />  {/* Folosim componenta ca un tag HTML */}
+                <MyButton />  {/* O putem folosi de mai multe ori */}
+                <MyButton />
+            </div>
+        );
+    }
+
+    // Exportăm componenta pentru a o putea folosi în alte fișiere
+    export default MyButton;
+            """, language="javascript")
+
+            st.markdown("""
+            **Explicația codului:**
+
+            1. **`function MyButton()`** - Definim o funcție JavaScript cu numele componentei
+            2. **`return <button>Click me</button>`** - Returnăm JSX (JavaScript XML)
+            3. **JSX** - Sintaxă care arată ca HTML dar e procesată de JavaScript
+            4. **`<MyButton />`** - Folosim componenta ca și cum ar fi un element HTML
+            5. **`export default MyButton`** - Exportăm componenta pentru reutilizare
+
+            **Reguli importante:**
+            - Numele componentei trebuie să înceapă cu literă mare (MyButton, nu myButton)
+            - O componentă poate returna doar un singur element părinte
+            - JSX-ul trebuie să fie înfășurat în paranteze dacă e pe mai multe linii
+            """)
+
+            st.markdown("#### Pasul 3: Adăugăm proprietăți (Props)")
+
+            st.markdown("""
+            Props (proprietăți) sunt modalitatea prin care transmitem date către componente. 
+            Ele fac componentele flexibile și reutilizabile.
+            """)
+
+            st.code("""
+    // Componenta primește props ca parametru
+    function MyButton(props) {
+        // Accesăm proprietatea 'text' din obiectul props
+        return <button>{props.text}</button>;
+    }
+
+    // Folosim componenta cu proprietăți diferite
+    function App() {
+        return (
+            <div>
+                <MyButton text="Click me" />
+                <MyButton text="Submit Form" />
+                <MyButton text="Cancel" />
+                <MyButton text="Save Changes" />
+            </div>
+        );
+    }
+
+    // Varianta cu destructuring (mai elegantă)
+    function MyButton({ text }) {
+        // Extragem direct proprietatea 'text' din props
+        return <button>{text}</button>;
+    }
+
+    // Putem avea mai multe props
+    function MyButton({ text, color, size }) {
+        return (
+            <button 
+                style={{ 
+                    backgroundColor: color, 
+                    fontSize: size 
+                }}
+            >
+                {text}
+            </button>
+        );
+    }
+
+    // Folosire cu mai multe props
+    function App() {
+        return (
+            <div>
+                <MyButton text="Primary" color="blue" size="16px" />
+                <MyButton text="Danger" color="red" size="14px" />
+                <MyButton text="Success" color="green" size="18px" />
+            </div>
+        );
+    }
+            """, language="javascript")
+
+            st.markdown("""
+            **Concepte cheie despre Props:**
+
+            - **Props sunt read-only** - nu le poți modifica în componentă
+            - **Props sunt ca parametrii unei funcții** - transmit date de la părinte la copil
+            - **Destructuring** - extragi proprietățile direct din obiectul props
+            - **Default values** - poți seta valori implicite pentru props
+            - **Props validation** - poți valida tipurile de date (cu PropTypes)
+
+            **De ce sunt utile Props-urile:**
+            - Fac componentele reutilizabile cu date diferite
+            - Permit comunicarea de la componentă părinte la copil
+            - Mențin componentele pure și predictibile
+            """)
+
+            st.markdown("#### Pasul 4: Adăugăm interactivitate cu evenimente")
+
+            st.code("""
+    // Componenta cu event handler
+    function MyButton({ text, onClick }) {
+        // onClick este o funcție primită prin props
+        return (
+            <button onClick={onClick}>
+                {text}
+            </button>
+        );
+    }
+
+    // Definim funcțiile pentru evenimente în componenta părinte
+    function App() {
+        // Funcții care se execută la click
+        const handleSaveClick = () => {
+            alert('Datele au fost salvate!');
+        };
+
+        const handleDeleteClick = () => {
+            if (confirm('Ești sigur că vrei să ștergi?')) {
+                alert('Element șters!');
+            }
+        };
+
+        const handleCancelClick = () => {
+            console.log('Operația a fost anulată');
+        };
+
+        return (
+            <div>
+                <h1>Panoul de control</h1>
+                <MyButton text="Save" onClick={handleSaveClick} />
+                <MyButton text="Delete" onClick={handleDeleteClick} />
+                <MyButton text="Cancel" onClick={handleCancelClick} />
+            </div>
+        );
+    }
+
+    // Variantă mai avansată cu parametri
+    function ActionButton({ text, action, data }) {
+        const handleClick = () => {
+            // Transmitem data către funcția primită prin props
+            action(data);
+        };
+
+        return <button onClick={handleClick}>{text}</button>;
+    }
+
+    // Folosire cu parametri
+    function UserList() {
+        const users = [
+            { id: 1, name: 'John Doe' },
+            { id: 2, name: 'Jane Smith' },
+            { id: 3, name: 'Bob Johnson' }
+        ];
+
+        const handleDeleteUser = (user) => {
+            console.log('Ștergem utilizatorul:', user.name);
+            // Aici ar fi logica pentru ștergere
+        };
+
+        return (
+            <div>
+                {users.map(user => (
+                    <div key={user.id}>
+                        <span>{user.name}</span>
+                        <ActionButton 
+                            text="Delete" 
+                            action={handleDeleteUser} 
+                            data={user} 
+                        />
+                    </div>
+                ))}
+            </div>
+        );
+    }
+            """, language="javascript")
+
+            st.markdown("""
+            **Concepte importante despre Events:**
+
+            - **Event handlers** - funcții care se execută când se întâmplă ceva (click, hover, etc.)
+            - **Callback props** - transmitem funcții prin props pentru a gestiona evenimente
+            - **Separation of concerns** - componenta nu știe ce face, execută doar funcția primită
+            - **Event delegation** - părintele gestionează logica, copilul doar declanșează evenimentul
+
+            **Pattern-ul standard:**
+            1. Definești funcția în componenta părinte
+            2. O transmiți ca prop către copil
+            3. Copilul o apelează când se întâmplă evenimentul
+            """)
+
+            st.markdown("#### Pasul 5: Adăugăm stare (State) componentei")
+
+            st.markdown("""
+            State-ul reprezintă datele interne ale unei componente care se pot schimba în timp. 
+            Când state-ul se modifică, componenta se re-renderează automat.
+            """)
+
+            st.code("""
+    import { useState } from 'react';
+
+    // Componentă cu state intern
+    function Counter() {
+        // useState returnează o pereche: [valoare, funcție_de_setare]
+        const [count, setCount] = useState(0);
+        //      ↑         ↑            ↑
+        //  valoarea  funcția    valoarea inițială
+        //  curentă   setter
+
+        // Funcții pentru modificarea state-ului
+        const handleIncrement = () => {
+            setCount(count + 1); // Incrementăm count-ul
+        };
+
+        const handleDecrement = () => {
+            setCount(count - 1); // Decrementăm count-ul
+        };
+
+        const handleReset = () => {
+            setCount(0); // Resetăm la valoarea inițială
+        };
+
+        return (
+            <div>
+                <h2>Counter: {count}</h2>
+                <button onClick={handleIncrement}>+</button>
+                <button onClick={handleDecrement}>-</button>
+                <button onClick={handleReset}>Reset</button>
+            </div>
+        );
+    }
+
+    // Componentă cu state mai complex - un obiect
+    function UserProfile() {
+        const [user, setUser] = useState({
+            name: '',
+            email: '',
+            age: 0
+        });
+
+        // Funcție pentru actualizarea unei proprietăți
+        const handleNameChange = (event) => {
+            setUser({
+                ...user, // Păstrăm toate proprietățile existente
+                name: event.target.value // Actualizăm doar name
+            });
+        };
+
+        const handleEmailChange = (event) => {
+            setUser({
+                ...user,
+                email: event.target.value
+            });
+        };
+
+        // Funcție generică pentru orice proprietate
+        const handleInputChange = (field) => (event) => {
+            setUser({
+                ...user,
+                [field]: event.target.value
+            });
+        };
+
+        return (
+            <div>
+                <h2>User Profile</h2>
+                <input
+                    type="text"
+                    placeholder="Name"
+                    value={user.name}
+                    onChange={handleNameChange}
+                />
+                <input
+                    type="email"
+                    placeholder="Email"
+                    value={user.email}
+                    onChange={handleEmailChange}
+                />
+                <input
+                    type="number"
+                    placeholder="Age"
+                    value={user.age}
+                    onChange={handleInputChange('age')}
+                />
+
+                <div>
+                    <h3>Preview:</h3>
+                    <p>Name: {user.name}</p>
+                    <p>Email: {user.email}</p>
+                    <p>Age: {user.age}</p>
+                </div>
+            </div>
+        );
+    }
+
+    // Folosire în aplicație
+    function App() {
+        return (
+            <div>
+                <Counter />
+                <hr />
+                <UserProfile />
+            </div>
+        );
+    }
+            """, language="javascript")
+
+            st.markdown("""
+            **Concepte esențiale despre State:**
+
+            - **useState hook** - funcția care ne permite să adăugăm state la componente
+            - **Immutability** - nu modifici niciodată state-ul direct, ci creezi o copie nouă
+            - **Re-rendering** - când state-ul se schimbă, componenta se re-desenează automat
+            - **Local state** - fiecare instanță de componentă are propriul state
+            - **Controlled components** - elemente de formular controlate de React state
+
+            **Reguli importante:**
+            - Nu modifica niciodată state-ul direct: `count++` (GREȘIT)
+            - Folosește întotdeauna setter-ul: `setCount(count + 1)` (CORECT)
+            - Pentru obiecte și array-uri, creează o copie nouă cu spread operator
+            """)
+
+            st.markdown("#### Pasul 6: Construim o componentă completă - TodoItem")
+
+            st.code("""
+    import { useState } from 'react';
+
+    // Componentă completă pentru un element Todo
+    function TodoItem({ initialText, onDelete, onToggle }) {
+        // State local pentru textul elementului
+        const [text, setText] = useState(initialText);
+        // State pentru statusul completat/necompletat
+        const [isCompleted, setIsCompleted] = useState(false);
+        // State pentru modul de editare
+        const [isEditing, setIsEditing] = useState(false);
+
+        // Handler pentru salvarea textului editat
+        const handleSave = () => {
+            if (text.trim()) { // Verificăm că textul nu e gol
+                setIsEditing(false);
+            }
+        };
+
+        // Handler pentru anularea editării
+        const handleCancel = () => {
+            setText(initialText); // Resetăm la textul original
+            setIsEditing(false);
+        };
+
+        // Handler pentru schimbarea statusului
+        const handleToggleComplete = () => {
+            const newStatus = !isCompleted;
+            setIsCompleted(newStatus);
+            onToggle(newStatus); // Informăm componenta părinte
+        };
+
+        // Handler pentru ștergere
+        const handleDelete = () => {
+            if (confirm('Ești sigur că vrei să ștergi acest element?')) {
+                onDelete(); // Apelăm funcția primită prin props
+            }
+        };
+
+        // Handler pentru tasta Enter în input
+        const handleKeyPress = (event) => {
+            if (event.key === 'Enter') {
+                handleSave();
+            } else if (event.key === 'Escape') {
+                handleCancel();
+            }
+        };
+
+        // Dacă suntem în modul de editare, afișăm input-ul
+        if (isEditing) {
+            return (
+                <div className="todo-item editing">
+                    <input
+                        type="text"
+                        value={text}
+                        onChange={(e) => setText(e.target.value)}
+                        onKeyDown={handleKeyPress}
+                        autoFocus // Focus automat pe input
+                    />
+                    <button onClick={handleSave} className="save-btn">
+                        Save
+                    </button>
+                    <button onClick={handleCancel} className="cancel-btn">
+                        Cancel
+                    </button>
+                </div>
+            );
+        }
+
+        // Modul normal de afișare
+        return (
+            <div className={`todo-item ${isCompleted ? 'completed' : ''}`}>
+                {/* Checkbox pentru completat/necompletat */}
+                <input
+                    type="checkbox"
+                    checked={isCompleted}
+                    onChange={handleToggleComplete}
+                />
+
+                {/* Textul elementului - click pentru editare */}
+                <span 
+                    className="todo-text"
+                    onClick={() => setIsEditing(true)}
+                    style={{
+                        textDecoration: isCompleted ? 'line-through' : 'none',
+                        color: isCompleted ? '#888' : '#000'
+                    }}
+                >
+                    {text}
+                </span>
+
+                {/* Buton pentru ștergere */}
+                <button onClick={handleDelete} className="delete-btn">
+                    Delete
+                </button>
+            </div>
+        );
+    }
+
+    // Componentă pentru lista completă de Todo-uri
+    function TodoApp() {
+        const [todos, setTodos] = useState([
+            { id: 1, text: "Învață React" },
+            { id: 2, text: "Construiește o aplicație" },
+            { id: 3, text: "Deploy pe server" }
+        ]);
+
+        // Funcție pentru ștergerea unui todo
+        const handleDeleteTodo = (id) => {
+            setTodos(todos.filter(todo => todo.id !== id));
+        };
+
+        // Funcție pentru schimbarea statusului unui todo
+        const handleToggleTodo = (id, isCompleted) => {
+            console.log(`Todo ${id} is now ${isCompleted ? 'completed' : 'incomplete'}`);
+            // Aici ai putea actualiza și state-ul global dacă e necesar
+        };
+
+        return (
+            <div className="todo-app">
+                <h1>My Todo List</h1>
+                <div className="todo-list">
+                    {todos.map(todo => (
+                        <TodoItem
+                            key={todo.id} // Key-ul e obligatoriu pentru liste
+                            initialText={todo.text}
+                            onDelete={() => handleDeleteTodo(todo.id)}
+                            onToggle={(isCompleted) => handleToggleTodo(todo.id, isCompleted)}
+                        />
+                    ))}
+                </div>
+
+                {todos.length === 0 && (
+                    <p className="empty-message">No todos yet. Add some!</p>
+                )}
+            </div>
+        );
+    }
+            """, language="javascript")
+
+            st.markdown("#### Pasul 7: Stilizarea componentei cu CSS")
+
+            st.code("""
+    /* styles.css */
+
+    /* Stiluri pentru aplicația Todo */
+    .todo-app {
+        max-width: 600px;
+        margin: 0 auto;
+        padding: 20px;
+        font-family: 'Arial', sans-serif;
+        background-color: #f5f5f5;
+        border-radius: 8px;
+        box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+    }
+
+    .todo-app h1 {
+        text-align: center;
+        color: #333;
+        margin-bottom: 30px;
+    }
+
+    /* Stiluri pentru lista de todo-uri */
+    .todo-list {
+        display: flex;
+        flex-direction: column;
+        gap: 10px;
+    }
+
+    /* Stiluri pentru fiecare element todo */
+    .todo-item {
+        display: flex;
+        align-items: center;
+        padding: 15px;
+        background: white;
+        border: 1px solid #ddd;
+        border-radius: 6px;
+        box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+        transition: all 0.2s ease;
+    }
+
+    .todo-item:hover {
+        box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
+        transform: translateY(-1px);
+    }
+
+    /* Stiluri pentru elementul completat */
+    .todo-item.completed {
+        background-color: #f0f8f0;
+        border-color: #c3d9c3;
+    }
+
+    /* Stiluri pentru modul de editare */
+    .todo-item.editing {
+        background-color: #e3f2fd;
+        border-color: #90caf9;
+    }
+
+    /* Checkbox styling */
+    .todo-item input[type="checkbox"] {
+        margin-right: 12px;
+        transform: scale(1.2);
+    }
+
+    /* Textul todo-ului */
+    .todo-text {
+        flex: 1;
+        cursor: pointer;
+        padding: 5px;
+        border-radius: 3px;
+        transition: background-color 0.2s ease;
+    }
+
+    .todo-text:hover {
+        background-color: #f0f0f0;
+    }
+
+    /* Input pentru editare */
+    .todo-item.editing input[type="text"] {
+        flex: 1;
+        padding: 8px;
+        border: 2px solid #2196f3;
+        border-radius: 4px;
+        font-size: 14px;
+        margin-right: 10px;
+    }
+
+    /* Butoane */
+    .save-btn, .cancel-btn, .delete-btn {
+        padding: 6px 12px;
+        border: none;
+        border-radius: 4px;
+        cursor: pointer;
+        font-size: 12px;
+        font-weight: bold;
+        text-transform: uppercase;
+        transition: background-color 0.2s ease;
+        margin-left: 5px;
+    }
+
+    .save-btn {
+        background-color: #4caf50;
+        color: white;
+    }
+
+    .save-btn:hover {
+        background-color: #45a049;
+    }
+
+    .cancel-btn {
+        background-color: #ff9800;
+        color: white;
+    }
+
+    .cancel-btn:hover {
+        background-color: #f57c00;
+    }
+
+    .delete-btn {
+        background-color: #f44336;
+        color: white;
+    }
+
+    .delete-btn:hover {
+        background-color: #da190b;
+    }
+
+    /* Mesaj pentru lista goală */
+    .empty-message {
+        text-align: center;
+        color: #666;
+        font-style: italic;
+        margin-top: 30px;
+    }
+
+    /* Responsive design */
+    @media (max-width: 480px) {
+        .todo-app {
+            margin: 10px;
+            padding: 15px;
+        }
+
+        .todo-item {
+            flex-direction: column;
+            align-items: flex-start;
+            gap: 10px;
+        }
+
+        .todo-text {
+            width: 100%;
+        }
+    }
+            """, language="css")
+
+            st.markdown("#### Pasul 8: Best Practices pentru început")
+
+            st.markdown("""
+            <div class="success-box">
+            <h4>Practici recomandate (Do's):</h4>
+            <ul>
+                <li><strong>Nume descriptive pentru componente</strong> - UserProfile, TodoItem, NavigationBar</li>
+                <li><strong>O responsabilitate per componentă</strong> - fiecare componentă să aibă un scop clar</li>
+                <li><strong>Props pentru transmiterea datelor</strong> - păstrează componentele reutilizabile</li>
+                <li><strong>State pentru datele ce se schimbă</strong> - folosește useState pentru interactivitate</li>
+                <li><strong>Key prop pentru liste</strong> - întotdeauna pune key={item.id} la element</li>
+                <li><strong>Comentarii în cod</strong> - explică logica complexă</li>
+                <li><strong>Exportă componentele</strong> - export default ComponentName</li>
+            </ul>
+            </div>
+
+            <div class="error-box">
+            <h4>Greșeli de evitat (Don'ts):</h4>
+            <ul>
+                <li><strong>Nu modifica props-urile</strong> - sunt read-only întotdeauna</li>
+                <li><strong>Nu modifica state-ul direct</strong> - folosește doar setter functions</li>
+                <li><strong>Nu pune logica în JSX</strong> - extrage în funcții separate</li>
+                <li><strong>Nu folosi index ca key</strong> - poate cauza bug-uri la reordonare</li>
+                <li><strong>Nu amesteca stilurile inline cu CSS</strong> - alege o metodă și rămâi consistent</li>
+                <li><strong>Nu uita de cleanup</strong> - elimină event listeners în componentWillUnmount</li>
+                <li><strong>Nu ignora warning-urile</strong> - React îți spune când ceva nu e în regulă</li>
+            </ul>
+            </div>
+            """, unsafe_allow_html=True)
+
+            st.markdown("#### Exerciții practice pentru consolidare")
+
+            st.markdown("""
+            <div class="quiz-container">
+            <h4>Challenge-uri pentru a-ți testa cunoștințele:</h4>
+
+            <h5>Nivel Începător:</h5>
+            <ul>
+                <li><strong>UserCard</strong> - Componentă care afișează nume, email și avatar</li>
+                <li><strong>SimpleButton</strong> - Buton cu text personalizabil și culori diferite</li>
+                <li><strong>ToggleSwitch</strong> - Switch on/off cu callback la schimbare</li>
+            </ul>
+
+            <h5>Nivel Intermediar:</h5>
+            <ul>
+                <li><strong>SearchBox</strong> - Input cu rezultate filtrate în timp real</li>
+                <li><strong>Counter cu limite</strong> - Counter cu valoare minimă și maximă</li>
+                <li><strong>FormField</strong> - Input cu validare și mesaje de eroare</li>
+            </ul>
+
+            <h5>Nivel Avansat:</h5>
+            <ul>
+                <li><strong>Modal</strong> - Fereastră popup cu backdrop și buton de închidere</li>
+                <li><strong>Tabs</strong> - Navigare între mai multe tab-uri cu conținut dinamic</li>
+                <li><strong>DataTable</strong> - Tabel cu sortare și paginare</li>
+            </ul>
+
+            <p><strong>Sfat:</strong> Începe cu cea mai simplă componentă și adaugă funcționalități pas cu pas. 
+            Nu încerca să faci totul dintr-o dată!</p>
+            </div>
+            """, unsafe_allow_html=True)
+
+            st.markdown("#### Recapitulare concepte învățate")
+
+            st.markdown("""
+            În acest tutorial ai învățat:
+
+            **1. Structura unei componente React**
+            - Funcție care returnează JSX
+            - Exportul pentru reutilizare
+            - Convențiile de denumire
+
+            **2. Props (Proprietăți)**
+            - Transmiterea datelor între componente
+            - Destructuring pentru cod mai curat
+            - Props ca funcții pentru event handling
+
+            **3. State (Starea)**
+            - useState hook pentru stare locală
+            - Immutability în actualizarea state-ului
+            - Re-rendering automat la schimbări
+
+            **4. Event Handling**
+            - Callback functions prin props
+            - Gestionarea evenimentelor DOM
+            - Pattern-ul standard de comunicare
+
+            **5. Styling**
+            - CSS classes și inline styles
+            - Stilizare condițională
+            - Responsive design
+
+            **6. Best Practices**
+            - Separarea responsabilităților
+            - Cod curat și comentat
+            - Naming conventions
+
+            **Următorul pas:** Continuă cu celelalte taburi pentru a învăța concepte mai avansate 
+            precum lifecycle management, performance optimization și advanced patterns.
+            """)
+
+        with components_tabs[1]:
+            st.markdown("### Tipuri de componente și evoluția lor")
+
+            st.markdown("""
+            React a evoluat semnificativ de-a lungul timpului, trecând de la Class Components 
+            la Function Components cu hooks. Înțelegerea ambelor abordări este esențială pentru:
+
+            **De ce să înveți ambele tipuri?**
+            - **Legacy codebases** - multe aplicații existente folosesc Class Components
+            - **Interviuri tehnice** - întrebări frecvente despre diferențe și migration
+            - **Evoluția React** - înțelegerea istoriei și motivațiilor din spatele schimbărilor
+            - **Debugging abilități** - capacitatea de a lucra cu cod existent
+            - **Team collaboration** - lucrul în echipe cu codebases mixte
+            """)
+
+            st.markdown("#### Class Components - Fundamentele React vechi")
+
+            st.markdown("""
+            **Class Components** au fost modalitatea principală de a scrie componente React până în 2018.
+            Deși sunt considerate legacy, înțelegerea lor rămâne crucială pentru dezvoltatorii React.
+
+            **Caracteristici Class Components:**
+            - Extind clasa React.Component
+            - Folosesc metode de lifecycle
+            - State gestionat prin this.state și this.setState()
+            - Necesită binding pentru metodele custom
+            - Mai verbose, dar foarte predictibile
+            """)
+
+            st.code("""
+    import React from 'react';
+    import PropTypes from 'prop-types';
+
+    // Class Component completă cu toate funcționalitățile
+    class UserProfile extends React.Component {
+        constructor(props) {
+            super(props);
+
+            // Definim state-ul inițial
+            this.state = {
+                user: null,           // Datele utilizatorului
+                loading: true,        // Status de încărcare
+                error: null,          // Mesajele de eroare
+                posts: [],           // Posts-urile utilizatorului
+                isEditing: false,    // Mod de editare
+                editData: {}         // Datele pentru editare
+            };
+
+            // Binding metodelor pentru context corect
+            // Aceasta este necesară pentru că JavaScript nu bind-uiește automat 'this'
+            this.handleEdit = this.handleEdit.bind(this);
+            this.handleSave = this.handleSave.bind(this);
+            this.handleCancel = this.handleCancel.bind(this);
+        }
+
+        // LIFECYCLE METHODS
+
+        // 1. componentDidMount - se execută DUPĂ ce componenta a fost inserată în DOM
+        componentDidMount() {
+            console.log('UserProfile component mounted');
+
+            // Aici facem operațiuni care necesită DOM sau API calls
+            this.fetchUserData();
+            this.setupEventListeners();
+
+            // Focus pe primul input dacă există
+            const firstInput = document.querySelector('input');
+            if (firstInput) {
+                firstInput.focus();
+            }
+        }
+
+        // 2. componentDidUpdate - se execută după fiecare update (props sau state)
+        componentDidUpdate(prevProps, prevState) {
+            console.log('UserProfile component updated');
+
+            // Re-fetch data dacă props-ul userId s-a schimbat
+            if (prevProps.userId !== this.props.userId) {
+                console.log('UserId changed from', prevProps.userId, 'to', this.props.userId);
+                this.fetchUserData();
+            }
+
+            // Handle edit mode changes
+            if (prevState.isEditing !== this.state.isEditing) {
+                this.handleEditModeChange();
+            }
+
+            // Update document title când se încarcă user-ul
+            if (prevState.user !== this.state.user && this.state.user) {
+                document.title = `Profile: ${this.state.user.name}`;
+            }
+        }
+
+        // 3. componentWillUnmount - se execută ÎNAINTE ca componenta să fie eliminată
+        componentWillUnmount() {
+            console.log('UserProfile component will unmount');
+
+            // CRITICAL: Cleanup pentru a preveni memory leaks
+            this.cleanupEventListeners();
+            this.cancelPendingRequests();
+
+            // Reset document title
+            document.title = 'React App';
+
+            // Clear any timers
+            if (this.timeoutId) {
+                clearTimeout(this.timeoutId);
+            }
+            if (this.intervalId) {
+                clearInterval(this.intervalId);
+            }
+        }
+
+        // 4. componentDidCatch - Error boundary functionality
+        componentDidCatch(error, errorInfo) {
+            console.error('Error caught in UserProfile:', error, errorInfo);
+
+            // Update state pentru a afișa error UI
+            this.setState({ 
+                error: error.message,
+                loading: false 
+            });
+
+            // Send error to monitoring service
+            if (window.Sentry) {
+                window.Sentry.captureException(error, {
+                    contexts: { react: { componentStack: errorInfo.componentStack } }
+                });
+            }
+        }
+
+        // CUSTOM METHODS
+
+        // Fetch user data from API
+        fetchUserData = async () => {
+            try {
+                this.setState({ loading: true, error: null });
+
+                // Simulăm call-uri API paralele
+                const [userResponse, postsResponse] = await Promise.all([
+                    fetch(`/api/users/${this.props.userId}`),
+                    fetch(`/api/users/${this.props.userId}/posts`)
+                ]);
+
+                // Verificăm dacă response-urile sunt OK
+                if (!userResponse.ok) {
+                    throw new Error(`User fetch failed: ${userResponse.status}`);
+                }
+                if (!postsResponse.ok) {
+                    throw new Error(`Posts fetch failed: ${postsResponse.status}`);
+                }
+
+                const user = await userResponse.json();
+                const posts = await postsResponse.json();
+
+                this.setState({ 
+                    user, 
+                    posts, 
+                    loading: false,
+                    editData: { ...user } // Pregătim datele pentru editare
+                });
+
+            } catch (error) {
+                console.error('Fetch error:', error);
+                this.setState({ 
+                    error: error.message, 
+                    loading: false 
+                });
+            }
+        };
+
+        // Event handlers - folosim arrow functions pentru auto-binding
+        handleEdit = () => {
+            this.setState({ 
+                isEditing: true,
+                editData: { ...this.state.user } // Copiem datele curente
+            });
+        };
+
+        handleSave = async (formData) => {
+            try {
+                this.setState({ loading: true });
+
+                const response = await fetch(`/api/users/${this.props.userId}`, {
+                    method: 'PUT',
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'Authorization': `Bearer ${this.props.authToken}`
+                    },
+                    body: JSON.stringify(formData)
+                });
+
+                if (!response.ok) {
+                    throw new Error(`Update failed: ${response.status}`);
+                }
+
+                const updatedUser = await response.json();
+
+                this.setState({ 
+                    user: updatedUser, 
+                    isEditing: false,
+                    loading: false,
+                    editData: {}
+                });
+
+                // Callback către componenta părinte
+                if (this.props.onUserUpdate) {
+                    this.props.onUserUpdate(updatedUser);
+                }
+
+                // Show success message
+                this.showNotification('User updated successfully!', 'success');
+
+            } catch (error) {
+                console.error('Save error:', error);
+                this.setState({ 
+                    error: error.message,
+                    loading: false
+                });
+            }
+        };
+
+        handleCancel = () => {
+            this.setState({ 
+                isEditing: false,
+                editData: {},
+                error: null // Clear any errors
+            });
+        };
+
+        // Helper methods
+        setupEventListeners() {
+            window.addEventListener('resize', this.handleResize);
+            window.addEventListener('beforeunload', this.handleBeforeUnload);
+        }
+
+        cleanupEventListeners() {
+            window.removeEventListener('resize', this.handleResize);
+            window.removeEventListener('beforeunload', this.handleBeforeUnload);
+        }
+
+        handleResize = () => {
+            // Debounce resize events pentru performance
+            if (this.resizeTimeout) {
+                clearTimeout(this.resizeTimeout);
+            }
+
+            this.resizeTimeout = setTimeout(() => {
+                console.log('Window resized');
+                // Handle responsive behavior here
+                this.forceUpdate(); // Re-render pentru responsive changes
+            }, 250);
+        };
+
+        handleBeforeUnload = (event) => {
+            // Warn user dacă sunt schimbări nesalvate
+            if (this.state.isEditing) {
+                event.preventDefault();
+                event.returnValue = 'You have unsaved changes. Are you sure you want to leave?';
+            }
+        };
+
+        handleEditModeChange() {
+            if (this.state.isEditing) {
+                // Focus primul input când intrăm în edit mode
+                this.timeoutId = setTimeout(() => {
+                    const firstInput = document.querySelector('.user-form input');
+                    if (firstInput) {
+                        firstInput.focus();
+                        firstInput.select();
+                    }
+                }, 0);
+            }
+        }
+
+        cancelPendingRequests() {
+            // Cancel any pending fetch requests
+            if (this.abortController) {
+                this.abortController.abort();
+            }
+        }
+
+        showNotification(message, type) {
+            // Simple notification system
+            console.log(`${type.toUpperCase()}: ${message}`);
+            // În aplicații reale, ai folosi o bibliotecă de notificații
+        }
+
+        // RENDER METHOD - obligatoriu în Class Components
+        render() {
+            const { user, loading, error, posts, isEditing, editData } = this.state;
+            const { className, onUserUpdate, ...otherProps } = this.props;
+
+            // Early returns pentru cazuri speciale
+            if (loading) {
+                return (
+                    <div className="user-profile-loading">
+                        <div className="spinner"></div>
+                        <p>Loading user profile...</p>
+                    </div>
+                );
+            }
+
+            if (error) {
+                return (
+                    <div className="user-profile-error">
+                        <h3>Something went wrong</h3>
+                        <p className="error-message">{error}</p>
+                        <div className="error-actions">
+                            <button onClick={this.fetchUserData} className="retry-btn">
+                                Try Again
+                            </button>
+                            <button onClick={() => this.setState({ error: null })}>
+                                Dismiss
+                            </button>
+                        </div>
+                    </div>
+                );
+            }
+
+            if (!user) {
+                return (
+                    <div className="user-profile-empty">
+                        <h3>User not found</h3>
+                        <p>The user with ID {this.props.userId} could not be found.</p>
+                    </div>
+                );
+            }
+
+            // Main render logic
+            return (
+                <div className={`user-profile ${className || ''}`} {...otherProps}>
+                    {/* Header Section */}
+                    <div className="user-profile-header">
+                        <div className="user-avatar">
+                            <img 
+                                src={user.avatar || '/default-avatar.png'} 
+                                alt={`${user.name}'s avatar`}
+                                onError={(e) => {
+                                    e.target.src = '/default-avatar.png';
+                                }}
+                            />
+                            <span className={`status-indicator ${user.online ? 'online' : 'offline'}`}>
+                                {user.online ? 'Online' : 'Offline'}
+                            </span>
+                        </div>
+
+                        <div className="user-info">
+                            {isEditing ? (
+                                <UserEditForm
+                                    user={editData}
+                                    onSave={this.handleSave}
+                                    onCancel={this.handleCancel}
+                                    onChange={(field, value) => {
+                                        this.setState({
+                                            editData: {
+                                                ...this.state.editData,
+                                                [field]: value
+                                            }
+                                        });
+                                    }}
+                                />
+                            ) : (
+                                <div className="user-display">
+                                    <h2>{user.name}</h2>
+                                    <p className="user-email">{user.email}</p>
+                                    <p className="user-role">{user.role}</p>
+                                    <div className="user-actions">
+                                        <button onClick={this.handleEdit} className="edit-btn">
+                                            Edit Profile
+                                        </button>
+                                    </div>
+                                </div>
+                            )}
+                        </div>
+                    </div>
+
+                    {/* Posts Section */}
+                    <div className="user-posts">
+                        <h3>Recent Posts ({posts.length})</h3>
+                        {posts.length === 0 ? (
+                            <p className="no-posts">No posts yet.</p>
+                        ) : (
+                            <div className="posts-list">
+                                {posts.map(post => (
+                                    <article key={post.id} className="post-item">
+                                        <h4>{post.title}</h4>
+                                        <p>{post.content}</p>
+                                        <div className="post-meta">
+                                            <time dateTime={post.createdAt}>
+                                                {new Date(post.createdAt).toLocaleDateString()}
+                                            </time>
+                                            <span className="post-views">{post.views} views</span>
+                                        </div>
+                                    </article>
+                                ))}
+                            </div>
+                        )}
+                    </div>
+                </div>
+            );
+        }
+    }
+
+    // PropTypes pentru type checking și documentație
+    UserProfile.propTypes = {
+        userId: PropTypes.string.isRequired,        // ID-ul utilizatorului (obligatoriu)
+        className: PropTypes.string,                // CSS class suplimentar
+        onUserUpdate: PropTypes.func,               // Callback la actualizare
+        authToken: PropTypes.string                 // Token pentru autentificare
+    };
+
+    // Default props pentru valori implicite
+    UserProfile.defaultProps = {
+        className: '',
+        onUserUpdate: null,
+        authToken: ''
+    };
+
+    export default UserProfile;
+            """, language="javascript")
+
+            st.markdown("""
+            **Concepte cheie în Class Components:**
+
+            **1. Constructor și State**
+            - `constructor(props)` - se execută la crearea instanței
+            - `this.state = {}` - definești starea inițială
+            - `this.setState()` - singura modalitate corectă de actualizare a state-ului
+
+            **2. Lifecycle Methods**
+            - `componentDidMount()` - după inserarea în DOM (pentru API calls, setup)
+            - `componentDidUpdate()` - după fiecare actualizare (pentru side effects)
+            - `componentWillUnmount()` - înainte de eliminare (pentru cleanup)
+
+            **3. Method Binding**
+            - `this.method = this.method.bind(this)` în constructor
+            - Sau arrow functions: `method = () => {}` pentru auto-binding
+            - Necesar pentru ca `this` să funcționeze în event handlers
+
+            **4. Props și State Management**
+            - `this.props` pentru accesarea proprietăților
+            - `this.state` pentru starea locală
+            - `prevProps` și `prevState` în componentDidUpdate pentru comparații
+            """)
+
+            st.markdown("""
+            <div class="info-box">
+            <h4>De ce sunt încă importante Class Components?</h4>
+            <ul>
+                <li><strong>Legacy code</strong> - multe aplicații existente le folosesc</li>
+                <li><strong>Error boundaries</strong> - doar Class Components pot fi error boundaries</li>
+                <li><strong>Interviuri</strong> - întrebări frecvente despre diferențe</li>
+                <li><strong>Understanding React</strong> - înțelegerea evoluției și motivațiilor</li>
+            </ul>
+            </div>
+            """, unsafe_allow_html=True)
+
+
+def state_props_page():
+    """State and Props - Tutorial Comprehensiv React"""
+    st.markdown('<h1 class="chapter-header">State și Props în React</h1>', unsafe_allow_html=True)
+
+    st.markdown("""
+    <div class="intro-box">
+    <h3>Introducere</h3>
+    <p>State și Props sunt conceptele fundamentale care controlează fluxul de date în React. 
+    Înțelegerea acestora este esențială pentru dezvoltarea aplicațiilor React eficiente și scalabile.</p>
+    </div>
+    """, unsafe_allow_html=True)
+
+    tab1, tab2, tab3, tab4 = st.tabs(["Props", "State", "State vs Props", "Cazuri Practice"])
 
     with tab1:
         st.markdown('<h2 class="section-header">Props (Proprietăți)</h2>', unsafe_allow_html=True)
-        # Add props content here
+
+        st.markdown("""
+        ### Ce sunt Props-urile?
+
+        Props (prescurtare pentru "properties") sunt argumentele pe care le primește o componentă React. 
+        Ele permit transmiterea datelor de la o componentă părinte către o componentă copil.
+
+        **Caracteristici cheie:**
+        - Sunt **immutable** (nu pot fi modificate de componenta copil)
+        - Sunt **read-only** (doar pentru citire)
+        - Permit **comunicarea unidirecțională** (de la părinte la copil)
+        - Pot conține orice tip de date: strings, numbers, objects, arrays, functions
+        """)
+
+        st.markdown("### Exemple Simple de Props")
+
+        st.code("""
+// Componentă simplă care primește props
+function Greeting(props) {
+    return <h1>Salut, {props.name}!</h1>;
+}
+
+// Utilizarea componentei cu props
+function App() {
+    return (
+        <div>
+            <Greeting name="Maria" />
+            <Greeting name="Ion" />
+        </div>
+    );
+}
+        """, language="javascript")
+
+        st.markdown("### Destructuring Props")
+
+        st.code("""
+// Destructuring în parametrii funcției
+function UserCard({ name, age, email, isActive }) {
+    return (
+        <div className="user-card">
+            <h2>{name}</h2>
+            <p>Vârsta: {age}</p>
+            <p>Email: {email}</p>
+            <span className={isActive ? "active" : "inactive"}>
+                {isActive ? "Activ" : "Inactiv"}
+            </span>
+        </div>
+    );
+}
+
+// Utilizare
+function App() {
+    return (
+        <UserCard 
+            name="Ana Popescu" 
+            age={28} 
+            email="ana@example.com" 
+            isActive={true} 
+        />
+    );
+}
+        """, language="javascript")
+
+        st.markdown("### Props cu Obiecte și Arrays")
+
+        st.code("""
+function ProductList({ products }) {
+    return (
+        <div>
+            <h2>Lista Produse</h2>
+            {products.map(product => (
+                <ProductCard 
+                    key={product.id}
+                    product={product}
+                />
+            ))}
+        </div>
+    );
+}
+
+function ProductCard({ product }) {
+    const { name, price, description, inStock } = product;
+
+    return (
+        <div className="product-card">
+            <h3>{name}</h3>
+            <p>{description}</p>
+            <p className="price">{price} RON</p>
+            <p className={inStock ? "in-stock" : "out-of-stock"}>
+                {inStock ? "În stoc" : "Epuizat"}
+            </p>
+        </div>
+    );
+}
+        """, language="javascript")
+
+        st.markdown("### Props ca Funcții")
+
+        st.code("""
+function Button({ onClick, children, variant = "primary" }) {
+    return (
+        <button 
+            className={`btn btn-${variant}`}
+            onClick={onClick}
+        >
+            {children}
+        </button>
+    );
+}
+
+function App() {
+    const handleSave = () => {
+        console.log("Salvare efectuată!");
+    };
+
+    const handleCancel = () => {
+        console.log("Operațiune anulată!");
+    };
+
+    return (
+        <div>
+            <Button onClick={handleSave} variant="success">
+                Salvează
+            </Button>
+            <Button onClick={handleCancel} variant="danger">
+                Anulează
+            </Button>
+        </div>
+    );
+}
+        """, language="javascript")
+
+        st.markdown("### Children Prop")
+
+        st.code("""
+function Card({ title, children }) {
+    return (
+        <div className="card">
+            <div className="card-header">
+                <h3>{title}</h3>
+            </div>
+            <div className="card-body">
+                {children}
+            </div>
+        </div>
+    );
+}
+
+function App() {
+    return (
+        <Card title="Informații Utilizator">
+            <p>Nume: Ion Popescu</p>
+            <p>Email: ion@example.com</p>
+            <button>Editează Profil</button>
+        </Card>
+    );
+}
+        """, language="javascript")
+
+        st.markdown("### PropTypes și Validare")
+
+        st.code("""
+import PropTypes from 'prop-types';
+
+function UserProfile({ name, age, email, hobbies, onEdit }) {
+    return (
+        <div>
+            <h2>{name}</h2>
+            <p>Vârsta: {age}</p>
+            <p>Email: {email}</p>
+            <ul>
+                {hobbies.map((hobby, index) => (
+                    <li key={index}>{hobby}</li>
+                ))}
+            </ul>
+            <button onClick={onEdit}>Editează</button>
+        </div>
+    );
+}
+
+UserProfile.propTypes = {
+    name: PropTypes.string.isRequired,
+    age: PropTypes.number.isRequired,
+    email: PropTypes.string.isRequired,
+    hobbies: PropTypes.arrayOf(PropTypes.string),
+    onEdit: PropTypes.func
+};
+
+UserProfile.defaultProps = {
+    hobbies: [],
+    onEdit: () => {}
+};
+        """, language="javascript")
+
+        st.markdown("### Props Spreading")
+
+        st.code("""
+function Input({ label, error, ...inputProps }) {
+    return (
+        <div className="form-group">
+            <label>{label}</label>
+            <input 
+                {...inputProps}
+                className={`form-input ${error ? 'error' : ''}`}
+            />
+            {error && <span className="error-text">{error}</span>}
+        </div>
+    );
+}
+
+function LoginForm() {
+    return (
+        <form>
+            <Input 
+                label="Email"
+                type="email"
+                name="email"
+                placeholder="Introduceți email-ul"
+                required
+            />
+            <Input 
+                label="Parolă"
+                type="password"
+                name="password"
+                placeholder="Introduceți parola"
+                required
+            />
+        </form>
+    );
+}
+        """, language="javascript")
 
     with tab2:
-        st.markdown('<h2 class="section-header">State (Starea)</h2>', unsafe_allow_html=True)
-        # Add state content here
+        st.markdown('<h2 class="section-header">State (Starea Componentei)</h2>', unsafe_allow_html=True)
+
+        st.markdown("""
+        ### Ce este State-ul?
+
+        State-ul reprezintă datele private ale unei componente care se pot schimba în timpul execuției. 
+        Spre deosebire de props, state-ul este **mutable** și poate fi modificat de componentă.
+
+        **Caracteristici cheie:**
+        - Este **mutable** (poate fi modificat)
+        - Este **privat** componentei (nu poate fi accesat direct din exterior)
+        - Modificările state-ului declanșează **re-renderarea** componentei
+        - Se inițializează în componentă și se gestionează local
+        """)
+
+        st.markdown("### useState Hook - Exemplu Simplu")
+
+        st.code("""
+import React, { useState } from 'react';
+
+function Counter() {
+    // Declararea unei variabile de state numită "count"
+    const [count, setCount] = useState(0);
+
+    return (
+        <div>
+            <p>Ai făcut clic de {count} ori</p>
+            <button onClick={() => setCount(count + 1)}>
+                Incrementează
+            </button>
+            <button onClick={() => setCount(count - 1)}>
+                Decrementează
+            </button>
+            <button onClick={() => setCount(0)}>
+                Resetează
+            </button>
+        </div>
+    );
+}
+        """, language="javascript")
+
+        st.markdown("### State cu Obiecte")
+
+        st.code("""
+function UserForm() {
+    const [user, setUser] = useState({
+        name: '',
+        email: '',
+        age: ''
+    });
+
+    const handleInputChange = (event) => {
+        const { name, value } = event.target;
+
+        // Actualizarea state-ului cu spread operator
+        setUser(prevUser => ({
+            ...prevUser,
+            [name]: value
+        }));
+    };
+
+    const handleSubmit = (event) => {
+        event.preventDefault();
+        console.log('Date utilizator:', user);
+    };
+
+    return (
+        <form onSubmit={handleSubmit}>
+            <input
+                type="text"
+                name="name"
+                placeholder="Nume"
+                value={user.name}
+                onChange={handleInputChange}
+            />
+            <input
+                type="email"
+                name="email"
+                placeholder="Email"
+                value={user.email}
+                onChange={handleInputChange}
+            />
+            <input
+                type="number"
+                name="age"
+                placeholder="Vârsta"
+                value={user.age}
+                onChange={handleInputChange}
+            />
+            <button type="submit">Salvează</button>
+        </form>
+    );
+}
+        """, language="javascript")
+
+        st.markdown("### State cu Arrays")
+
+        st.code("""
+function TodoList() {
+    const [todos, setTodos] = useState([]);
+    const [inputValue, setInputValue] = useState('');
+
+    const addTodo = () => {
+        if (inputValue.trim() !== '') {
+            const newTodo = {
+                id: Date.now(),
+                text: inputValue,
+                completed: false
+            };
+
+            setTodos(prevTodos => [...prevTodos, newTodo]);
+            setInputValue('');
+        }
+    };
+
+    const toggleTodo = (id) => {
+        setTodos(prevTodos =>
+            prevTodos.map(todo =>
+                todo.id === id 
+                    ? { ...todo, completed: !todo.completed }
+                    : todo
+            )
+        );
+    };
+
+    const deleteTodo = (id) => {
+        setTodos(prevTodos => prevTodos.filter(todo => todo.id !== id));
+    };
+
+    return (
+        <div>
+            <div>
+                <input
+                    type="text"
+                    value={inputValue}
+                    onChange={(e) => setInputValue(e.target.value)}
+                    placeholder="Adaugă o sarcină..."
+                />
+                <button onClick={addTodo}>Adaugă</button>
+            </div>
+
+            <ul>
+                {todos.map(todo => (
+                    <li key={todo.id}>
+                        <span 
+                            style={{ 
+                                textDecoration: todo.completed ? 'line-through' : 'none' 
+                            }}
+                            onClick={() => toggleTodo(todo.id)}
+                        >
+                            {todo.text}
+                        </span>
+                        <button onClick={() => deleteTodo(todo.id)}>
+                            Șterge
+                        </button>
+                    </li>
+                ))}
+            </ul>
+        </div>
+    );
+}
+        """, language="javascript")
+
+        st.markdown("### State Functional Updates")
+
+        st.code("""
+function AdvancedCounter() {
+    const [count, setCount] = useState(0);
+
+    // Update funcțional - recomandat pentru actualizări bazate pe starea anterioară
+    const increment = () => {
+        setCount(prevCount => prevCount + 1);
+    };
+
+    const incrementByAmount = (amount) => {
+        setCount(prevCount => prevCount + amount);
+    };
+
+    // Multiple updates în aceeași funcție
+    const multipleIncrements = () => {
+        setCount(prevCount => prevCount + 1);
+        setCount(prevCount => prevCount + 1);
+        setCount(prevCount => prevCount + 1);
+    };
+
+    return (
+        <div>
+            <p>Count: {count}</p>
+            <button onClick={increment}>+1</button>
+            <button onClick={() => incrementByAmount(5)}>+5</button>
+            <button onClick={multipleIncrements}>+3 (multiple)</button>
+        </div>
+    );
+}
+        """, language="javascript")
+
+        st.markdown("### Lifting State Up")
+
+        st.code("""
+// Componentă părinte care gestionează state-ul partajat
+function ShoppingApp() {
+    const [cart, setCart] = useState([]);
+
+    const addToCart = (product) => {
+        setCart(prevCart => [...prevCart, product]);
+    };
+
+    const removeFromCart = (productId) => {
+        setCart(prevCart => prevCart.filter(item => item.id !== productId));
+    };
+
+    return (
+        <div>
+            <ProductList onAddToCart={addToCart} />
+            <Cart 
+                items={cart} 
+                onRemoveFromCart={removeFromCart} 
+            />
+        </div>
+    );
+}
+
+// Componentele copil primesc funcțiile prin props
+function ProductList({ onAddToCart }) {
+    const products = [
+        { id: 1, name: "Laptop", price: 2500 },
+        { id: 2, name: "Mouse", price: 50 }
+    ];
+
+    return (
+        <div>
+            {products.map(product => (
+                <div key={product.id}>
+                    <span>{product.name} - {product.price} RON</span>
+                    <button onClick={() => onAddToCart(product)}>
+                        Adaugă în coș
+                    </button>
+                </div>
+            ))}
+        </div>
+    );
+}
+
+function Cart({ items, onRemoveFromCart }) {
+    const total = items.reduce((sum, item) => sum + item.price, 0);
+
+    return (
+        <div>
+            <h3>Coșul de cumpărături</h3>
+            {items.map(item => (
+                <div key={item.id}>
+                    <span>{item.name}</span>
+                    <button onClick={() => onRemoveFromCart(item.id)}>
+                        Elimină
+                    </button>
+                </div>
+            ))}
+            <p>Total: {total} RON</p>
+        </div>
+    );
+}
+        """, language="javascript")
+
+    with tab3:
+        st.markdown('<h2 class="section-header">State vs Props - Diferențe și Utilizare</h2>', unsafe_allow_html=True)
+
+        st.markdown("""
+        ### Comparație State vs Props
+        """)
+
+        comparison_data = {
+            "Caracteristică": [
+                "Mutabilitate",
+                "Proprietar",
+                "Inițializare",
+                "Actualizare",
+                "Utilizare",
+                "Declanșează re-render",
+                "Accesibilitate"
+            ],
+            "State": [
+                "Mutable (poate fi modificat)",
+                "Componenta care îl definește",
+                "În interiorul componentei",
+                "Prin setState/useState",
+                "Pentru date care se schimbă",
+                "Da, când se modifică",
+                "Privat componentei"
+            ],
+            "Props": [
+                "Immutable (nu poate fi modificat)",
+                "Componenta părinte",
+                "Transmis de la părinte",
+                "Nu poate fi actualizat direct",
+                "Pentru comunicare părinte-copil",
+                "Da, când se schimbă",
+                "Transmis între componente"
+            ]
+        }
+
+        st.table(comparison_data)
+
+        st.markdown("### Exemple Comparative")
+
+        st.code("""
+// PROPS - Date transmise de la părinte la copil
+function ParentComponent() {
+    const userData = {
+        name: "Maria Ionescu",
+        role: "Developer"
+    };
+
+    return (
+        <div>
+            {/* Transmiterea datelor prin props */}
+            <ChildComponent 
+                userName={userData.name}
+                userRole={userData.role}
+                isActive={true}
+            />
+        </div>
+    );
+}
+
+function ChildComponent({ userName, userRole, isActive }) {
+    // Props sunt doar pentru citire - nu pot fi modificate
+    // userName = "Alt nume"; // ❌ GREȘIT - nu modificați props-urile
+
+    return (
+        <div>
+            <h2>{userName}</h2>
+            <p>Rol: {userRole}</p>
+            <span>{isActive ? "Activ" : "Inactiv"}</span>
+        </div>
+    );
+}
+
+// STATE - Date private care se pot schimba
+function ComponentWithState() {
+    // State poate fi modificat prin setter-ul său
+    const [userName, setUserName] = useState("Maria Ionescu");
+    const [isEditing, setIsEditing] = useState(false);
+
+    const handleNameChange = (newName) => {
+        setUserName(newName); // ✅ CORECT - modificarea state-ului
+    };
+
+    return (
+        <div>
+            {isEditing ? (
+                <input 
+                    value={userName}
+                    onChange={(e) => handleNameChange(e.target.value)}
+                />
+            ) : (
+                <h2>{userName}</h2>
+            )}
+
+            <button onClick={() => setIsEditing(!isEditing)}>
+                {isEditing ? "Salvează" : "Editează"}
+            </button>
+        </div>
+    );
+}
+        """, language="javascript")
+
+        st.markdown("### Când să folosim State vs Props")
+
+        st.markdown("""
+        **Folosește STATE când:**
+        - Datele se pot schimba în timp (input-uri, contoare, toggle-uri)
+        - Componenta trebuie să "își amintească" ceva
+        - Vrei să declanșezi re-renderarea la schimbarea datelor
+        - Datele sunt private componentei
+
+        **Folosește PROPS când:**
+        - Vrei să transmiți date de la părinte la copil
+        - Datele sunt statice sau se schimbă rar
+        - Vrei să configurezi comportamentul unei componente
+        - Vrei să reutilizezi componenta cu date diferite
+        """)
+
+        st.code("""
+// Exemplu complex care combină State și Props
+function UserDashboard({ initialUser, onUserUpdate }) {
+    // State pentru datele care se schimbă local
+    const [user, setUser] = useState(initialUser);
+    const [isEditing, setIsEditing] = useState(false);
+    const [notifications, setNotifications] = useState([]);
+
+    // Funcție care folosește și state și props
+    const handleSaveUser = () => {
+        setIsEditing(false);
+        // Notifică componenta părinte prin props
+        onUserUpdate(user);
+
+        // Actualizează state-ul local
+        setNotifications(prev => [...prev, "Profil actualizat cu succes!"]);
+    };
+
+    return (
+        <div>
+            <UserProfile 
+                user={user}              // Props - date transmise
+                isEditing={isEditing}    // Props - configurare comportament
+                onUserChange={setUser}   // Props - callback function
+                onSave={handleSaveUser}  // Props - callback function
+            />
+
+            <NotificationList 
+                notifications={notifications}  // Props - date transmise
+                onClear={() => setNotifications([])}  // Props - callback
+            />
+        </div>
+    );
+}
+        """, language="javascript")
+
+    with tab4:
+        st.markdown('<h2 class="section-header">Cazuri Practice și Întrebări de Interviu</h2>', unsafe_allow_html=True)
+
+        st.markdown("### Cazuri Practice Comune")
+
+        with st.expander("1. Formulare Controlate vs Necontrolate"):
+            st.code("""
+// FORMULAR CONTROLAT (cu state)
+function ControlledForm() {
+    const [formData, setFormData] = useState({
+        email: '',
+        password: '',
+        rememberMe: false
+    });
+
+    const handleChange = (e) => {
+        const { name, value, type, checked } = e.target;
+        setFormData(prev => ({
+            ...prev,
+            [name]: type === 'checkbox' ? checked : value
+        }));
+    };
+
+    return (
+        <form>
+            <input
+                name="email"
+                value={formData.email}  // Controlat de state
+                onChange={handleChange}
+            />
+            <input
+                name="password"
+                type="password"
+                value={formData.password}  // Controlat de state
+                onChange={handleChange}
+            />
+            <input
+                name="rememberMe"
+                type="checkbox"
+                checked={formData.rememberMe}  // Controlat de state
+                onChange={handleChange}
+            />
+        </form>
+    );
+}
+
+// FORMULAR NECONTROLAT (cu refs)
+function UncontrolledForm() {
+    const emailRef = useRef();
+    const passwordRef = useRef();
+
+    const handleSubmit = (e) => {
+        e.preventDefault();
+        console.log(emailRef.current.value);
+        console.log(passwordRef.current.value);
+    };
+
+    return (
+        <form onSubmit={handleSubmit}>
+            <input ref={emailRef} name="email" />
+            <input ref={passwordRef} name="password" type="password" />
+        </form>
+    );
+}
+            """, language="javascript")
+
+        with st.expander("2. Prop Drilling și Soluții"):
+            st.code("""
+// PROBLEMĂ: Prop Drilling
+function App() {
+    const [user, setUser] = useState({ name: "Ion", theme: "dark" });
+
+    return (
+        <div>
+            <Header user={user} />
+            <MainContent user={user} setUser={setUser} />
+            <Footer user={user} />
+        </div>
+    );
+}
+
+function MainContent({ user, setUser }) {
+    return (
+        <div>
+            <Sidebar user={user} />
+            <Content user={user} setUser={setUser} />
+        </div>
+    );
+}
+
+function Content({ user, setUser }) {
+    return (
+        <div>
+            <UserProfile user={user} setUser={setUser} />
+        </div>
+    );
+}
+
+// SOLUȚIE 1: Context API
+const UserContext = createContext();
+
+function App() {
+    const [user, setUser] = useState({ name: "Ion", theme: "dark" });
+
+    return (
+        <UserContext.Provider value={{ user, setUser }}>
+            <div>
+                <Header />
+                <MainContent />
+                <Footer />
+            </div>
+        </UserContext.Provider>
+    );
+}
+
+function UserProfile() {
+    const { user, setUser } = useContext(UserContext);
+
+    return (
+        <div>
+            <h2>{user.name}</h2>
+            <button onClick={() => setUser(prev => ({ ...prev, name: "Maria" }))}>
+                Schimbă numele
+            </button>
+        </div>
+    );
+}
+
+// SOLUȚIE 2: Custom Hook
+function useUser() {
+    const context = useContext(UserContext);
+    if (!context) {
+        throw new Error('useUser must be used within UserProvider');
+    }
+    return context;
+}
+            """, language="javascript")
+
+        with st.expander("3. State Batching și Performance"):
+            st.code("""
+function OptimizedComponent() {
+    const [count, setCount] = useState(0);
+    const [name, setName] = useState('');
+    const [items, setItems] = useState([]);
+
+    // React 18+ - Automatic Batching
+    const handleMultipleUpdates = () => {
+        setCount(c => c + 1);      // \
+        setName('New Name');        //  > Un singur re-render
+        setItems(['item1']);       // /
+    };
+
+    // Pentru React 17 și anterior
+    const handleLegacyBatching = () => {
+        unstable_batchedUpdates(() => {
+            setCount(c => c + 1);
+            setName('New Name');
+            setItems(['item1']);
+        });
+    };
+
+    // Evitarea re-render-urilor inutile cu React.memo
+    const ExpensiveChild = React.memo(({ data }) => {
+        console.log('ExpensiveChild rendered');
+        return <div>{data.value}</div>;
+    });
+
+    // State derivat - evită state-ul redundant
+    const expensiveData = useMemo(() => {
+        return items.map(item => ({ 
+            ...item, 
+            processed: item.value * 2 
+        }));
+    }, [items]);
+
+    return (
+        <div>
+            <p>Count: {count}</p>
+            <p>Name: {name}</p>
+            <ExpensiveChild data={{ value: count }} />
+            <button onClick={handleMultipleUpdates}>
+                Update Multiple
+            </button>
+        </div>
+    );
+}
+            """, language="javascript")
+
+        st.markdown("### Întrebări Frecvente la Interviuri")
+
+        with st.expander("Întrebarea 1: Care este diferența între state și props?"):
+            st.markdown("""
+            **Răspuns complet:**
+
+            State și props sunt două concepte fundamentale pentru gestionarea datelor în React:
+
+            **Props:**
+            - Sunt immutable și read-only
+            - Se transmit de la componenta părinte la componenta copil
+            - Permit comunicarea unidirecțională
+            - Nu pot fi modificate de componenta care le primește
+            - Sunt ca argumentele unei funcții
+
+            **State:**
+            - Este mutable și poate fi modificat
+            - Aparține componentei care îl definește
+            - Modificările declanșează re-renderarea
+            - Se gestionează local în componentă
+            - Folosit pentru date care se schimbă în timp
+
+            **Exemplu practic:** Props-urile sunt ca setările pe care le primești (culoarea unui buton), 
+            iar state-ul este ca memoria componentei (dacă butonul a fost apăsat).
+            """)
+
+        with st.expander("Întrebarea 2: Cum actualizezi state-ul care depinde de valoarea anterioară?"):
+            st.markdown("""
+            **Răspuns:**
+
+            Pentru actualizări care depind de state-ul anterior, folosește forma funcțională a setter-ului:
+
+            ```javascript
+            // ❌ GREȘIT - poate cauza probleme
+            setCount(count + 1);
+
+            // ✅ CORECT - folosește valoarea anterioară
+            setCount(prevCount => prevCount + 1);
+            ```
+
+            **De ce este important:**
+            - State-ul se actualizează asincron
+            - Multiple actualizări simultane pot fi problematice
+            - Forma funcțională garantează că folosești cea mai recentă valoare
+            """)
+
+        with st.expander("Întrebarea 3: Ce este prop drilling și cum îl rezolvi?"):
+            st.markdown("""
+            **Răspuns:**
+
+            **Prop drilling** este procesul de transmitere a props-urilor prin multiple nivele de componente 
+            pentru a ajunge la componenta care chiar le folosește.
+
+            **Problemele:**
+            - Cod greu de întreținut
+            - Componente intermediare care nu folosesc props-urile
+            - Dificultate în refactorizare
+
+            **Soluții:**
+            1. **Context API** - pentru state global
+            2. **Component composition** - folosirea children
+            3. **State management libraries** (Redux, Zustand)
+            4. **Custom hooks** pentru logica reutilizabilă
+            """)
+
+        with st.expander("Întrebarea 4: Când folosești state local vs state global?"):
+            st.markdown("""
+            **State Local când:**
+            - Datele sunt folosite doar într-o componentă
+            - State-ul nu trebuie partajat
+            - Logica este simplă și izolată
+            - Exemple: form inputs, toggle states, local counters
+
+            **State Global când:**
+            - Datele sunt folosite în multiple componente
+            - Componente îndepărtate trebuie să comunice
+            - State-ul trebuie persistat între navigări
+            - Exemple: user authentication, theme settings, shopping cart
+
+            **Regula generală:** Începe cu state local și mută în global doar când este necesar.
+            """)
+
+        st.markdown("### Exerciții Practice")
+
+        with st.expander("Exercițiul 1: Todo App Complet"):
+            st.markdown("""
+            Creează o aplicație Todo cu următoarele funcționalități:
+            - Adăugare task-uri
+            - Marcare ca complete/incomplete
+            - Filtrare (toate, active, completate)
+            - Șterge task-urile completate
+            - Contorizare task-uri active
+
+            **Provocări suplimentare:**
+            - Persistă datele în localStorage
+            - Adaugă drag & drop pentru reordonare
+            - Implementează categorii pentru task-uri
+            """)
+
+        with st.expander("Exercițiul 2: Form Validation Complex"):
+            st.markdown("""
+            Construiește un formular de înregistrare cu:
+            - Validare în timp real
+            - Afișare erori specifice pentru fiecare câmp
+            - Verificare strength parolă
+            - Confirmare parolă
+            - Checkbox pentru termeni și condiții
+
+            **State-ul să includă:**
+            - Valorile câmpurilor
+            - Erorile pentru fiecare câmp
+            - Status submit (loading, success, error)
+            """)
+
+        st.markdown("### Best Practices")
+
+        st.markdown("""
+        **Pentru Props:**
+        1. Folosește destructuring pentru citire mai ușoară
+        2. Definește PropTypes pentru validare
+        3. Oferă valori default cu defaultProps
+        4. Păstrează props-urile simple și focalizate
+        5. Evită transmiterea de obiecte mari ca props
+
+        **Pentru State:**
+        1. Păstrează state-ul cât mai mic și focalizat
+        2. Folosește multiple state variables în loc de un obiect mare
+        3. Actualizează state-ul immutable
+        4. Folosește functional updates pentru dependențe
+        5. Consideră lifting state up când este necesar
+
+        **General:**
+        1. Preferă composition peste inheritance
+        2. Folosește Context doar pentru state truly global
+        3. Optimizează performance cu React.memo și useMemo
+        4. Testează componentele cu diferite combinații de props și state
+        """)
+
+    st.markdown("""
+    <div class="summary-box">
+    <h3>Rezumat Capitol</h3>
+    <p><strong>Props</strong> permit comunicarea între componente și configurarea comportamentului, 
+    în timp ce <strong>State</strong> gestionează datele care se schimbă în cadrul unei componente. 
+    Înțelegerea acestor concepte și a modului în care interacționează este fundamentală pentru 
+    dezvoltarea aplicațiilor React eficiente și scalabile.</p>
+    </div>
+    """, unsafe_allow_html=True)
 
 
 def events_page():
-    """Event Handling"""
-    st.markdown('<h1 class="chapter-header">Event Handling</h1>', unsafe_allow_html=True)
+    """Event Handling - Tutorial Comprehensiv React"""
+    st.markdown('<h1 class="chapter-header">Event Handling în React</h1>', unsafe_allow_html=True)
 
     st.markdown("""
-    <div class="info-box">
-        <h3>Evenimente în React</h3>
-        <p>React folosește SyntheticEvents pentru comportament consistent.</p>
+    <div class="intro-box">
+    <h3>Introducere</h3>
+    <p>Event Handling este mecanismul prin care aplicațiile React răspund la acțiunile utilizatorului. 
+    React folosește un sistem de evenimente sintetice care oferă o interfață consistentă 
+    între diferite browsere și platforme.</p>
     </div>
     """, unsafe_allow_html=True)
 
-    # Add events content here
+    tab1, tab2, tab3, tab4, tab5 = st.tabs([
+        "Concepte de Bază",
+        "SyntheticEvents",
+        "Event Handling Avansat",
+        "Performance & Optimizare",
+        "Întrebări de Interviu"
+    ])
+
+    with tab1:
+        st.markdown('<h2 class="section-header">Concepte Fundamentale</h2>', unsafe_allow_html=True)
+
+        st.markdown("""
+        ### Cum Funcționează Event Handling în React
+
+        React nu atașează event listener-ii direct la elementele DOM. În schimb, folosește:
+        - **Event Delegation** - Un singur listener pe root
+        - **SyntheticEvents** - Wrapper peste evenimente native
+        - **Event Pooling** - Reutilizarea obiectelor de evenimente (React 16 și anterior)
+        """)
+
+        st.markdown("### Exemple Simple de Event Handling")
+
+        st.code("""
+// Exemplu basic - Click Handler
+function BasicButton() {
+    const handleClick = () => {
+        console.log('Butonul a fost apăsat!');
+    };
+
+    return (
+        <button onClick={handleClick}>
+            Apasă-mă
+        </button>
+    );
+}
+
+// Handler inline - Nu recomandat pentru logică complexă
+function InlineHandler() {
+    return (
+        <button onClick={() => console.log('Click inline')}>
+            Click Inline
+        </button>
+    );
+}
+
+// Handler cu parametri
+function ButtonWithParams() {
+    const handleClick = (message, event) => {
+        console.log('Mesaj:', message);
+        console.log('Event:', event);
+    };
+
+    return (
+        <div>
+            <button onClick={(e) => handleClick('Primul buton', e)}>
+                Buton 1
+            </button>
+            <button onClick={(e) => handleClick('Al doilea buton', e)}>
+                Buton 2
+            </button>
+        </div>
+    );
+}
+        """, language="javascript")
+
+        st.markdown("### Event Handling cu State")
+
+        st.code("""
+function InteractiveForm() {
+    const [formData, setFormData] = useState({
+        name: '',
+        email: '',
+        message: ''
+    });
+    const [isSubmitting, setIsSubmitting] = useState(false);
+
+    // Handler pentru input-uri text
+    const handleInputChange = (event) => {
+        const { name, value } = event.target;
+        setFormData(prevData => ({
+            ...prevData,
+            [name]: value
+        }));
+    };
+
+    // Handler pentru submit
+    const handleSubmit = async (event) => {
+        event.preventDefault(); // Previne comportamentul default
+        setIsSubmitting(true);
+
+        try {
+            // Simulăm o cerere către server
+            await new Promise(resolve => setTimeout(resolve, 1000));
+            console.log('Date trimise:', formData);
+            alert('Formular trimis cu succes!');
+
+            // Reset formular
+            setFormData({ name: '', email: '', message: '' });
+        } catch (error) {
+            console.error('Eroare la trimitere:', error);
+        } finally {
+            setIsSubmitting(false);
+        }
+    };
+
+    return (
+        <form onSubmit={handleSubmit}>
+            <input
+                type="text"
+                name="name"
+                placeholder="Numele tău"
+                value={formData.name}
+                onChange={handleInputChange}
+                required
+            />
+
+            <input
+                type="email"
+                name="email"
+                placeholder="Email-ul tău"
+                value={formData.email}
+                onChange={handleInputChange}
+                required
+            />
+
+            <textarea
+                name="message"
+                placeholder="Mesajul tău"
+                value={formData.message}
+                onChange={handleInputChange}
+                rows="4"
+                required
+            />
+
+            <button type="submit" disabled={isSubmitting}>
+                {isSubmitting ? 'Se trimite...' : 'Trimite'}
+            </button>
+        </form>
+    );
+}
+        """, language="javascript")
+
+        st.markdown("### Event Handling pentru Diferite Elemente")
+
+        st.code("""
+function EventExamples() {
+    const [logs, setLogs] = useState([]);
+
+    const addLog = (message) => {
+        setLogs(prev => [...prev, `${new Date().toLocaleTimeString()}: ${message}`]);
+    };
+
+    // Mouse Events
+    const handleMouseEnter = () => addLog('Mouse entered');
+    const handleMouseLeave = () => addLog('Mouse left');
+    const handleDoubleClick = () => addLog('Double clicked');
+
+    // Keyboard Events
+    const handleKeyDown = (event) => {
+        addLog(`Key pressed: ${event.key}`);
+
+        // Exemple de taste speciale
+        if (event.key === 'Enter') {
+            addLog('Enter key pressed!');
+        }
+        if (event.ctrlKey && event.key === 's') {
+            event.preventDefault();
+            addLog('Ctrl+S pressed (save shortcut)');
+        }
+    };
+
+    // Focus Events
+    const handleFocus = () => addLog('Input focused');
+    const handleBlur = () => addLog('Input lost focus');
+
+    // Change Events
+    const handleSelectChange = (event) => {
+        addLog(`Selected: ${event.target.value}`);
+    };
+
+    const handleCheckboxChange = (event) => {
+        addLog(`Checkbox ${event.target.checked ? 'checked' : 'unchecked'}`);
+    };
+
+    return (
+        <div>
+            <div 
+                onMouseEnter={handleMouseEnter}
+                onMouseLeave={handleMouseLeave}
+                onDoubleClick={handleDoubleClick}
+                style={{
+                    padding: '20px',
+                    border: '2px dashed #ccc',
+                    margin: '10px 0'
+                }}
+            >
+                Zonă interactivă - hover și double-click
+            </div>
+
+            <input
+                type="text"
+                placeholder="Tastează ceva..."
+                onKeyDown={handleKeyDown}
+                onFocus={handleFocus}
+                onBlur={handleBlur}
+            />
+
+            <select onChange={handleSelectChange}>
+                <option value="">Selectează o opțiune</option>
+                <option value="option1">Opțiunea 1</option>
+                <option value="option2">Opțiunea 2</option>
+                <option value="option3">Opțiunea 3</option>
+            </select>
+
+            <label>
+                <input
+                    type="checkbox"
+                    onChange={handleCheckboxChange}
+                />
+                Bifează această opțiune
+            </label>
+
+            <div style={{ marginTop: '20px' }}>
+                <h4>Log Evenimente:</h4>
+                <div style={{ height: '200px', overflow: 'auto', border: '1px solid #ccc' }}>
+                    {logs.map((log, index) => (
+                        <div key={index}>{log}</div>
+                    ))}
+                </div>
+                <button onClick={() => setLogs([])}>
+                    Șterge Log-urile
+                </button>
+            </div>
+        </div>
+    );
+}
+        """, language="javascript")
+
+    with tab2:
+        st.markdown('<h2 class="section-header">SyntheticEvents în Detaliu</h2>', unsafe_allow_html=True)
+
+        st.markdown("""
+        ### Ce sunt SyntheticEvents?
+
+        SyntheticEvents sunt wrapper-ele React peste evenimentele native DOM. Oferă:
+        - **Cross-browser compatibility** - Același API pe toate browserele
+        - **Performance optimizată** - Event pooling și delegation
+        - **API consistent** - Metodele și proprietățile sunt standardizate
+
+        ### Proprietăți Importante ale SyntheticEvents
+        """)
+
+        st.code("""
+function SyntheticEventDemo() {
+    const handleEvent = (syntheticEvent) => {
+        console.log('=== SyntheticEvent Properties ===');
+
+        // Proprietăți comune
+        console.log('Type:', syntheticEvent.type);
+        console.log('Target:', syntheticEvent.target);
+        console.log('CurrentTarget:', syntheticEvent.currentTarget);
+        console.log('TimeStamp:', syntheticEvent.timeStamp);
+
+        // Verifică dacă este un MouseEvent
+        if (syntheticEvent.type.startsWith('mouse')) {
+            console.log('ClientX:', syntheticEvent.clientX);
+            console.log('ClientY:', syntheticEvent.clientY);
+            console.log('Button:', syntheticEvent.button);
+            console.log('Buttons:', syntheticEvent.buttons);
+        }
+
+        // Verifică dacă este un KeyboardEvent
+        if (syntheticEvent.type.startsWith('key')) {
+            console.log('Key:', syntheticEvent.key);
+            console.log('KeyCode:', syntheticEvent.keyCode);
+            console.log('CharCode:', syntheticEvent.charCode);
+            console.log('Ctrl Key:', syntheticEvent.ctrlKey);
+            console.log('Shift Key:', syntheticEvent.shiftKey);
+            console.log('Alt Key:', syntheticEvent.altKey);
+        }
+
+        // Accesarea evenimentului nativ
+        const nativeEvent = syntheticEvent.nativeEvent;
+        console.log('Native Event:', nativeEvent);
+
+        // Metodele importante
+        console.log('=== Metode Disponibile ===');
+        console.log('preventDefault:', typeof syntheticEvent.preventDefault);
+        console.log('stopPropagation:', typeof syntheticEvent.stopPropagation);
+        console.log('persist:', typeof syntheticEvent.persist);
+    };
+
+    return (
+        <div>
+            <button 
+                onClick={handleEvent}
+                onMouseMove={handleEvent}
+                onKeyDown={handleEvent}
+            >
+                Interacționează cu mine (vezi consola)
+            </button>
+        </div>
+    );
+}
+        """, language="javascript")
+
+        st.markdown("### Event Persistence și Async Handling")
+
+        st.code("""
+function EventPersistenceDemo() {
+    const [message, setMessage] = useState('');
+
+    // ❌ PROBLEMĂ - Event pooling (React 16 și anterior)
+    const handleAsyncWrong = (event) => {
+        // În React 16, acest cod ar genera eroare
+        setTimeout(() => {
+            console.log(event.target.value); // Event pooled - eroare
+        }, 1000);
+    };
+
+    // ✅ SOLUȚIE 1 - Persist event (React 16)
+    const handleAsyncWithPersist = (event) => {
+        event.persist(); // Previne event pooling
+        setTimeout(() => {
+            console.log('Persisted event:', event.target.value);
+        }, 1000);
+    };
+
+    // ✅ SOLUȚIE 2 - Extract value (Recommended)
+    const handleAsyncCorrect = (event) => {
+        const value = event.target.value; // Extrage valoarea
+        setTimeout(() => {
+            console.log('Extracted value:', value);
+            setMessage(`Processed: ${value}`);
+        }, 1000);
+    };
+
+    // ✅ SOLUȚIE 3 - React 17+ (Nu mai e nevoie de persist)
+    const handleAsyncModern = (event) => {
+        // În React 17+, event pooling nu mai există
+        setTimeout(() => {
+            console.log('Modern handling:', event.target.value);
+        }, 1000);
+    };
+
+    return (
+        <div>
+            <input
+                type="text"
+                placeholder="Tastează pentru test async..."
+                onChange={handleAsyncCorrect}
+            />
+            <p>Status: {message}</p>
+        </div>
+    );
+}
+        """, language="javascript")
+
+        st.markdown("### Custom Events și Event Creation")
+
+        st.code("""
+function CustomEventDemo() {
+    const [eventLog, setEventLog] = useState([]);
+
+    // Crearea și dispatch-ul unui eveniment custom
+    const dispatchCustomEvent = () => {
+        // Creează eveniment custom
+        const customEvent = new CustomEvent('myCustomEvent', {
+            detail: {
+                message: 'Acesta este un eveniment custom',
+                timestamp: Date.now(),
+                data: { id: 1, name: 'Test Event' }
+            },
+            bubbles: true,
+            cancelable: true
+        });
+
+        // Dispatch evenimentul
+        document.dispatchEvent(customEvent);
+
+        setEventLog(prev => [...prev, 'Custom event dispatched']);
+    };
+
+    // Listener pentru evenimentul custom
+    useEffect(() => {
+        const handleCustomEvent = (event) => {
+            console.log('Custom event received:', event.detail);
+            setEventLog(prev => [
+                ...prev, 
+                `Received: ${event.detail.message} at ${new Date(event.detail.timestamp).toLocaleTimeString()}`
+            ]);
+        };
+
+        document.addEventListener('myCustomEvent', handleCustomEvent);
+
+        // Cleanup
+        return () => {
+            document.removeEventListener('myCustomEvent', handleCustomEvent);
+        };
+    }, []);
+
+    // Simularea unui eveniment de click programatic
+    const triggerProgrammaticClick = () => {
+        const button = document.getElementById('target-button');
+        if (button) {
+            button.click(); // Trigger click programmatic
+        }
+    };
+
+    const handleTargetClick = () => {
+        setEventLog(prev => [...prev, 'Button clicked programmatically']);
+    };
+
+    return (
+        <div>
+            <button onClick={dispatchCustomEvent}>
+                Dispatch Custom Event
+            </button>
+
+            <button onClick={triggerProgrammaticClick}>
+                Trigger Click Programmatic
+            </button>
+
+            <button 
+                id="target-button" 
+                onClick={handleTargetClick}
+                style={{ display: 'none' }}
+            >
+                Target Button
+            </button>
+
+            <div style={{ marginTop: '20px' }}>
+                <h4>Event Log:</h4>
+                <ul>
+                    {eventLog.map((log, index) => (
+                        <li key={index}>{log}</li>
+                    ))}
+                </ul>
+                <button onClick={() => setEventLog([])}>
+                    Clear Log
+                </button>
+            </div>
+        </div>
+    );
+}
+        """, language="javascript")
+
+    with tab3:
+        st.markdown('<h2 class="section-header">Event Handling Avansat</h2>', unsafe_allow_html=True)
+
+        st.markdown("### Event Delegation și Bubbling")
+
+        st.code("""
+function EventDelegationDemo() {
+    const [clickedItem, setClickedItem] = useState(null);
+
+    // Event delegation - Un singur handler pentru multiple elemente
+    const handleContainerClick = (event) => {
+        // Verifică dacă elementul target are clasa 'clickable-item'
+        if (event.target.classList.contains('clickable-item')) {
+            const itemId = event.target.dataset.itemId;
+            const itemText = event.target.textContent;
+
+            setClickedItem({ id: itemId, text: itemText });
+
+            console.log('Clicked item:', { itemId, itemText });
+        }
+    };
+
+    // Demonstrare event bubbling
+    const handleBubblingDemo = (event, level) => {
+        console.log(`Event reached ${level}`);
+        // event.stopPropagation(); // Uncomment pentru a opri bubbling
+    };
+
+    return (
+        <div>
+            {/* Event Delegation Example */}
+            <div 
+                onClick={handleContainerClick}
+                style={{ padding: '20px', border: '2px solid #ddd' }}
+            >
+                <h4>Click pe oricare item (Event Delegation):</h4>
+                <div className="clickable-item" data-item-id="1">Item 1</div>
+                <div className="clickable-item" data-item-id="2">Item 2</div>
+                <div className="clickable-item" data-item-id="3">Item 3</div>
+                <div>Item non-clickable</div>
+
+                {clickedItem && (
+                    <p>Ai ales: {clickedItem.text} (ID: {clickedItem.id})</p>
+                )}
+            </div>
+
+            {/* Event Bubbling Demo */}
+            <div 
+                onClick={(e) => handleBubblingDemo(e, 'Container')}
+                style={{ padding: '20px', border: '2px solid #f00', margin: '20px 0' }}
+            >
+                Container
+                <div 
+                    onClick={(e) => handleBubblingDemo(e, 'Middle')}
+                    style={{ padding: '15px', border: '2px solid #0f0', margin: '10px' }}
+                >
+                    Middle
+                    <button 
+                        onClick={(e) => handleBubblingDemo(e, 'Button')}
+                        style={{ padding: '10px' }}
+                    >
+                        Inner Button (vezi consola pentru bubbling)
+                    </button>
+                </div>
+            </div>
+        </div>
+    );
+}
+        """, language="javascript")
+
+        st.markdown("### Advanced Form Handling")
+
+        st.code("""
+function AdvancedFormHandling() {
+    const [formState, setFormState] = useState({
+        personalInfo: {
+            firstName: '',
+            lastName: '',
+            email: ''
+        },
+        preferences: {
+            newsletter: false,
+            notifications: true,
+            theme: 'light'
+        },
+        skills: []
+    });
+
+    const [errors, setErrors] = useState({});
+    const [touchedFields, setTouchedFields] = useState(new Set());
+
+    // Generic handler pentru nested objects
+    const handleNestedChange = (section, field, value) => {
+        setFormState(prev => ({
+            ...prev,
+            [section]: {
+                ...prev[section],
+                [field]: value
+            }
+        }));
+
+        // Mark field as touched
+        setTouchedFields(prev => new Set([...prev, `${section}.${field}`]));
+
+        // Clear error when user starts typing
+        if (errors[`${section}.${field}`]) {
+            setErrors(prev => {
+                const newErrors = { ...prev };
+                delete newErrors[`${section}.${field}`];
+                return newErrors;
+            });
+        }
+    };
+
+    // Handler pentru checkbox-uri multiple (skills)
+    const handleSkillToggle = (skill) => {
+        setFormState(prev => ({
+            ...prev,
+            skills: prev.skills.includes(skill)
+                ? prev.skills.filter(s => s !== skill)
+                : [...prev.skills, skill]
+        }));
+    };
+
+    // Real-time validation
+    const validateField = (section, field, value) => {
+        const fieldKey = `${section}.${field}`;
+
+        switch (fieldKey) {
+            case 'personalInfo.email':
+                const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+                return emailRegex.test(value) ? null : 'Email invalid';
+
+            case 'personalInfo.firstName':
+            case 'personalInfo.lastName':
+                return value.length >= 2 ? null : 'Minim 2 caractere';
+
+            default:
+                return null;
+        }
+    };
+
+    // Handler cu validare
+    const handleValidatedChange = (event) => {
+        const { name, value, type, checked } = event.target;
+        const [section, field] = name.split('.');
+
+        const actualValue = type === 'checkbox' ? checked : value;
+        handleNestedChange(section, field, actualValue);
+
+        // Validate if field is touched
+        const fieldKey = `${section}.${field}`;
+        if (touchedFields.has(fieldKey)) {
+            const error = validateField(section, field, actualValue);
+            if (error) {
+                setErrors(prev => ({ ...prev, [fieldKey]: error }));
+            }
+        }
+    };
+
+    // Submit handler
+    const handleSubmit = (event) => {
+        event.preventDefault();
+
+        // Validate all fields
+        const newErrors = {};
+        Object.keys(formState.personalInfo).forEach(field => {
+            const error = validateField('personalInfo', field, formState.personalInfo[field]);
+            if (error) {
+                newErrors[`personalInfo.${field}`] = error;
+            }
+        });
+
+        if (Object.keys(newErrors).length > 0) {
+            setErrors(newErrors);
+            return;
+        }
+
+        console.log('Form submitted:', formState);
+    };
+
+    // Dynamic form generation
+    const renderFormField = (section, field, type = 'text', options = []) => {
+        const fieldKey = `${section}.${field}`;
+        const value = formState[section][field];
+        const error = errors[fieldKey];
+        const isTouched = touchedFields.has(fieldKey);
+
+        const commonProps = {
+            name: fieldKey,
+            onChange: handleValidatedChange,
+            onBlur: () => setTouchedFields(prev => new Set([...prev, fieldKey]))
+        };
+
+        switch (type) {
+            case 'select':
+                return (
+                    <div key={fieldKey}>
+                        <label>{field}:</label>
+                        <select {...commonProps} value={value}>
+                            {options.map(opt => (
+                                <option key={opt.value} value={opt.value}>
+                                    {opt.label}
+                                </option>
+                            ))}
+                        </select>
+                        {isTouched && error && <span className="error">{error}</span>}
+                    </div>
+                );
+
+            case 'checkbox':
+                return (
+                    <div key={fieldKey}>
+                        <label>
+                            <input 
+                                type="checkbox" 
+                                {...commonProps} 
+                                checked={value}
+                            />
+                            {field}
+                        </label>
+                    </div>
+                );
+
+            default:
+                return (
+                    <div key={fieldKey}>
+                        <label>{field}:</label>
+                        <input 
+                            type={type} 
+                            {...commonProps} 
+                            value={value}
+                            className={isTouched && error ? 'error' : ''}
+                        />
+                        {isTouched && error && <span className="error">{error}</span>}
+                    </div>
+                );
+        }
+    };
+
+    const availableSkills = ['JavaScript', 'React', 'Node.js', 'Python', 'CSS'];
+
+    return (
+        <form onSubmit={handleSubmit}>
+            <fieldset>
+                <legend>Informații Personale</legend>
+                {renderFormField('personalInfo', 'firstName')}
+                {renderFormField('personalInfo', 'lastName')}
+                {renderFormField('personalInfo', 'email', 'email')}
+            </fieldset>
+
+            <fieldset>
+                <legend>Preferințe</legend>
+                {renderFormField('preferences', 'newsletter', 'checkbox')}
+                {renderFormField('preferences', 'notifications', 'checkbox')}
+                {renderFormField('preferences', 'theme', 'select', [
+                    { value: 'light', label: 'Light' },
+                    { value: 'dark', label: 'Dark' },
+                    { value: 'auto', label: 'Auto' }
+                ])}
+            </fieldset>
+
+            <fieldset>
+                <legend>Skills</legend>
+                {availableSkills.map(skill => (
+                    <label key={skill}>
+                        <input
+                            type="checkbox"
+                            checked={formState.skills.includes(skill)}
+                            onChange={() => handleSkillToggle(skill)}
+                        />
+                        {skill}
+                    </label>
+                ))}
+            </fieldset>
+
+            <button type="submit">Submit</button>
+
+            <pre style={{ marginTop: '20px', fontSize: '12px' }}>
+                {JSON.stringify(formState, null, 2)}
+            </pre>
+        </form>
+    );
+}
+        """, language="javascript")
+
+        st.markdown("### Drag and Drop Events")
+
+        st.code("""
+function DragDropDemo() {
+    const [items, setItems] = useState([
+        { id: 1, text: 'Item 1', category: 'todo' },
+        { id: 2, text: 'Item 2', category: 'todo' },
+        { id: 3, text: 'Item 3', category: 'todo' }
+    ]);
+
+    const [draggedItem, setDraggedItem] = useState(null);
+    const [dropZones] = useState(['todo', 'inprogress', 'done']);
+
+    // Drag events
+    const handleDragStart = (event, item) => {
+        setDraggedItem(item);
+        event.dataTransfer.effectAllowed = 'move';
+        event.dataTransfer.setData('text/html', event.target.outerHTML);
+        event.dataTransfer.setData('text/plain', item.text);
+
+        // Custom drag image
+        const dragImage = event.target.cloneNode(true);
+        dragImage.style.opacity = '0.8';
+        dragImage.style.transform = 'rotate(5deg)';
+        event.dataTransfer.setDragImage(dragImage, 0, 0);
+    };
+
+    const handleDragEnd = () => {
+        setDraggedItem(null);
+    };
+
+    // Drop zone events
+    const handleDragOver = (event) => {
+        event.preventDefault(); // Permite drop
+        event.dataTransfer.dropEffect = 'move';
+    };
+
+    const handleDragEnter = (event) => {
+        event.preventDefault();
+        event.target.classList.add('drag-over');
+    };
+
+    const handleDragLeave = (event) => {
+        event.target.classList.remove('drag-over');
+    };
+
+    const handleDrop = (event, targetCategory) => {
+        event.preventDefault();
+        event.target.classList.remove('drag-over');
+
+        if (draggedItem && draggedItem.category !== targetCategory) {
+            setItems(prev => prev.map(item => 
+                item.id === draggedItem.id 
+                    ? { ...item, category: targetCategory }
+                    : item
+            ));
+        }
+
+        console.log('Dropped item:', draggedItem, 'in category:', targetCategory);
+    };
+
+    // Touch events pentru mobile support
+    const handleTouchStart = (event, item) => {
+        setDraggedItem(item);
+    };
+
+    const handleTouchMove = (event) => {
+        event.preventDefault();
+        const touch = event.touches[0];
+        const elementBelow = document.elementFromPoint(touch.clientX, touch.clientY);
+
+        // Highlight drop zones
+        document.querySelectorAll('.drop-zone').forEach(zone => {
+            zone.classList.remove('drag-over');
+        });
+
+        if (elementBelow && elementBelow.classList.contains('drop-zone')) {
+            elementBelow.classList.add('drag-over');
+        }
+    };
+
+    const handleTouchEnd = (event) => {
+        const touch = event.changedTouches[0];
+        const elementBelow = document.elementFromPoint(touch.clientX, touch.clientY);
+
+        if (elementBelow && elementBelow.classList.contains('drop-zone')) {
+            const category = elementBelow.dataset.category;
+            handleDrop(event, category);
+        }
+
+        document.querySelectorAll('.drop-zone').forEach(zone => {
+            zone.classList.remove('drag-over');
+        });
+
+        setDraggedItem(null);
+    };
+
+    return (
+        <div style={{ display: 'flex', gap: '20px' }}>
+            {dropZones.map(category => (
+                <div
+                    key={category}
+                    className="drop-zone"
+                    data-category={category}
+                    onDragOver={handleDragOver}
+                    onDragEnter={handleDragEnter}
+                    onDragLeave={handleDragLeave}
+                    onDrop={(e) => handleDrop(e, category)}
+                    style={{
+                        minHeight: '200px',
+                        width: '200px',
+                        border: '2px dashed #ccc',
+                        padding: '10px',
+                        backgroundColor: '#f9f9f9'
+                    }}
+                >
+                    <h3>{category.toUpperCase()}</h3>
+                    {items
+                        .filter(item => item.category === category)
+                        .map(item => (
+                            <div
+                                key={item.id}
+                                draggable
+                                onDragStart={(e) => handleDragStart(e, item)}
+                                onDragEnd={handleDragEnd}
+                                onTouchStart={(e) => handleTouchStart(e, item)}
+                                onTouchMove={handleTouchMove}
+                                onTouchEnd={handleTouchEnd}
+                                style={{
+                                    padding: '8px',
+                                    margin: '5px 0',
+                                    backgroundColor: '#fff',
+                                    border: '1px solid #ddd',
+                                    borderRadius: '4px',
+                                    cursor: 'grab',
+                                    opacity: draggedItem?.id === item.id ? 0.5 : 1
+                                }}
+                            >
+                                {item.text}
+                            </div>
+                        ))
+                    }
+                </div>
+            ))}
+        </div>
+    );
+}
+        """, language="javascript")
+
+    with tab4:
+        st.markdown('<h2 class="section-header">Performance și Optimizare</h2>', unsafe_allow_html=True)
+
+        st.markdown("### Event Handler Optimization")
+
+        st.code("""
+// ❌ PROBLEMĂ - Handler recreat la fiecare render
+function BadEventHandling() {
+    const [count, setCount] = useState(0);
+    const [items, setItems] = useState([]);
+
+    return (
+        <div>
+            {items.map(item => (
+                <button 
+                    key={item.id}
+                    onClick={() => {  // Funcție nouă la fiecare render
+                        console.log('Clicked item:', item.id);
+                        setCount(count + 1);  // Closure over stale value
+                    }}
+                >
+                    {item.name}
+                </button>
+            ))}
+        </div>
+    );
+}
+
+// ✅ SOLUȚIE 1 - useCallback și functional updates
+function OptimizedEventHandling() {
+    const [count, setCount] = useState(0);
+    const [items, setItems] = useState([
+        { id: 1, name: 'Item 1' },
+        { id: 2, name: 'Item 2' },
+        { id: 3, name: 'Item 3' }
+    ]);
+
+    // Handler optimizat cu useCallback
+    const handleItemClick = useCallback((itemId) => {
+        console.log('Clicked item:', itemId);
+        setCount(prevCount => prevCount + 1); // Functional update
+    }, []); // Empty dependency array - funcția nu se schimbă
+
+    return (
+        <div>
+            <p>Count: {count}</p>
+            {items.map(item => (
+                <OptimizedButton
+                    key={item.id}
+                    item={item}
+                    onClick={handleItemClick}
+                />
+            ))}
+        </div>
+    );
+}
+
+// Component memo pentru a evita re-render-urile inutile
+const OptimizedButton = React.memo(({ item, onClick }) => {
+    console.log(`Rendering button for ${item.name}`);
+
+    const handleClick = useCallback(() => {
+        onClick(item.id);
+    }, [item.id, onClick]);
+
+    return (
+        <button onClick={handleClick}>
+            {item.name}
+        </button>
+    );
+});
+
+// ✅ SOLUȚIE 2 - Event delegation pentru liste mari
+function EventDelegationOptimization() {
+    const [items, setItems] = useState(
+        Array.from({ length: 1000 }, (_, i) => ({
+            id: i,
+            name: `Item ${i}`,
+            active: false
+        }))
+    );
+
+    // Un singur event handler pentru toate item-urile
+    const handleContainerClick = useCallback((event) => {
+        const button = event.target.closest('button[data-item-id]');
+        if (!button) return;
+
+        const itemId = parseInt(button.dataset.itemId);
+        const action = button.dataset.action;
+
+        setItems(prevItems => prevItems.map(item => 
+            item.id === itemId 
+                ? { ...item, active: action === 'toggle' ? !item.active : true }
+                : item
+        ));
+    }, []);
+
+    return (
+        <div onClick={handleContainerClick}>
+            {items.slice(0, 10).map(item => (
+                <div key={item.id} style={{ padding: '5px' }}>
+                    <span>{item.name}</span>
+                    <button 
+                        data-item-id={item.id}
+                        data-action="toggle"
+                        style={{ 
+                            marginLeft: '10px',
+                            backgroundColor: item.active ? 'green' : 'gray'
+                        }}
+                    >
+                        {item.active ? 'Active' : 'Inactive'}
+                    </button>
+                </div>
+            ))}
+        </div>
+    );
+}
+        """, language="javascript")
+
+        st.markdown("### Debouncing și Throttling")
+
+        st.code("""
+// Custom hooks pentru debounce și throttle
+function useDebounce(value, delay) {
+    const [debouncedValue, setDebouncedValue] = useState(value);
+
+    useEffect(() => {
+        const handler = setTimeout(() => {
+            setDebouncedValue(value);
+        }, delay);
+
+        return () => {
+            clearTimeout(handler);
+        };
+    }, [value, delay]);
+
+    return debouncedValue;
+}
+
+function useThrottle(value, delay) {
+    const [throttledValue, setThrottledValue] = useState(value);
+    const lastRan = useRef(Date.now());
+
+    useEffect(() => {
+        const handler = setTimeout(() => {
+            if (Date.now() - lastRan.current >= delay) {
+                setThrottledValue(value);
+                lastRan.current = Date.now();
+            }
+        }, delay - (Date.now() - lastRan.current));
+
+        return () => {
+            clearTimeout(handler);
+        };
+    }, [value, delay]);
+
+    return throttledValue;
+}
+
+// Componente care folosesc debounce și throttle
+function SearchWithDebounce() {
+    const [searchTerm, setSearchTerm] = useState('');
+    const [searchResults, setSearchResults] = useState([]);
+    const [isSearching, setIsSearching] = useState(false);
+
+    // Debounce search term
+    const debouncedSearchTerm = useDebounce(searchTerm, 500);
+
+    // Effect pentru search
+    useEffect(() => {
+        if (debouncedSearchTerm) {
+            setIsSearching(true);
+            // Simulăm o cerere de search
+            setTimeout(() => {
+                const results = Array.from({ length: 5 }, (_, i) => 
+                    `Result ${i + 1} for "${debouncedSearchTerm}"`
+                );
+                setSearchResults(results);
+                setIsSearching(false);
+            }, 300);
+        } else {
+            setSearchResults([]);
+        }
+    }, [debouncedSearchTerm]);
+
+    return (
+        <div>
+            <input
+                type="text"
+                placeholder="Search... (debounced)"
+                value={searchTerm}
+                onChange={(e) => setSearchTerm(e.target.value)}
+            />
+
+            {isSearching && <p>Searching...</p>}
+
+            <ul>
+                {searchResults.map((result, index) => (
+                    <li key={index}>{result}</li>
+                ))}
+            </ul>
+        </div>
+    );
+}
+
+function ScrollTracker() {
+    const [scrollPosition, setScrollPosition] = useState(0);
+    const [throttledScrollPosition, setThrottledScrollPosition] = useState(0);
+
+    // Handler normal (va fi apelat foarte des)
+    const handleScroll = useCallback(() => {
+        setScrollPosition(window.scrollY);
+    }, []);
+
+    // Handler throttled (apelat maxim o dată la 100ms)
+    const handleThrottledScroll = useCallback(() => {
+        setThrottledScrollPosition(window.scrollY);
+    }, []);
+
+    useEffect(() => {
+        let throttleTimeout;
+        const throttledHandler = () => {
+            if (!throttleTimeout) {
+                throttleTimeout = setTimeout(() => {
+                    handleThrottledScroll();
+                    throttleTimeout = null;
+                }, 100);
+            }
+        };
+
+        window.addEventListener('scroll', handleScroll);
+        window.addEventListener('scroll', throttledHandler);
+
+        return () => {
+            window.removeEventListener('scroll', handleScroll);
+            window.removeEventListener('scroll', throttledHandler);
+            if (throttleTimeout) {
+                clearTimeout(throttleTimeout);
+            }
+        };
+    }, [handleScroll, handleThrottledScroll]);
+
+    return (
+        <div style={{ position: 'fixed', top: 0, right: 0, padding: '10px' }}>
+            <div>Normal Scroll: {scrollPosition}px</div>
+            <div>Throttled Scroll: {throttledScrollPosition}px</div>
+        </div>
+    );
+}
+        """, language="javascript")
+
+    with tab5:
+        st.markdown('<h2 class="section-header">Întrebări de Interviu - Event Handling</h2>', unsafe_allow_html=True)
+
+        st.markdown("### Întrebări de Nivel Începător")
+
+        with st.expander("1. Ce sunt SyntheticEvents în React?"):
+            st.markdown("""
+            **Răspuns complet:**
+
+            SyntheticEvents sunt wrapper-ele React peste evenimentele native DOM. Ele oferă:
+
+            **Avantaje:**
+            - **Cross-browser compatibility** - Același API pe toate browserele
+            - **Performance optimizată** - Prin event delegation și pooling
+            - **API consistent** - Metodele și proprietățile sunt standardizate
+            - **Funcționalități suplimentare** - Persist, pooling (în React 16)
+
+            **Proprietăți importante:**
+            - `event.target` - Elementul care a declanșat evenimentul
+            - `event.currentTarget` - Elementul pe care este atașat handler-ul
+            - `event.preventDefault()` - Previne comportamentul default
+            - `event.stopPropagation()` - Oprește propagarea evenimentului
+            - `event.nativeEvent` - Accesul la evenimentul nativ DOM
+
+            **Exemplu:**
+            ```javascript
+            function Button({ onClick }) {
+                const handleClick = (syntheticEvent) => {
+                    console.log('SyntheticEvent:', syntheticEvent);
+                    console.log('Native Event:', syntheticEvent.nativeEvent);
+                    syntheticEvent.preventDefault();
+                };
+
+                return <button onClick={handleClick}>Click</button>;
+            }
+            ```
+            """)
+
+        with st.expander("2. Care este diferența între onClick și addEventListener?"):
+            st.markdown("""
+            **Diferențe principale:**
+
+            **React onClick (Recomandat în React):**
+            - Folosește event delegation automată
+            - Handler-ii sunt atașați la nivelul root-ului
+            - Cleanup automat când componenta se unmount-ează
+            - Sintaxă declarativă și intuitivă
+            - Integrare perfectă cu state-ul React
+
+            **addEventListener (Imperative DOM):**
+            - Atașează listener-ul direct la element
+            - Necesită cleanup manual
+            - Mai multă flexibilitate pentru eventi complecși
+            - Folosit în useEffect pentru eventi care nu au echivalent JSX
+
+            **Când folosești addEventListener:**
+            ```javascript
+            useEffect(() => {
+                const handleResize = () => setWindowSize(window.innerWidth);
+
+                window.addEventListener('resize', handleResize);
+
+                return () => {
+                    window.removeEventListener('resize', handleResize);
+                };
+            }, []);
+            ```
+            """)
+
+        st.markdown("### Întrebări de Nivel Intermediar")
+
+        with st.expander("3. Explică event bubbling și cum îl controlezi în React"):
+            st.markdown("""
+            **Event Bubbling** este procesul prin care un eveniment se propagă de la elementul target 
+            către elementele părinte până la root.
+
+            **Faze ale evenimentelor:**
+            1. **Capture Phase** - De la root către target
+            2. **Target Phase** - La elementul target
+            3. **Bubble Phase** - De la target către root (default în React)
+
+            **Controlul bubbling-ului:**
+
+            ```javascript
+            function BubblingDemo() {
+                const handleContainer = (e) => {
+                    console.log('Container clicked');
+                };
+
+                const handleButton = (e) => {
+                    console.log('Button clicked');
+                    e.stopPropagation(); // Oprește bubbling-ul
+                };
+
+                return (
+                    <div onClick={handleContainer}>
+                        <button onClick={handleButton}>
+                            Click me (nu va ajunge la container)
+                        </button>
+                    </div>
+                );
+            }
+            ```
+
+            **Event Delegation cu bubbling:**
+            ```javascript
+            const handleListClick = (e) => {
+                if (e.target.tagName === 'LI') {
+                    console.log('List item clicked:', e.target.textContent);
+                }
+            };
+
+            <ul onClick={handleListClick}>
+                <li>Item 1</li>
+                <li>Item 2</li>
+            </ul>
+            ```
+            """)
+
+        with st.expander("4. Cum optimizezi event handler-ii pentru performance?"):
+            st.markdown("""
+            **Tehnici de optimizare:**
+
+            **1. useCallback pentru handler-ii stabili:**
+            ```javascript
+            const handleClick = useCallback((id) => {
+                setItems(prev => prev.filter(item => item.id !== id));
+            }, []); // Dependencies goale = handler stabil
+            ```
+
+            **2. Event delegation pentru liste mari:**
+            ```javascript
+            const handleListClick = useCallback((e) => {
+                const itemId = e.target.dataset.itemId;
+                if (itemId) handleItemAction(itemId);
+            }, []);
+
+            <div onClick={handleListClick}>
+                {items.map(item => (
+                    <div key={item.id} data-item-id={item.id}>
+                        {item.name}
+                    </div>
+                ))}
+            </div>
+            ```
+
+            **3. Debouncing pentru evenimente frecvente:**
+            ```javascript
+            const debouncedSearch = useCallback(
+                debounce((term) => performSearch(term), 300),
+                []
+            );
+            ```
+
+            **4. React.memo pentru componente care primesc handler-ii:**
+            ```javascript
+            const ListItem = React.memo(({ item, onClick }) => (
+                <div onClick={() => onClick(item.id)}>
+                    {item.name}
+                </div>
+            ));
+            ```
+            """)
+
+        st.markdown("### Întrebări de Nivel Avansat")
+
+        with st.expander("5. Explică event pooling și cum afectează handler-ii async"):
+            st.markdown("""
+            **Event Pooling (React 16 și anterior):**
+
+            React reutiliza obiectele SyntheticEvent pentru performance. După ce handler-ul se executa,
+            proprietățile evenimentului erau resetate.
+
+            **Problema cu async handlers:**
+            ```javascript
+            // ❌ PROBLEMĂ în React 16
+            const handleAsync = (event) => {
+                setTimeout(() => {
+                    console.log(event.target.value); // Error: pooled event
+                }, 1000);
+            };
+
+            // ✅ SOLUȚIE 1: event.persist()
+            const handleAsyncWithPersist = (event) => {
+                event.persist(); // Previne pooling
+                setTimeout(() => {
+                    console.log(event.target.value); // OK
+                }, 1000);
+            };
+
+            // ✅ SOLUȚIE 2: Extract values
+            const handleAsyncCorrect = (event) => {
+                const value = event.target.value;
+                setTimeout(() => {
+                    console.log(value); // OK
+                }, 1000);
+            };
+            ```
+
+            **React 17+ schimbări:**
+            - Event pooling a fost eliminat complet
+            - Nu mai e nevoie de `event.persist()`
+            - Event-urile rămân accesibile în handler-ii async
+
+            **De ce era folosit pooling-ul:**
+            - Reducerea overhead-ului de creare obiecte
+            - Îmbunătățirea performance-ului în aplicații mari
+            - Gestionarea memoriei mai eficientă
+            """)
+
+        with st.expander("6. Cum implementezi custom event handling patterns?"):
+            st.markdown("""
+            **1. Custom Hook pentru Multiple Event Types:**
+            ```javascript
+            function useEventListener(eventName, handler, element = window) {
+                const savedHandler = useRef();
+
+                useEffect(() => {
+                    savedHandler.current = handler;
+                }, [handler]);
+
+                useEffect(() => {
+                    const eventListener = (event) => savedHandler.current(event);
+                    element.addEventListener(eventName, eventListener);
+
+                    return () => {
+                        element.removeEventListener(eventName, eventListener);
+                    };
+                }, [eventName, element]);
+            }
+
+            // Usage
+            function Component() {
+                useEventListener('keydown', (e) => {
+                    if (e.key === 'Escape') closeModal();
+                });
+            }
+            ```
+
+            **2. Event Bus Pattern:**
+            ```javascript
+            class EventBus {
+                constructor() {
+                    this.events = {};
+                }
+
+                on(event, callback) {
+                    if (!this.events[event]) {
+                        this.events[event] = [];
+                    }
+                    this.events[event].push(callback);
+                }
+
+                emit(event, data) {
+                    if (this.events[event]) {
+                        this.events[event].forEach(callback => callback(data));
+                    }
+                }
+
+                off(event, callback) {
+                    if (this.events[event]) {
+                        this.events[event] = this.events[event].filter(cb => cb !== callback);
+                    }
+                }
+            }
+
+            const eventBus = new EventBus();
+
+            // În componente
+            useEffect(() => {
+                const handler = (data) => console.log('Event received:', data);
+                eventBus.on('customEvent', handler);
+
+                return () => eventBus.off('customEvent', handler);
+            }, []);
+            ```
+
+            **3. Gesture Handling pentru Touch:**
+            ```javascript
+            function useGestures(ref) {
+                const [gesture, setGesture] = useState(null);
+
+                useEffect(() => {
+                    const element = ref.current;
+                    let startTouch = null;
+
+                    const handleTouchStart = (e) => {
+                        startTouch = {
+                            x: e.touches[0].clientX,
+                            y: e.touches[0].clientY,
+                            time: Date.now()
+                        };
+                    };
+
+                    const handleTouchEnd = (e) => {
+                        if (!startTouch) return;
+
+                        const endTouch = {
+                            x: e.changedTouches[0].clientX,
+                            y: e.changedTouches[0].clientY,
+                            time: Date.now()
+                        };
+
+                        const deltaX = endTouch.x - startTouch.x;
+                        const deltaY = endTouch.y - startTouch.y;
+                        const deltaTime = endTouch.time - startTouch.time;
+
+                        if (Math.abs(deltaX) > Math.abs(deltaY) && Math.abs(deltaX) > 50) {
+                            setGesture({
+                                type: 'swipe',
+                                direction: deltaX > 0 ? 'right' : 'left',
+                                velocity: Math.abs(deltaX) / deltaTime
+                            });
+                        }
+                    };
+
+                    element.addEventListener('touchstart', handleTouchStart);
+                    element.addEventListener('touchend', handleTouchEnd);
+
+                    return () => {
+                        element.removeEventListener('touchstart', handleTouchStart);
+                        element.removeEventListener('touchend', handleTouchEnd);
+                    };
+                }, []);
+
+                return gesture;
+            }
+            ```
+            """)
+
+        st.markdown("### Exerciții Practice Avansate")
+
+        with st.expander("Exercițiul 1: Modal System cu Keyboard Navigation"):
+            st.markdown("""
+            **Cerințe:**
+            - Modal care se deschide/închide cu Escape
+            - Tab navigation care rămâne în modal
+            - Focus management automat
+            - Click outside pentru închidere
+            - Support pentru multiple modals (stacking)
+
+            **Provocări suplimentare:**
+            - Animații pentru deschidere/închidere
+            - Prevent scroll pe body când modal e deschis
+            - ARIA attributes pentru accessibility
+            - Portal rendering pentru z-index management
+            """)
+
+        with st.expander("Exercițiul 2: Advanced Data Grid cu Event Handling"):
+            st.markdown("""
+            **Funcționalități:**
+            - Click pentru selectare row/cell
+            - Drag pentru selectare multiple
+            - Keyboard navigation (arrow keys)
+            - Right-click pentru context menu
+            - Double-click pentru editare inline
+            - Drag & drop pentru reordonare coloane
+
+            **Event handling complex:**
+            - Multiple event types pe același element
+            - Event delegation pentru performance
+            - State management pentru selectii
+            - Optimization pentru liste mari (virtualization)
+            """)
+
+        st.markdown("### Best Practices - Event Handling")
+
+        st.markdown("""
+        **Performance:**
+        1. Folosește `useCallback` pentru handler-ii care se transmit ca props
+        2. Implementează event delegation pentru liste mari
+        3. Debounce/throttle evenimentele frecvente (scroll, resize, input)
+        4. Evită crearea de funcții inline în JSX pentru componente mari
+
+        **Memory Management:**
+        1. Cleanup event listener-ii în useEffect
+        2. Folosește weak references pentru circular dependencies
+        3. Evită closure-urile care capturează obiecte mari
+        4. Remove handler-ii când componentele se unmount
+
+        **Accessibility:**
+        1. Suportă atât mouse cât și keyboard events
+        2. Implementează ARIA attributes corespunzător
+        3. Oferă feedback vizual pentru interacțiuni
+        4. Testează cu screen readers
+
+        **Security:**
+        1. Sanitizează input-urile din evenimente
+        2. Validează date-le pe client și server
+        3. Evită eval() sau innerHTML cu date de la utilizatori
+        4. Implementează rate limiting pentru evenimente critice
+        """)
+
+    st.markdown("""
+    <div class="summary-box">
+    <h3>Rezumat Capitol</h3>
+    <p><strong>Event Handling</strong> în React combină puterea evenimentelor native DOM cu 
+    optimizările și abstractizările React. Înțelegerea SyntheticEvents, event delegation, 
+    și tehnicilor de optimizare este esențială pentru construirea aplicațiilor React 
+    performante și interactive. Practică cu exemple reale și testează diferite scenarii 
+    pentru a stăpâni complet acest concept fundamental.</p>
+    </div>
+    """, unsafe_allow_html=True)
 
 
 def hooks_page():
-    """React Hooks"""
-    st.markdown('<h1 class="chapter-header">Hooks în React</h1>', unsafe_allow_html=True)
+    """React Hooks - Tutorial Comprehensiv"""
+    st.markdown('<h1 class="chapter-header">React Hooks - Completul Ghid</h1>', unsafe_allow_html=True)
 
     st.markdown("""
-    <div class="info-box">
-        <h3>Ce sunt Hooks-urile?</h3>
-        <p>Hooks permit accesul la funcționalitățile React din componentele funcționale.</p>
+    <div class="intro-box">
+    <h3>Introducere în React Hooks</h3>
+    <p>Hooks au revoluționat React prin permiterea folosirii state-ului și a lifecycle methods-urilor 
+    în functional components. Introduse în React 16.8, Hooks oferă o modalitate mai elegantă și 
+    flexibilă de a scrie componente React.</p>
     </div>
     """, unsafe_allow_html=True)
 
-    tabs = st.tabs(["useState", "useEffect", "useContext", "Custom Hooks"])
-    # Add hooks content here
+    tab1, tab2, tab3, tab4, tab5, tab6 = st.tabs([
+        "Hooks de Bază",
+        "Built-in Hooks",
+        "Custom Hooks",
+        "Hooks Avansați",
+        "Patterns & Best Practices",
+        "Întrebări de Interviu"
+    ])
+
+    with tab1:
+        st.markdown('<h2 class="section-header">Hooks Fundamentali</h2>', unsafe_allow_html=True)
+
+        st.markdown("""
+        ### Regulile Hooks-urilor
+
+        **Reguli obligatorii:**
+        1. Hooks se apelează DOAR la nivelul superior (nu în loop-uri, condiții sau funcții nested)
+        2. Hooks se folosesc DOAR în React functional components sau custom hooks
+        3. Ordinea apelării hooks-urilor trebuie să fie consistentă între render-uri
+
+        **De ce aceste reguli:**
+        - React se bazează pe ordinea apelării pentru a asocia state-ul cu hooks-urile
+        - Ordinea inconsistentă poate cauza bug-uri subtile și hard-to-debug
+        """)
+
+        st.markdown("### useState - Gestionarea State-ului Local")
+
+        st.code("""
+import React, { useState } from 'react';
+
+// Exemplu simplu - Counter
+function Counter() {
+    const [count, setCount] = useState(0);
+
+    return (
+        <div>
+            <p>Count: {count}</p>
+            <button onClick={() => setCount(count + 1)}>+</button>
+            <button onClick={() => setCount(count - 1)}>-</button>
+            <button onClick={() => setCount(0)}>Reset</button>
+        </div>
+    );
+}
+
+// State cu obiecte - Form handling
+function UserForm() {
+    const [user, setUser] = useState({
+        name: '',
+        email: '',
+        age: 0
+    });
+
+    const [errors, setErrors] = useState({});
+
+    const handleInputChange = (field, value) => {
+        // Actualizare corectă cu spread operator
+        setUser(prevUser => ({
+            ...prevUser,
+            [field]: value
+        }));
+
+        // Clear error când user tastează
+        if (errors[field]) {
+            setErrors(prevErrors => ({
+                ...prevErrors,
+                [field]: null
+            }));
+        }
+    };
+
+    const validateForm = () => {
+        const newErrors = {};
+
+        if (!user.name.trim()) {
+            newErrors.name = 'Numele este obligatoriu';
+        }
+
+        if (!user.email.includes('@')) {
+            newErrors.email = 'Email invalid';
+        }
+
+        if (user.age < 18) {
+            newErrors.age = 'Vârsta minimă este 18 ani';
+        }
+
+        setErrors(newErrors);
+        return Object.keys(newErrors).length === 0;
+    };
+
+    const handleSubmit = (e) => {
+        e.preventDefault();
+        if (validateForm()) {
+            console.log('Form valid:', user);
+        }
+    };
+
+    return (
+        <form onSubmit={handleSubmit}>
+            <div>
+                <input
+                    type="text"
+                    placeholder="Nume"
+                    value={user.name}
+                    onChange={(e) => handleInputChange('name', e.target.value)}
+                />
+                {errors.name && <span className="error">{errors.name}</span>}
+            </div>
+
+            <div>
+                <input
+                    type="email"
+                    placeholder="Email"
+                    value={user.email}
+                    onChange={(e) => handleInputChange('email', e.target.value)}
+                />
+                {errors.email && <span className="error">{errors.email}</span>}
+            </div>
+
+            <div>
+                <input
+                    type="number"
+                    placeholder="Vârsta"
+                    value={user.age}
+                    onChange={(e) => handleInputChange('age', parseInt(e.target.value))}
+                />
+                {errors.age && <span className="error">{errors.age}</span>}
+            </div>
+
+            <button type="submit">Trimite</button>
+        </form>
+    );
+}
+
+// State cu arrays - Todo List
+function TodoList() {
+    const [todos, setTodos] = useState([]);
+    const [inputValue, setInputValue] = useState('');
+    const [filter, setFilter] = useState('all'); // all, active, completed
+
+    const addTodo = () => {
+        if (inputValue.trim()) {
+            const newTodo = {
+                id: Date.now(),
+                text: inputValue.trim(),
+                completed: false,
+                createdAt: new Date()
+            };
+
+            setTodos(prevTodos => [...prevTodos, newTodo]);
+            setInputValue('');
+        }
+    };
+
+    const toggleTodo = (id) => {
+        setTodos(prevTodos =>
+            prevTodos.map(todo =>
+                todo.id === id 
+                    ? { ...todo, completed: !todo.completed }
+                    : todo
+            )
+        );
+    };
+
+    const deleteTodo = (id) => {
+        setTodos(prevTodos => prevTodos.filter(todo => todo.id !== id));
+    };
+
+    const clearCompleted = () => {
+        setTodos(prevTodos => prevTodos.filter(todo => !todo.completed));
+    };
+
+    // Computed values
+    const filteredTodos = todos.filter(todo => {
+        if (filter === 'active') return !todo.completed;
+        if (filter === 'completed') return todo.completed;
+        return true;
+    });
+
+    const activeCount = todos.filter(todo => !todo.completed).length;
+    const completedCount = todos.length - activeCount;
+
+    return (
+        <div>
+            <div>
+                <input
+                    type="text"
+                    value={inputValue}
+                    onChange={(e) => setInputValue(e.target.value)}
+                    onKeyPress={(e) => e.key === 'Enter' && addTodo()}
+                    placeholder="Adaugă o sarcină..."
+                />
+                <button onClick={addTodo}>Adaugă</button>
+            </div>
+
+            <div>
+                <button 
+                    onClick={() => setFilter('all')}
+                    className={filter === 'all' ? 'active' : ''}
+                >
+                    Toate ({todos.length})
+                </button>
+                <button 
+                    onClick={() => setFilter('active')}
+                    className={filter === 'active' ? 'active' : ''}
+                >
+                    Active ({activeCount})
+                </button>
+                <button 
+                    onClick={() => setFilter('completed')}
+                    className={filter === 'completed' ? 'active' : ''}
+                >
+                    Completate ({completedCount})
+                </button>
+            </div>
+
+            <ul>
+                {filteredTodos.map(todo => (
+                    <li key={todo.id}>
+                        <input
+                            type="checkbox"
+                            checked={todo.completed}
+                            onChange={() => toggleTodo(todo.id)}
+                        />
+                        <span 
+                            style={{ 
+                                textDecoration: todo.completed ? 'line-through' : 'none' 
+                            }}
+                        >
+                            {todo.text}
+                        </span>
+                        <button onClick={() => deleteTodo(todo.id)}>Șterge</button>
+                    </li>
+                ))}
+            </ul>
+
+            {completedCount > 0 && (
+                <button onClick={clearCompleted}>
+                    Șterge Completate ({completedCount})
+                </button>
+            )}
+        </div>
+    );
+}
+        """, language="javascript")
+
+        st.markdown("### useEffect - Side Effects și Lifecycle")
+
+        st.code("""
+// Exemplu 1: Effect fără dependencies - rulează după fiecare render
+function ComponentWithEffect() {
+    const [count, setCount] = useState(0);
+
+    // ❌ Rulează după fiecare render - poate cauza probleme de performance
+    useEffect(() => {
+        console.log('Component rendered, count is:', count);
+        document.title = `Count: ${count}`;
+    });
+
+    return (
+        <div>
+            <p>{count}</p>
+            <button onClick={() => setCount(count + 1)}>Increment</button>
+        </div>
+    );
+}
+
+// Exemplu 2: Effect cu dependencies - rulează doar când se schimbă dependencies
+function TimerComponent() {
+    const [seconds, setSeconds] = useState(0);
+    const [isRunning, setIsRunning] = useState(false);
+
+    useEffect(() => {
+        let interval = null;
+
+        if (isRunning) {
+            interval = setInterval(() => {
+                setSeconds(prevSeconds => prevSeconds + 1);
+            }, 1000);
+        }
+
+        // Cleanup function - foarte important!
+        return () => {
+            if (interval) {
+                clearInterval(interval);
+            }
+        };
+    }, [isRunning]); // Rulează doar când isRunning se schimbă
+
+    const handleStart = () => setIsRunning(true);
+    const handleStop = () => setIsRunning(false);
+    const handleReset = () => {
+        setSeconds(0);
+        setIsRunning(false);
+    };
+
+    return (
+        <div>
+            <h2>Timer: {seconds}s</h2>
+            <button onClick={handleStart} disabled={isRunning}>Start</button>
+            <button onClick={handleStop} disabled={!isRunning}>Stop</button>
+            <button onClick={handleReset}>Reset</button>
+        </div>
+    );
+}
+
+// Exemplu 3: Effect cu cleanup pentru event listeners
+function WindowSizeTracker() {
+    const [windowSize, setWindowSize] = useState({
+        width: window.innerWidth,
+        height: window.innerHeight
+    });
+
+    useEffect(() => {
+        const handleResize = () => {
+            setWindowSize({
+                width: window.innerWidth,
+                height: window.innerHeight
+            });
+        };
+
+        // Add event listener
+        window.addEventListener('resize', handleResize);
+
+        // Cleanup function
+        return () => {
+            window.removeEventListener('resize', handleResize);
+        };
+    }, []); // Empty dependency array - rulează doar la mount/unmount
+
+    return (
+        <div>
+            <p>Window size: {windowSize.width} x {windowSize.height}</p>
+        </div>
+    );
+}
+
+// Exemplu 4: Data fetching cu useEffect
+function UserProfile({ userId }) {
+    const [user, setUser] = useState(null);
+    const [loading, setLoading] = useState(true);
+    const [error, setError] = useState(null);
+
+    useEffect(() => {
+        // Reset state când userId se schimbă
+        setLoading(true);
+        setError(null);
+        setUser(null);
+
+        // Simulare API call
+        const fetchUser = async () => {
+            try {
+                const response = await fetch(`/api/users/${userId}`);
+                if (!response.ok) {
+                    throw new Error('Failed to fetch user');
+                }
+                const userData = await response.json();
+                setUser(userData);
+            } catch (err) {
+                setError(err.message);
+            } finally {
+                setLoading(false);
+            }
+        };
+
+        fetchUser();
+    }, [userId]); // Rulează când userId se schimbă
+
+    if (loading) return <div>Loading...</div>;
+    if (error) return <div>Error: {error}</div>;
+    if (!user) return <div>User not found</div>;
+
+    return (
+        <div>
+            <h2>{user.name}</h2>
+            <p>Email: {user.email}</p>
+            <p>Joined: {new Date(user.joinDate).toLocaleDateString()}</p>
+        </div>
+    );
+}
+
+// Exemplu 5: Multiple effects pentru separarea concerns
+function Dashboard() {
+    const [user, setUser] = useState(null);
+    const [notifications, setNotifications] = useState([]);
+    const [onlineStatus, setOnlineStatus] = useState(navigator.onLine);
+
+    // Effect 1: Fetch user data
+    useEffect(() => {
+        fetchUserData().then(setUser);
+    }, []);
+
+    // Effect 2: Setup notifications
+    useEffect(() => {
+        const unsubscribe = subscribeToNotifications((notification) => {
+            setNotifications(prev => [...prev, notification]);
+        });
+
+        return unsubscribe;
+    }, []);
+
+    // Effect 3: Track online status
+    useEffect(() => {
+        const handleOnline = () => setOnlineStatus(true);
+        const handleOffline = () => setOnlineStatus(false);
+
+        window.addEventListener('online', handleOnline);
+        window.addEventListener('offline', handleOffline);
+
+        return () => {
+            window.removeEventListener('online', handleOnline);
+            window.removeEventListener('offline', handleOffline);
+        };
+    }, []);
+
+    return (
+        <div>
+            <div className={`status ${onlineStatus ? 'online' : 'offline'}`}>
+                {onlineStatus ? 'Online' : 'Offline'}
+            </div>
+
+            {user && (
+                <div>
+                    <h1>Welcome, {user.name}!</h1>
+                    <p>You have {notifications.length} notifications</p>
+                </div>
+            )}
+        </div>
+    );
+}
+        """, language="javascript")
+
+    with tab2:
+        st.markdown('<h2 class="section-header">Built-in Hooks Avansați</h2>', unsafe_allow_html=True)
+
+        st.markdown("### useContext - Gestionarea State-ului Global")
+
+        st.code("""
+// 1. Crearea Context-ului
+const ThemeContext = createContext();
+const UserContext = createContext();
+
+// 2. Provider Component
+function AppProvider({ children }) {
+    const [theme, setTheme] = useState('light');
+    const [user, setUser] = useState(null);
+
+    const toggleTheme = () => {
+        setTheme(prevTheme => prevTheme === 'light' ? 'dark' : 'light');
+    };
+
+    const login = (userData) => {
+        setUser(userData);
+        localStorage.setItem('user', JSON.stringify(userData));
+    };
+
+    const logout = () => {
+        setUser(null);
+        localStorage.removeItem('user');
+    };
+
+    // Load user from localStorage on mount
+    useEffect(() => {
+        const savedUser = localStorage.getItem('user');
+        if (savedUser) {
+            setUser(JSON.parse(savedUser));
+        }
+    }, []);
+
+    return (
+        <ThemeContext.Provider value={{ theme, toggleTheme }}>
+            <UserContext.Provider value={{ user, login, logout }}>
+                <div className={`app-container ${theme}`}>
+                    {children}
+                </div>
+            </UserContext.Provider>
+        </ThemeContext.Provider>
+    );
+}
+
+// 3. Custom hooks pentru ușurința utilizării
+function useTheme() {
+    const context = useContext(ThemeContext);
+    if (!context) {
+        throw new Error('useTheme must be used within a ThemeProvider');
+    }
+    return context;
+}
+
+function useUser() {
+    const context = useContext(UserContext);
+    if (!context) {
+        throw new Error('useUser must be used within a UserProvider');
+    }
+    return context;
+}
+
+// 4. Componente care folosesc context
+function Header() {
+    const { theme, toggleTheme } = useTheme();
+    const { user, logout } = useUser();
+
+    return (
+        <header className="header">
+            <h1>My App</h1>
+
+            <div className="header-controls">
+                <button onClick={toggleTheme}>
+                    Switch to {theme === 'light' ? 'dark' : 'light'} mode
+                </button>
+
+                {user ? (
+                    <div>
+                        <span>Welcome, {user.name}!</span>
+                        <button onClick={logout}>Logout</button>
+                    </div>
+                ) : (
+                    <LoginButton />
+                )}
+            </div>
+        </header>
+    );
+}
+
+function LoginButton() {
+    const { login } = useUser();
+
+    const handleLogin = () => {
+        // Simulare login
+        const userData = {
+            id: 1,
+            name: 'John Doe',
+            email: 'john@example.com'
+        };
+        login(userData);
+    };
+
+    return <button onClick={handleLogin}>Login</button>;
+}
+
+// 5. App principală
+function App() {
+    return (
+        <AppProvider>
+            <Header />
+            <MainContent />
+        </AppProvider>
+    );
+}
+        """, language="javascript")
+
+        st.markdown("### useReducer - State Management Complex")
+
+        st.code("""
+// 1. Definirea action types și reducer-ului
+const ACTION_TYPES = {
+    ADD_ITEM: 'ADD_ITEM',
+    REMOVE_ITEM: 'REMOVE_ITEM',
+    UPDATE_QUANTITY: 'UPDATE_QUANTITY',
+    CLEAR_CART: 'CLEAR_CART',
+    APPLY_DISCOUNT: 'APPLY_DISCOUNT',
+    SET_SHIPPING: 'SET_SHIPPING'
+};
+
+function cartReducer(state, action) {
+    switch (action.type) {
+        case ACTION_TYPES.ADD_ITEM: {
+            const existingItem = state.items.find(item => item.id === action.payload.id);
+
+            if (existingItem) {
+                return {
+                    ...state,
+                    items: state.items.map(item =>
+                        item.id === action.payload.id
+                            ? { ...item, quantity: item.quantity + 1 }
+                            : item
+                    )
+                };
+            }
+
+            return {
+                ...state,
+                items: [...state.items, { ...action.payload, quantity: 1 }]
+            };
+        }
+
+        case ACTION_TYPES.REMOVE_ITEM:
+            return {
+                ...state,
+                items: state.items.filter(item => item.id !== action.payload)
+            };
+
+        case ACTION_TYPES.UPDATE_QUANTITY:
+            return {
+                ...state,
+                items: state.items.map(item =>
+                    item.id === action.payload.id
+                        ? { ...item, quantity: action.payload.quantity }
+                        : item
+                ).filter(item => item.quantity > 0)
+            };
+
+        case ACTION_TYPES.CLEAR_CART:
+            return {
+                ...state,
+                items: [],
+                discount: 0
+            };
+
+        case ACTION_TYPES.APPLY_DISCOUNT:
+            return {
+                ...state,
+                discount: action.payload
+            };
+
+        case ACTION_TYPES.SET_SHIPPING:
+            return {
+                ...state,
+                shipping: action.payload
+            };
+
+        default:
+            throw new Error(`Unknown action type: ${action.type}`);
+    }
+}
+
+// 2. Starea inițială
+const initialCartState = {
+    items: [],
+    discount: 0,
+    shipping: 0
+};
+
+// 3. Shopping Cart Component
+function ShoppingCart() {
+    const [cartState, dispatch] = useReducer(cartReducer, initialCartState);
+
+    // Computed values
+    const subtotal = cartState.items.reduce((sum, item) => sum + (item.price * item.quantity), 0);
+    const discountAmount = subtotal * (cartState.discount / 100);
+    const total = subtotal - discountAmount + cartState.shipping;
+    const itemCount = cartState.items.reduce((sum, item) => sum + item.quantity, 0);
+
+    // Action creators
+    const addItem = (product) => {
+        dispatch({
+            type: ACTION_TYPES.ADD_ITEM,
+            payload: product
+        });
+    };
+
+    const removeItem = (itemId) => {
+        dispatch({
+            type: ACTION_TYPES.REMOVE_ITEM,
+            payload: itemId
+        });
+    };
+
+    const updateQuantity = (itemId, quantity) => {
+        dispatch({
+            type: ACTION_TYPES.UPDATE_QUANTITY,
+            payload: { id: itemId, quantity }
+        });
+    };
+
+    const applyDiscount = (percentage) => {
+        dispatch({
+            type: ACTION_TYPES.APPLY_DISCOUNT,
+            payload: percentage
+        });
+    };
+
+    const clearCart = () => {
+        dispatch({ type: ACTION_TYPES.CLEAR_CART });
+    };
+
+    return (
+        <div className="shopping-cart">
+            <h2>Shopping Cart ({itemCount} items)</h2>
+
+            {cartState.items.length === 0 ? (
+                <p>Your cart is empty</p>
+            ) : (
+                <>
+                    <div className="cart-items">
+                        {cartState.items.map(item => (
+                            <div key={item.id} className="cart-item">
+                                <h4>{item.name}</h4>
+                                <p>Price: ${item.price}</p>
+                                <div className="quantity-controls">
+                                    <button 
+                                        onClick={() => updateQuantity(item.id, item.quantity - 1)}
+                                    >
+                                        -
+                                    </button>
+                                    <span>Quantity: {item.quantity}</span>
+                                    <button 
+                                        onClick={() => updateQuantity(item.id, item.quantity + 1)}
+                                    >
+                                        +
+                                    </button>
+                                </div>
+                                <button onClick={() => removeItem(item.id)}>
+                                    Remove Item
+                                </button>
+                                <p>Subtotal: ${item.price * item.quantity}</p>
+                            </div>
+                        ))}
+                    </div>
+
+                    <div className="cart-summary">
+                        <p>Subtotal: ${subtotal.toFixed(2)}</p>
+                        {cartState.discount > 0 && (
+                            <p>Discount ({cartState.discount}%): -${discountAmount.toFixed(2)}</p>
+                        )}
+                        <p>Shipping: ${cartState.shipping}</p>
+                        <h3>Total: ${total.toFixed(2)}</h3>
+
+                        <div className="cart-actions">
+                            <button onClick={() => applyDiscount(10)}>
+                                Apply 10% Discount
+                            </button>
+                            <button onClick={clearCart}>Clear Cart</button>
+                        </div>
+                    </div>
+                </>
+            )}
+
+            <ProductList onAddToCart={addItem} />
+        </div>
+    );
+}
+
+// 4. Exemplu de folosire a useReducer pentru form complex
+const formReducer = (state, action) => {
+    switch (action.type) {
+        case 'SET_FIELD':
+            return {
+                ...state,
+                fields: {
+                    ...state.fields,
+                    [action.field]: action.value
+                },
+                errors: {
+                    ...state.errors,
+                    [action.field]: null // Clear error când user tastează
+                }
+            };
+
+        case 'SET_ERRORS':
+            return {
+                ...state,
+                errors: action.errors
+            };
+
+        case 'SET_LOADING':
+            return {
+                ...state,
+                isLoading: action.isLoading
+            };
+
+        case 'RESET_FORM':
+            return action.initialState;
+
+        default:
+            return state;
+    }
+};
+
+function ComplexForm() {
+    const initialState = {
+        fields: {
+            firstName: '',
+            lastName: '',
+            email: '',
+            password: '',
+            confirmPassword: '',
+            terms: false
+        },
+        errors: {},
+        isLoading: false
+    };
+
+    const [formState, dispatch] = useReducer(formReducer, initialState);
+
+    const setField = (field, value) => {
+        dispatch({ type: 'SET_FIELD', field, value });
+    };
+
+    const validateForm = () => {
+        const errors = {};
+        const { fields } = formState;
+
+        if (!fields.firstName.trim()) errors.firstName = 'First name is required';
+        if (!fields.lastName.trim()) errors.lastName = 'Last name is required';
+        if (!fields.email.includes('@')) errors.email = 'Invalid email';
+        if (fields.password.length < 6) errors.password = 'Password must be at least 6 characters';
+        if (fields.password !== fields.confirmPassword) errors.confirmPassword = 'Passwords do not match';
+        if (!fields.terms) errors.terms = 'You must accept the terms';
+
+        dispatch({ type: 'SET_ERRORS', errors });
+        return Object.keys(errors).length === 0;
+    };
+
+    const handleSubmit = async (e) => {
+        e.preventDefault();
+
+        if (!validateForm()) return;
+
+        dispatch({ type: 'SET_LOADING', isLoading: true });
+
+        try {
+            // Simulate API call
+            await new Promise(resolve => setTimeout(resolve, 2000));
+            alert('Form submitted successfully!');
+            dispatch({ type: 'RESET_FORM', initialState });
+        } catch (error) {
+            dispatch({ 
+                type: 'SET_ERRORS', 
+                errors: { submit: 'Submission failed. Please try again.' }
+            });
+        } finally {
+            dispatch({ type: 'SET_LOADING', isLoading: false });
+        }
+    };
+
+    return (
+        <form onSubmit={handleSubmit}>
+            {/* Form fields implementation */}
+            <input
+                type="text"
+                placeholder="First Name"
+                value={formState.fields.firstName}
+                onChange={(e) => setField('firstName', e.target.value)}
+            />
+            {formState.errors.firstName && <span className="error">{formState.errors.firstName}</span>}
+
+            {/* Additional form fields... */}
+
+            <button type="submit" disabled={formState.isLoading}>
+                {formState.isLoading ? 'Submitting...' : 'Submit'}
+            </button>
+        </form>
+    );
+}
+        """, language="javascript")
+
+        st.markdown("### useMemo și useCallback - Optimizarea Performance-ului")
+
+        st.code("""
+// useMemo - Pentru expensive calculations
+function ExpensiveComponent({ items, filter }) {
+    // ❌ FĂRĂ useMemo - calculul se face la fiecare render
+    const expensiveCalculation = items
+        .filter(item => item.category === filter)
+        .map(item => ({
+            ...item,
+            processedData: heavyProcessing(item)
+        }))
+        .sort((a, b) => a.score - b.score);
+
+    // ✅ CU useMemo - calculul se face doar când dependencies se schimbă
+    const optimizedCalculation = useMemo(() => {
+        console.log('Performing expensive calculation...');
+        return items
+            .filter(item => item.category === filter)
+            .map(item => ({
+                ...item,
+                processedData: heavyProcessing(item)
+            }))
+            .sort((a, b) => a.score - b.score);
+    }, [items, filter]); // Se recalculeaza doar când items sau filter se schimbă
+
+    return (
+        <div>
+            {optimizedCalculation.map(item => (
+                <div key={item.id}>{item.name}</div>
+            ))}
+        </div>
+    );
+}
+
+// useCallback - Pentru optimizarea handler-ilor
+function ParentComponent({ users }) {
+    const [selectedUsers, setSelectedUsers] = useState(new Set());
+    const [searchTerm, setSearchTerm] = useState('');
+
+    // ❌ FĂRĂ useCallback - funcția se recrează la fiecare render
+    const handleUserSelectBad = (userId) => {
+        setSelectedUsers(prev => {
+            const newSet = new Set(prev);
+            if (newSet.has(userId)) {
+                newSet.delete(userId);
+            } else {
+                newSet.add(userId);
+            }
+            return newSet;
+        });
+    };
+
+    // ✅ CU useCallback - funcția se recrează doar când este necesar
+    const handleUserSelect = useCallback((userId) => {
+        setSelectedUsers(prev => {
+            const newSet = new Set(prev);
+            if (newSet.has(userId)) {
+                newSet.delete(userId);
+            } else {
+                newSet.add(userId);
+            }
+            return newSet;
+        });
+    }, []); // Empty dependencies - funcția nu se schimbă niciodată
+
+    // Handler cu dependencies
+    const handleUserAction = useCallback((userId, action) => {
+        console.log(`Performing ${action} on user ${userId}`);
+        // Logic specific pentru action
+        if (action === 'delete') {
+            // Remove from selected users
+            setSelectedUsers(prev => {
+                const newSet = new Set(prev);
+                newSet.delete(userId);
+                return newSet;
+            });
+        }
+    }, []);
+
+    // Filtered users cu useMemo
+    const filteredUsers = useMemo(() => {
+        return users.filter(user => 
+            user.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
+            user.email.toLowerCase().includes(searchTerm.toLowerCase())
+        );
+    }, [users, searchTerm]);
+
+    return (
+        <div>
+            <input
+                type="text"
+                placeholder="Search users..."
+                value={searchTerm}
+                onChange={(e) => setSearchTerm(e.target.value)}
+            />
+
+            <p>Selected: {selectedUsers.size} users</p>
+
+            <div>
+                {filteredUsers.map(user => (
+                    <UserCard
+                        key={user.id}
+                        user={user}
+                        isSelected={selectedUsers.has(user.id)}
+                        onSelect={handleUserSelect}
+                        onAction={handleUserAction}
+                    />
+                ))}
+            </div>
+        </div>
+    );
+}
+
+// Component optimizat cu React.memo
+const UserCard = React.memo(({ user, isSelected, onSelect, onAction }) => {
+    console.log(`Rendering UserCard for ${user.name}`);
+
+    return (
+        <div className={`user-card ${isSelected ? 'selected' : ''}`}>
+            <h3>{user.name}</h3>
+            <p>{user.email}</p>
+
+            <button onClick={() => onSelect(user.id)}>
+                {isSelected ? 'Deselect' : 'Select'}
+            </button>
+
+            <button onClick={() => onAction(user.id, 'edit')}>
+                Edit
+            </button>
+
+            <button onClick={() => onAction(user.id, 'delete')}>
+                Delete
+            </button>
+        </div>
+    );
+});
+
+// Exemplu complex cu multiple optimizări
+function DataVisualization({ rawData }) {
+    const [chartType, setChartType] = useState('bar');
+    const [dateRange, setDateRange] = useState({ start: null, end: null });
+    const [selectedMetrics, setSelectedMetrics] = useState(new Set(['revenue']));
+
+    // Expensive data processing cu useMemo
+    const processedData = useMemo(() => {
+        console.log('Processing data for visualization...');
+
+        let filtered = rawData;
+
+        // Filter by date range
+        if (dateRange.start && dateRange.end) {
+            filtered = filtered.filter(item => {
+                const itemDate = new Date(item.date);
+                return itemDate >= dateRange.start && itemDate <= dateRange.end;
+            });
+        }
+
+        // Group and aggregate data
+        const grouped = filtered.reduce((acc, item) => {
+            const key = item.category;
+            if (!acc[key]) {
+                acc[key] = { category: key, revenue: 0, orders: 0, users: 0 };
+            }
+            acc[key].revenue += item.revenue;
+            acc[key].orders += item.orders;
+            acc[key].users += item.users;
+            return acc;
+        }, {});
+
+        return Object.values(grouped);
+    }, [rawData, dateRange]);
+
+    // Chart configuration cu useMemo
+    const chartConfig = useMemo(() => {
+        console.log('Building chart configuration...');
+
+        return {
+            type: chartType,
+            data: processedData,
+            metrics: Array.from(selectedMetrics),
+            options: {
+                responsive: true,
+                plugins: {
+                    legend: { position: 'top' },
+                    tooltip: { enabled: true }
+                }
+            }
+        };
+    }, [chartType, processedData, selectedMetrics]);
+
+    // Event handlers cu useCallback
+    const handleChartTypeChange = useCallback((type) => {
+        setChartType(type);
+    }, []);
+
+    const handleMetricToggle = useCallback((metric) => {
+        setSelectedMetrics(prev => {
+            const newSet = new Set(prev);
+            if (newSet.has(metric)) {
+                newSet.delete(metric);
+            } else {
+                newSet.add(metric);
+            }
+            return newSet;
+        });
+    }, []);
+
+    const handleDateRangeChange = useCallback((start, end) => {
+        setDateRange({ start, end });
+    }, []);
+
+    return (
+        <div className="data-visualization">
+            <div className="controls">
+                <ChartTypeSelector 
+                    selectedType={chartType}
+                    onTypeChange={handleChartTypeChange}
+                />
+
+                <MetricSelector
+                    selectedMetrics={selectedMetrics}
+                    onMetricToggle={handleMetricToggle}
+                />
+
+                <DateRangePicker
+                    dateRange={dateRange}
+                    onRangeChange={handleDateRangeChange}
+                />
+            </div>
+
+            <Chart config={chartConfig} />
+        </div>
+    );
+}
+        """, language="javascript")
+
+    with tab3:
+        st.markdown('<h2 class="section-header">Custom Hooks - Reutilizarea Logicii</h2>', unsafe_allow_html=True)
+
+        st.markdown("""
+        ### De ce Custom Hooks?
+
+        Custom hooks permit:
+        - **Reutilizarea logicii** între componente
+        - **Separarea concerns** - logica de business separată de UI
+        - **Testarea mai ușoară** - logica poate fi testată independent
+        - **Cod mai curat și mai organizat**
+        """)
+
+        st.code("""
+// 1. useLocalStorage - Persistent state management
+function useLocalStorage(key, initialValue) {
+    // State pentru stocarea valorii
+    const [storedValue, setStoredValue] = useState(() => {
+        try {
+            const item = window.localStorage.getItem(key);
+            return item ? JSON.parse(item) : initialValue;
+        } catch (error) {
+            console.error(`Error reading localStorage key "${key}":`, error);
+            return initialValue;
+        }
+    });
+
+    // Function pentru setarea valorii
+    const setValue = useCallback((value) => {
+        try {
+            // Allow value to be a function so we have the same API as useState
+            const valueToStore = value instanceof Function ? value(storedValue) : value;
+
+            setStoredValue(valueToStore);
+
+            if (valueToStore === undefined) {
+                window.localStorage.removeItem(key);
+            } else {
+                window.localStorage.setItem(key, JSON.stringify(valueToStore));
+            }
+        } catch (error) {
+            console.error(`Error setting localStorage key "${key}":`, error);
+        }
+    }, [key, storedValue]);
+
+    return [storedValue, setValue];
+}
+
+// Utilizare
+function Settings() {
+    const [theme, setTheme] = useLocalStorage('theme', 'light');
+    const [language, setLanguage] = useLocalStorage('language', 'en');
+    const [preferences, setPreferences] = useLocalStorage('preferences', {
+        notifications: true,
+        autoSave: false
+    });
+
+    return (
+        <div>
+            <select value={theme} onChange={(e) => setTheme(e.target.value)}>
+                <option value="light">Light</option>
+                <option value="dark">Dark</option>
+            </select>
+
+            <select value={language} onChange={(e) => setLanguage(e.target.value)}>
+                <option value="en">English</option>
+                <option value="ro">Română</option>
+            </select>
+
+            <label>
+                <input
+                    type="checkbox"
+                    checked={preferences.notifications}
+                    onChange={(e) => setPreferences(prev => ({
+                        ...prev,
+                        notifications: e.target.checked
+                    }))}
+                />
+                Enable notifications
+            </label>
+        </div>
+    );
+}
+
+// 2. useFetch - Data fetching cu loading și error states
+function useFetch(url, options = {}) {
+    const [data, setData] = useState(null);
+    const [loading, setLoading] = useState(true);
+    const [error, setError] = useState(null);
+
+    // Memoize options pentru a evita re-fetch-urile inutile
+    const memoizedOptions = useMemo(() => options, [JSON.stringify(options)]);
+
+    useEffect(() => {
+        let isCancelled = false;
+
+        const fetchData = async () => {
+            try {
+                setLoading(true);
+                setError(null);
+
+                const response = await fetch(url, memoizedOptions);
+
+                if (!response.ok) {
+                    throw new Error(`HTTP error! status: ${response.status}`);
+                }
+
+                const result = await response.json();
+
+                if (!isCancelled) {
+                    setData(result);
+                }
+            } catch (err) {
+                if (!isCancelled) {
+                    setError(err.message);
+                }
+            } finally {
+                if (!isCancelled) {
+                    setLoading(false);
+                }
+            }
+        };
+
+        fetchData();
+
+        // Cleanup function pentru a evita memory leaks
+        return () => {
+            isCancelled = true;
+        };
+    }, [url, memoizedOptions]);
+
+    // Function pentru retry
+    const retry = useCallback(() => {
+        setError(null);
+        setLoading(true);
+        // Re-trigger effect prin schimbarea unui dependency
+    }, []);
+
+    return { data, loading, error, retry };
+}
+
+// Utilizare
+function UserList() {
+    const { data: users, loading, error, retry } = useFetch('/api/users', {
+        method: 'GET',
+        headers: {
+            'Content-Type': 'application/json'
+        }
+    });
+
+    if (loading) return <div>Loading users...</div>;
+    if (error) return (
+        <div>
+            <p>Error: {error}</p>
+            <button onClick={retry}>Retry</button>
+        </div>
+    );
+
+    return (
+        <ul>
+            {users?.map(user => (
+                <li key={user.id}>{user.name} - {user.email}</li>
+            ))}
+        </ul>
+    );
+}
+
+// 3. useDebounce - Pentru input optimization
+function useDebounce(value, delay) {
+    const [debouncedValue, setDebouncedValue] = useState(value);
+
+    useEffect(() => {
+        const handler = setTimeout(() => {
+            setDebouncedValue(value);
+        }, delay);
+
+        return () => {
+            clearTimeout(handler);
+        };
+    }, [value, delay]);
+
+    return debouncedValue;
+}
+
+// Hook pentru search cu debounce și caching
+function useSearch(searchFunction, delay = 300) {
+    const [query, setQuery] = useState('');
+    const [results, setResults] = useState([]);
+    const [loading, setLoading] = useState(false);
+    const [error, setError] = useState(null);
+
+    const debouncedQuery = useDebounce(query, delay);
+
+    // Cache pentru rezultate
+    const cache = useRef(new Map());
+
+    useEffect(() => {
+        if (!debouncedQuery) {
+            setResults([]);
+            return;
+        }
+
+        // Check cache first
+        if (cache.current.has(debouncedQuery)) {
+            setResults(cache.current.get(debouncedQuery));
+            return;
+        }
+
+        const performSearch = async () => {
+            try {
+                setLoading(true);
+                setError(null);
+
+                const searchResults = await searchFunction(debouncedQuery);
+
+                // Cache results
+                cache.current.set(debouncedQuery, searchResults);
+                setResults(searchResults);
+            } catch (err) {
+                setError(err.message);
+                setResults([]);
+            } finally {
+                setLoading(false);
+            }
+        };
+
+        performSearch();
+    }, [debouncedQuery, searchFunction]);
+
+    const clearCache = useCallback(() => {
+        cache.current.clear();
+    }, []);
+
+    return {
+        query,
+        setQuery,
+        results,
+        loading,
+        error,
+        clearCache
+    };
+}
+
+// Utilizare
+function SearchComponent() {
+    const searchUsers = useCallback(async (query) => {
+        const response = await fetch(`/api/search/users?q=${encodeURIComponent(query)}`);
+        return response.json();
+    }, []);
+
+    const { query, setQuery, results, loading, error } = useSearch(searchUsers);
+
+    return (
+        <div>
+            <input
+                type="text"
+                placeholder="Search users..."
+                value={query}
+                onChange={(e) => setQuery(e.target.value)}
+            />
+
+            {loading && <div>Searching...</div>}
+            {error && <div>Error: {error}</div>}
+
+            <ul>
+                {results.map(user => (
+                    <li key={user.id}>{user.name}</li>
+                ))}
+            </ul>
+        </div>
+    );
+}
+
+// 4. useFormValidation - Complex form handling
+function useFormValidation(initialValues, validationRules) {
+    const [values, setValues] = useState(initialValues);
+    const [errors, setErrors] = useState({});
+    const [touched, setTouched] = useState({});
+    const [isSubmitting, setIsSubmitting] = useState(false);
+
+    // Function pentru validarea unui câmp
+    const validateField = useCallback((name, value) => {
+        const rules = validationRules[name];
+        if (!rules) return null;
+
+        for (const rule of rules) {
+            const error = rule(value, values);
+            if (error) return error;
+        }
+
+        return null;
+    }, [validationRules, values]);
+
+    // Function pentru setarea unei valori
+    const setValue = useCallback((name, value) => {
+        setValues(prev => ({ ...prev, [name]: value }));
+
+        // Clear error when user starts typing
+        if (errors[name]) {
+            setErrors(prev => ({ ...prev, [name]: null }));
+        }
+    }, [errors]);
+
+    // Function pentru marcarea unui câmp ca touched
+    const setTouched = useCallback((name) => {
+        setTouched(prev => ({ ...prev, [name]: true }));
+
+        // Validate field when it loses focus
+        const error = validateField(name, values[name]);
+        if (error) {
+            setErrors(prev => ({ ...prev, [name]: error }));
+        }
+    }, [validateField, values]);
+
+    // Function pentru validarea întregului form
+    const validateForm = useCallback(() => {
+        const newErrors = {};
+
+        Object.keys(validationRules).forEach(name => {
+            const error = validateField(name, values[name]);
+            if (error) {
+                newErrors[name] = error;
+            }
+        });
+
+        setErrors(newErrors);
+        return Object.keys(newErrors).length === 0;
+    }, [validationRules, validateField, values]);
+
+    // Function pentru submit
+    const handleSubmit = useCallback((onSubmit) => {
+        return async (event) => {
+            event.preventDefault();
+
+            if (!validateForm()) {
+                // Mark all fields as touched to show errors
+                const allTouched = Object.keys(validationRules).reduce((acc, key) => {
+                    acc[key] = true;
+                    return acc;
+                }, {});
+                setTouched(allTouched);
+                return;
+            }
+
+            setIsSubmitting(true);
+
+            try {
+                await onSubmit(values);
+            } catch (error) {
+                console.error('Form submission error:', error);
+            } finally {
+                setIsSubmitting(false);
+            }
+        };
+    }, [validateForm, validationRules, values]);
+
+    // Function pentru reset
+    const reset = useCallback(() => {
+        setValues(initialValues);
+        setErrors({});
+        setTouched({});
+        setIsSubmitting(false);
+    }, [initialValues]);
+
+    return {
+        values,
+        errors,
+        touched,
+        isSubmitting,
+        setValue,
+        setTouched,
+        handleSubmit,
+        reset,
+        isValid: Object.keys(errors).length === 0
+    };
+}
+
+// Utilizare cu validation rules
+function RegistrationForm() {
+    const validationRules = {
+        email: [
+            (value) => !value ? 'Email is required' : null,
+            (value) => !/\S+@\S+\.\S+/.test(value) ? 'Email is invalid' : null
+        ],
+        password: [
+            (value) => !value ? 'Password is required' : null,
+            (value) => value.length < 6 ? 'Password must be at least 6 characters' : null
+        ],
+        confirmPassword: [
+            (value) => !value ? 'Please confirm your password' : null,
+            (value, allValues) => value !== allValues.password ? 'Passwords do not match' : null
+        ]
+    };
+
+    const {
+        values,
+        errors,
+        touched,
+        isSubmitting,
+        setValue,
+        setTouched,
+        handleSubmit,
+        reset
+    } = useFormValidation({
+        email: '',
+        password: '',
+        confirmPassword: ''
+    }, validationRules);
+
+    const onSubmit = async (formData) => {
+        // Simulate API call
+        await new Promise(resolve => setTimeout(resolve, 1000));
+        console.log('Form submitted:', formData);
+        alert('Registration successful!');
+        reset();
+    };
+
+    return (
+        <form onSubmit={handleSubmit(onSubmit)}>
+            <div>
+                <input
+                    type="email"
+                    placeholder="Email"
+                    value={values.email}
+                    onChange={(e) => setValue('email', e.target.value)}
+                    onBlur={() => setTouched('email')}
+                />
+                {touched.email && errors.email && (
+                    <span className="error">{errors.email}</span>
+                )}
+            </div>
+
+            <div>
+                <input
+                    type="password"
+                    placeholder="Password"
+                    value={values.password}
+                    onChange={(e) => setValue('password', e.target.value)}
+                    onBlur={() => setTouched('password')}
+                />
+                {touched.password && errors.password && (
+                    <span className="error">{errors.password}</span>
+                )}
+            </div>
+
+            <div>
+                <input
+                    type="password"
+                    placeholder="Confirm Password"
+                    value={values.confirmPassword}
+                    onChange={(e) => setValue('confirmPassword', e.target.value)}
+                    onBlur={() => setTouched('confirmPassword')}
+                />
+                {touched.confirmPassword && errors.confirmPassword && (
+                    <span className="error">{errors.confirmPassword}</span>
+                )}
+            </div>
+
+            <button type="submit" disabled={isSubmitting}>
+                {isSubmitting ? 'Registering...' : 'Register'}
+            </button>
+        </form>
+    );
+}
+        """, language="javascript")
+
+    with tab4:
+        st.markdown('<h2 class="section-header">Hooks Avansați și Specializați</h2>', unsafe_allow_html=True)
+
+        st.markdown("### useRef - Referințe și Mutarea Beyond State")
+
+        st.code("""
+// 1. DOM References și Imperative Actions
+function FocusInput() {
+    const inputRef = useRef(null);
+    const [count, setCount] = useState(0);
+
+    // Focus pe input la mount
+    useEffect(() => {
+        inputRef.current?.focus();
+    }, []);
+
+    const handleFocus = () => {
+        inputRef.current?.focus();
+    };
+
+    const handleClear = () => {
+        if (inputRef.current) {
+            inputRef.current.value = '';
+            inputRef.current.focus();
+        }
+    };
+
+    return (
+        <div>
+            <input ref={inputRef} type="text" placeholder="Type something..." />
+            <button onClick={handleFocus}>Focus Input</button>
+            <button onClick={handleClear}>Clear & Focus</button>
+
+            <p>Component rendered {count} times</p>
+            <button onClick={() => setCount(count + 1)}>Re-render</button>
+        </div>
+    );
+}
+
+// 2. Storing Mutable Values (nu declanșează re-render)
+function Timer() {
+    const [seconds, setSeconds] = useState(0);
+    const [isRunning, setIsRunning] = useState(false);
+
+    // useRef pentru storing interval ID (nu se pierde la re-render)
+    const intervalRef = useRef(null);
+
+    // useRef pentru previous value tracking
+    const prevSecondsRef = useRef();
+
+    useEffect(() => {
+        prevSecondsRef.current = seconds;
+    });
+
+    const prevSeconds = prevSecondsRef.current;
+
+    useEffect(() => {
+        if (isRunning) {
+            intervalRef.current = setInterval(() => {
+                setSeconds(prevSeconds => prevSeconds + 1);
+            }, 1000);
+        } else {
+            if (intervalRef.current) {
+                clearInterval(intervalRef.current);
+                intervalRef.current = null;
+            }
+        }
+
+        // Cleanup
+        return () => {
+            if (intervalRef.current) {
+                clearInterval(intervalRef.current);
+            }
+        };
+    }, [isRunning]);
+
+    const handleStart = () => setIsRunning(true);
+    const handleStop = () => setIsRunning(false);
+    const handleReset = () => {
+        setSeconds(0);
+        setIsRunning(false);
+    };
+
+    return (
+        <div>
+            <h2>Timer: {seconds}s</h2>
+            <p>Previous: {prevSeconds}s</p>
+
+            <button onClick={handleStart} disabled={isRunning}>
+                Start
+            </button>
+            <button onClick={handleStop} disabled={!isRunning}>
+                Stop
+            </button>
+            <button onClick={handleReset}>Reset</button>
+        </div>
+    );
+}
+
+// 3. Forward Refs pentru Custom Components
+const CustomInput = forwardRef(({ label, error, ...props }, ref) => {
+    return (
+        <div className="form-group">
+            <label>{label}</label>
+            <input
+                ref={ref}
+                {...props}
+                className={`form-input ${error ? 'error' : ''}`}
+            />
+            {error && <span className="error-text">{error}</span>}
+        </div>
+    );
+});
+
+function FormWithCustomInputs() {
+    const emailRef = useRef(null);
+    const passwordRef = useRef(null);
+
+    const handleSubmit = (e) => {
+        e.preventDefault();
+
+        const email = emailRef.current?.value;
+        const password = passwordRef.current?.value;
+
+        if (!email) {
+            emailRef.current?.focus();
+            return;
+        }
+
+        if (!password) {
+            passwordRef.current?.focus();
+            return;
+        }
+
+        console.log('Submitted:', { email, password });
+    };
+
+    return (
+        <form onSubmit={handleSubmit}>
+            <CustomInput
+                ref={emailRef}
+                label="Email"
+                type="email"
+                required
+            />
+
+            <CustomInput
+                ref={passwordRef}
+                label="Password"
+                type="password"
+                required
+            />
+
+            <button type="submit">Login</button>
+        </form>
+    );
+}
+
+// 4. useRef pentru Measuring și Animations
+function MeasureComponent() {
+    const [dimensions, setDimensions] = useState({ width: 0, height: 0 });
+    const elementRef = useRef(null);
+
+    useEffect(() => {
+        const updateDimensions = () => {
+            if (elementRef.current) {
+                const { offsetWidth, offsetHeight } = elementRef.current;
+                setDimensions({ width: offsetWidth, height: offsetHeight });
+            }
+        };
+
+        // Initial measurement
+        updateDimensions();
+
+        // Listen for resize
+        window.addEventListener('resize', updateDimensions);
+
+        return () => {
+            window.removeEventListener('resize', updateDimensions);
+        };
+    }, []);
+
+    return (
+        <div>
+            <div
+                ref={elementRef}
+                style={{
+                    padding: '20px',
+                    border: '2px solid #ccc',
+                    resize: 'both',
+                    overflow: 'auto',
+                    minWidth: '200px',
+                    minHeight: '100px'
+                }}
+            >
+                <h3>Resizable Box</h3>
+                <p>Try resizing this box or the window!</p>
+                <p>Current dimensions: {dimensions.width}x{dimensions.height}</p>
+            </div>
+        </div>
+    );
+}
+        """, language="javascript")
+
+        st.markdown("### useLayoutEffect - Synchronous Effects")
+
+        st.code("""
+// useLayoutEffect vs useEffect - Timing diferit
+function LayoutEffectDemo() {
+    const [color, setColor] = useState('red');
+    const buttonRef = useRef(null);
+
+    // useEffect - Rulează DUPĂ paint (asincron)
+    useEffect(() => {
+        console.log('useEffect - după paint');
+    });
+
+    // useLayoutEffect - Rulează ÎNAINTE de paint (sincron)
+    useLayoutEffect(() => {
+        console.log('useLayoutEffect - înainte de paint');
+
+        // Exemplu: Ajustarea poziției unui element
+        if (buttonRef.current) {
+            const rect = buttonRef.current.getBoundingClientRect();
+            console.log('Button position:', rect);
+
+            // Modificări DOM care trebuie să fie vizibile imediat
+            if (rect.right > window.innerWidth - 50) {
+                buttonRef.current.style.position = 'absolute';
+                buttonRef.current.style.right = '10px';
+            }
+        }
+    });
+
+    return (
+        <div>
+            <button
+                ref={buttonRef}
+                onClick={() => setColor(color === 'red' ? 'blue' : 'red')}
+                style={{ backgroundColor: color }}
+            >
+                Click me - Color: {color}
+            </button>
+        </div>
+    );
+}
+
+// Exemplu practic: Tooltip positioning
+function TooltipDemo() {
+    const [showTooltip, setShowTooltip] = useState(false);
+    const [tooltipPosition, setTooltipPosition] = useState({ top: 0, left: 0 });
+    const triggerRef = useRef(null);
+    const tooltipRef = useRef(null);
+
+    useLayoutEffect(() => {
+        if (showTooltip && triggerRef.current && tooltipRef.current) {
+            const triggerRect = triggerRef.current.getBoundingClientRect();
+            const tooltipRect = tooltipRef.current.getBoundingClientRect();
+
+            let top = triggerRect.bottom + 5;
+            let left = triggerRect.left + (triggerRect.width / 2) - (tooltipRect.width / 2);
+
+            // Adjust if tooltip goes outside viewport
+            if (left < 0) {
+                left = 5;
+            } else if (left + tooltipRect.width > window.innerWidth) {
+                left = window.innerWidth - tooltipRect.width - 5;
+            }
+
+            if (top + tooltipRect.height > window.innerHeight) {
+                top = triggerRect.top - tooltipRect.height - 5;
+            }
+
+            setTooltipPosition({ top, left });
+        }
+    }, [showTooltip]);
+
+    return (
+        <div>
+            <button
+                ref={triggerRef}
+                onMouseEnter={() => setShowTooltip(true)}
+                onMouseLeave={() => setShowTooltip(false)}
+                style={{ margin: '100px' }}
+            >
+                Hover for tooltip
+            </button>
+
+            {showTooltip && (
+                <div
+                    ref={tooltipRef}
+                    style={{
+                        position: 'fixed',
+                        top: tooltipPosition.top,
+                        left: tooltipPosition.left,
+                        backgroundColor: 'black',
+                        color: 'white',
+                        padding: '8px',
+                        borderRadius: '4px',
+                        fontSize: '12px',
+                        pointerEvents: 'none',
+                        zIndex: 1000
+                    }}
+                >
+                    This is a perfectly positioned tooltip!
+                </div>
+            )}
+        </div>
+    );
+}
+        """, language="javascript")
+
+        st.markdown("### useImperativeHandle - Expunerea Metodelor Custom")
+
+        st.code("""
+// Custom Input Component cu metode exposed
+const FancyInput = forwardRef((props, ref) => {
+    const inputRef = useRef(null);
+    const [isFocused, setIsFocused] = useState(false);
+    const [value, setValue] = useState('');
+
+    // Expose custom methods prin ref
+    useImperativeHandle(ref, () => ({
+        // Metode standard
+        focus: () => {
+            inputRef.current?.focus();
+        },
+
+        blur: () => {
+            inputRef.current?.blur();
+        },
+
+        // Metode custom
+        clear: () => {
+            setValue('');
+            inputRef.current?.focus();
+        },
+
+        getValue: () => {
+            return value;
+        },
+
+        setValue: (newValue) => {
+            setValue(newValue);
+        },
+
+        selectAll: () => {
+            inputRef.current?.select();
+        },
+
+        // Getter pentru state intern
+        get isFocused() {
+            return isFocused;
+        },
+
+        // Animation methods
+        shake: () => {
+            if (inputRef.current) {
+                inputRef.current.style.animation = 'shake 0.5s';
+                setTimeout(() => {
+                    inputRef.current.style.animation = '';
+                }, 500);
+            }
+        },
+
+        highlight: (duration = 1000) => {
+            if (inputRef.current) {
+                inputRef.current.style.backgroundColor = '#ffeb3b';
+                setTimeout(() => {
+                    inputRef.current.style.backgroundColor = '';
+                }, duration);
+            }
+        }
+    }), [isFocused, value]);
+
+    const handleFocus = () => setIsFocused(true);
+    const handleBlur = () => setIsFocused(false);
+    const handleChange = (e) => setValue(e.target.value);
+
+    return (
+        <input
+            ref={inputRef}
+            value={value}
+            onChange={handleChange}
+            onFocus={handleFocus}
+            onBlur={handleBlur}
+            style={{
+                border: isFocused ? '2px solid blue' : '1px solid gray',
+                padding: '8px',
+                borderRadius: '4px',
+                outline: 'none'
+            }}
+            {...props}
+        />
+    );
+});
+
+// Component care folosește FancyInput
+function FancyInputDemo() {
+    const inputRef = useRef(null);
+    const [log, setLog] = useState([]);
+
+    const addLog = (message) => {
+        setLog(prev => [...prev, `${new Date().toLocaleTimeString()}: ${message}`]);
+    };
+
+    const handleFocus = () => {
+        inputRef.current?.focus();
+        addLog('Input focused via ref');
+    };
+
+    const handleClear = () => {
+        inputRef.current?.clear();
+        addLog('Input cleared via ref');
+    };
+
+    const handleGetValue = () => {
+        const value = inputRef.current?.getValue();
+        addLog(`Current value: "${value}"`);
+    };
+
+    const handleSetValue = () => {
+        inputRef.current?.setValue('Hello from parent!');
+        addLog('Value set via ref');
+    };
+
+    const handleSelectAll = () => {
+        inputRef.current?.selectAll();
+        addLog('Text selected via ref');
+    };
+
+    const handleShake = () => {
+        inputRef.current?.shake();
+        addLog('Input shaken via ref');
+    };
+
+    const handleHighlight = () => {
+        inputRef.current?.highlight(2000);
+        addLog('Input highlighted via ref');
+    };
+
+    const handleCheckFocus = () => {
+        const focused = inputRef.current?.isFocused;
+        addLog(`Input is ${focused ? 'focused' : 'not focused'}`);
+    };
+
+    return (
+        <div>
+            <h3>Fancy Input with Imperative Handle</h3>
+
+            <FancyInput
+                ref={inputRef}
+                placeholder="Type something..."
+            />
+
+            <div style={{ margin: '20px 0' }}>
+                <button onClick={handleFocus}>Focus</button>
+                <button onClick={handleClear}>Clear</button>
+                <button onClick={handleGetValue}>Get Value</button>
+                <button onClick={handleSetValue}>Set Value</button>
+                <button onClick={handleSelectAll}>Select All</button>
+                <button onClick={handleShake}>Shake</button>
+                <button onClick={handleHighlight}>Highlight</button>
+                <button onClick={handleCheckFocus}>Check Focus</button>
+            </div>
+
+            <div>
+                <h4>Action Log:</h4>
+                <div style={{ 
+                    maxHeight: '200px', 
+                    overflow: 'auto', 
+                    border: '1px solid #ccc',
+                    padding: '10px'
+                }}>
+                    {log.map((entry, index) => (
+                        <div key={index}>{entry}</div>
+                    ))}
+                </div>
+                <button onClick={() => setLog([])}>Clear Log</button>
+            </div>
+        </div>
+    );
+}
+
+// Advanced example: Modal cu imperativ API
+const Modal = forwardRef(({ children, title }, ref) => {
+    const [isOpen, setIsOpen] = useState(false);
+    const [position, setPosition] = useState({ x: 0, y: 0 });
+    const modalRef = useRef(null);
+
+    useImperativeHandle(ref, () => ({
+        open: (options = {}) => {
+            setIsOpen(true);
+
+            if (options.position) {
+                setPosition(options.position);
+            }
+
+            if (options.center) {
+                // Center modal on screen
+                setTimeout(() => {
+                    if (modalRef.current) {
+                        const rect = modalRef.current.getBoundingClientRect();
+                        setPosition({
+                            x: (window.innerWidth - rect.width) / 2,
+                            y: (window.innerHeight - rect.height) / 2
+                        });
+                    }
+                }, 0);
+            }
+        },
+
+        close: () => {
+            setIsOpen(false);
+        },
+
+        toggle: () => {
+            setIsOpen(prev => !prev);
+        },
+
+        setPosition: (newPosition) => {
+            setPosition(newPosition);
+        },
+
+        get isOpen() {
+            return isOpen;
+        }
+    }), [isOpen]);
+
+    if (!isOpen) return null;
+
+    return (
+        <div 
+            style={{
+                position: 'fixed',
+                top: 0,
+                left: 0,
+                right: 0,
+                bottom: 0,
+                backgroundColor: 'rgba(0,0,0,0.5)',
+                zIndex: 1000
+            }}
+            onClick={() => setIsOpen(false)}
+        >
+            <div
+                ref={modalRef}
+                style={{
+                    position: 'absolute',
+                    top: position.y,
+                    left: position.x,
+                    backgroundColor: 'white',
+                    padding: '20px',
+                    borderRadius: '8px',
+                    minWidth: '300px'
+                }}
+                onClick={(e) => e.stopPropagation()}
+            >
+                <h3>{title}</h3>
+                {children}
+                <button onClick={() => setIsOpen(false)}>Close</button>
+            </div>
+        </div>
+    );
+});
+
+function ModalDemo() {
+    const modalRef = useRef(null);
+
+    return (
+        <div>
+            <button onClick={() => modalRef.current?.open({ center: true })}>
+                Open Centered Modal
+            </button>
+
+            <button onClick={() => modalRef.current?.open({ position: { x: 50, y: 50 } })}>
+                Open at Position
+            </button>
+
+            <button onClick={() => modalRef.current?.toggle()}>
+                Toggle Modal
+            </button>
+
+            <Modal ref={modalRef} title="Imperative Modal">
+                <p>This modal can be controlled imperatively!</p>
+                <p>It was opened using ref methods.</p>
+            </Modal>
+        </div>
+    );
+}
+        """, language="javascript")
+
+    with tab5:
+        st.markdown('<h2 class="section-header">Patterns și Best Practices</h2>', unsafe_allow_html=True)
+
+        st.markdown("### Compound Hooks Pattern")
+
+        st.code("""
+// Pattern pentru combining multiple related hooks
+function useCounter(initialValue = 0, options = {}) {
+    const { min = -Infinity, max = Infinity, step = 1 } = options;
+
+    const [count, setCount] = useState(initialValue);
+    const [history, setHistory] = useState([initialValue]);
+
+    const increment = useCallback(() => {
+        setCount(prev => {
+            const newValue = Math.min(prev + step, max);
+            if (newValue !== prev) {
+                setHistory(prevHistory => [...prevHistory, newValue]);
+            }
+            return newValue;
+        });
+    }, [step, max]);
+
+    const decrement = useCallback(() => {
+        setCount(prev => {
+            const newValue = Math.max(prev - step, min);
+            if (newValue !== prev) {
+                setHistory(prevHistory => [...prevHistory, newValue]);
+            }
+            return newValue;
+        });
+    }, [step, min]);
+
+    const reset = useCallback(() => {
+        setCount(initialValue);
+        setHistory([initialValue]);
+    }, [initialValue]);
+
+    const setValue = useCallback((value) => {
+        const clampedValue = Math.max(min, Math.min(max, value));
+        setCount(clampedValue);
+        setHistory(prev => [...prev, clampedValue]);
+    }, [min, max]);
+
+    const undo = useCallback(() => {
+        if (history.length > 1) {
+            const newHistory = history.slice(0, -1);
+            setHistory(newHistory);
+            setCount(newHistory[newHistory.length - 1]);
+        }
+    }, [history]);
+
+    return {
+        count,
+        increment,
+        decrement,
+        reset,
+        setValue,
+        undo,
+        history,
+        canUndo: history.length > 1,
+        isAtMin: count === min,
+        isAtMax: count === max
+    };
+}
+
+// Usage
+function CounterComponent() {
+    const counter = useCounter(0, { min: 0, max: 10, step: 2 });
+
+    return (
+        <div>
+            <h2>Count: {counter.count}</h2>
+
+            <button 
+                onClick={counter.decrement} 
+                disabled={counter.isAtMin}
+            >
+                -2
+            </button>
+
+            <button 
+                onClick={counter.increment} 
+                disabled={counter.isAtMax}
+            >
+                +2
+            </button>
+
+            <button onClick={counter.reset}>Reset</button>
+
+            <button 
+                onClick={counter.undo} 
+                disabled={!counter.canUndo}
+            >
+                Undo
+            </button>
+
+            <div>
+                <h4>History:</h4>
+                <p>{counter.history.join(' → ')}</p>
+            </div>
+        </div>
+    );
+}
+
+// Pattern pentru State Machine cu hooks
+function useStateMachine(states, initialState) {
+    const [currentState, setCurrentState] = useState(initialState);
+    const [context, setContext] = useState({});
+
+    const transition = useCallback((event, payload = {}) => {
+        const stateConfig = states[currentState];
+        if (!stateConfig || !stateConfig.on || !stateConfig.on[event]) {
+            console.warn(`No transition for event "${event}" in state "${currentState}"`);
+            return;
+        }
+
+        const transition = stateConfig.on[event];
+        const nextState = typeof transition === 'string' ? transition : transition.target;
+
+        // Update context if transition has actions
+        if (typeof transition === 'object' && transition.actions) {
+            setContext(prevContext => {
+                const newContext = { ...prevContext };
+                transition.actions.forEach(action => {
+                    if (typeof action === 'function') {
+                        action(newContext, payload);
+                    }
+                });
+                return newContext;
+            });
+        }
+
+        setCurrentState(nextState);
+    }, [currentState, states]);
+
+    const can = useCallback((event) => {
+        const stateConfig = states[currentState];
+        return !!(stateConfig && stateConfig.on && stateConfig.on[event]);
+    }, [currentState, states]);
+
+    return {
+        state: currentState,
+        context,
+        transition,
+        can,
+        matches: (state) => currentState === state
+    };
+}
+
+// Usage: Loading state machine
+function LoadingExample() {
+    const loadingMachine = useStateMachine({
+        idle: {
+            on: {
+                LOAD: 'loading'
+            }
+        },
+        loading: {
+            on: {
+                SUCCESS: {
+                    target: 'success',
+                    actions: [(context, payload) => {
+                        context.data = payload.data;
+                    }]
+                },
+                ERROR: {
+                    target: 'error',
+                    actions: [(context, payload) => {
+                        context.error = payload.error;
+                    }]
+                }
+            }
+        },
+        success: {
+            on: {
+                RELOAD: 'loading',
+                RESET: 'idle'
+            }
+        },
+        error: {
+            on: {
+                RETRY: 'loading',
+                RESET: 'idle'
+            }
+        }
+    }, 'idle');
+
+    const handleLoad = async () => {
+        loadingMachine.transition('LOAD');
+
+        try {
+            // Simulate API call
+            await new Promise(resolve => setTimeout(resolve, 2000));
+            const data = { message: 'Data loaded successfully!' };
+            loadingMachine.transition('SUCCESS', { data });
+        } catch (error) {
+            loadingMachine.transition('ERROR', { error: error.message });
+        }
+    };
+
+    return (
+        <div>
+            <h3>Current State: {loadingMachine.state}</h3>
+
+            {loadingMachine.matches('idle') && (
+                <button onClick={handleLoad}>Load Data</button>
+            )}
+
+            {loadingMachine.matches('loading') && (
+                <div>Loading...</div>
+            )}
+
+            {loadingMachine.matches('success') && (
+                <div>
+                    <p>✅ {loadingMachine.context.data?.message}</p>
+                    <button onClick={() => loadingMachine.transition('RELOAD')}>
+                        Reload
+                    </button>
+                    <button onClick={() => loadingMachine.transition('RESET')}>
+                        Reset
+                    </button>
+                </div>
+            )}
+
+            {loadingMachine.matches('error') && (
+                <div>
+                    <p>❌ Error: {loadingMachine.context.error}</p>
+                    <button onClick={() => loadingMachine.transition('RETRY')}>
+                        Retry
+                    </button>
+                    <button onClick={() => loadingMachine.transition('RESET')}>
+                        Reset
+                    </button>
+                </div>
+            )}
+        </div>
+    );
+}
+        """, language="javascript")
+
+        st.markdown("### Hook Composition și Advanced Patterns")
+
+        st.code("""
+// Higher-Order Hook Pattern
+function withLoading(hook) {
+    return function useHookWithLoading(...args) {
+        const [loading, setLoading] = useState(false);
+        const [error, setError] = useState(null);
+
+        const hookResult = hook(...args);
+
+        // Wrap async methods cu loading state
+        const wrappedResult = useMemo(() => {
+            const wrapped = { ...hookResult };
+
+            Object.keys(hookResult).forEach(key => {
+                if (typeof hookResult[key] === 'function') {
+                    wrapped[key] = async (...fnArgs) => {
+                        try {
+                            setLoading(true);
+                            setError(null);
+                            const result = await hookResult[key](...fnArgs);
+                            return result;
+                        } catch (err) {
+                            setError(err);
+                            throw err;
+                        } finally {
+                            setLoading(false);
+                        }
+                    };
+                }
+            });
+
+            return {
+                ...wrapped,
+                loading,
+                error
+            };
+        }, [hookResult, loading, error]);
+
+        return wrappedResult;
+    };
+}
+
+// Basic hook pentru API operations
+function useApi(baseUrl) {
+    const get = useCallback(async (endpoint) => {
+        const response = await fetch(`${baseUrl}${endpoint}`);
+        if (!response.ok) throw new Error('API request failed');
+        return response.json();
+    }, [baseUrl]);
+
+    const post = useCallback(async (endpoint, data) => {
+        const response = await fetch(`${baseUrl}${endpoint}`, {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify(data)
+        });
+        if (!response.ok) throw new Error('API request failed');
+        return response.json();
+    }, [baseUrl]);
+
+    return { get, post };
+}
+
+// Enhanced hook cu loading
+const useApiWithLoading = withLoading(useApi);
+
+// Usage
+function ApiComponent() {
+    const api = useApiWithLoading('/api');
+    const [data, setData] = useState(null);
+
+    const handleLoad = async () => {
+        try {
+            const result = await api.get('/users');
+            setData(result);
+        } catch (error) {
+            console.error('Failed to load data:', error);
+        }
+    };
+
+    return (
+        <div>
+            <button onClick={handleLoad} disabled={api.loading}>
+                {api.loading ? 'Loading...' : 'Load Data'}
+            </button>
+
+            {api.error && <p>Error: {api.error.message}</p>}
+            {data && <pre>{JSON.stringify(data, null, 2)}</pre>}
+        </div>
+    );
+}
+
+// Dependency Injection Pattern pentru hooks
+const ApiContext = createContext();
+
+function ApiProvider({ children, baseUrl }) {
+    const api = useApi(baseUrl);
+    return (
+        <ApiContext.Provider value={api}>
+            {children}
+        </ApiContext.Provider>
+    );
+}
+
+function useApiContext() {
+    const context = useContext(ApiContext);
+    if (!context) {
+        throw new Error('useApiContext must be used within ApiProvider');
+    }
+    return context;
+}
+
+// Hook composition pentru complex state management
+function useEntityManager(entityName, apiEndpoint) {
+    const api = useApiContext();
+    const [entities, setEntities] = useState([]);
+    const [loading, setLoading] = useState(false);
+    const [error, setError] = useState(null);
+    const [selectedId, setSelectedId] = useState(null);
+
+    // CRUD operations
+    const load = useCallback(async () => {
+        try {
+            setLoading(true);
+            setError(null);
+            const data = await api.get(apiEndpoint);
+            setEntities(data);
+        } catch (err) {
+            setError(err);
+        } finally {
+            setLoading(false);
+        }
+    }, [api, apiEndpoint]);
+
+    const create = useCallback(async (entityData) => {
+        try {
+            const newEntity = await api.post(apiEndpoint, entityData);
+            setEntities(prev => [...prev, newEntity]);
+            return newEntity;
+        } catch (err) {
+            setError(err);
+            throw err;
+        }
+    }, [api, apiEndpoint]);
+
+    const update = useCallback(async (id, updates) => {
+        try {
+            const updatedEntity = await api.post(`${apiEndpoint}/${id}`, updates);
+            setEntities(prev => prev.map(entity => 
+                entity.id === id ? updatedEntity : entity
+            ));
+            return updatedEntity;
+        } catch (err) {
+            setError(err);
+            throw err;
+        }
+    }, [api, apiEndpoint]);
+
+    const remove = useCallback(async (id) => {
+        try {
+            await api.post(`${apiEndpoint}/${id}`, { method: 'DELETE' });
+            setEntities(prev => prev.filter(entity => entity.id !== id));
+            if (selectedId === id) {
+                setSelectedId(null);
+            }
+        } catch (err) {
+            setError(err);
+            throw err;
+        }
+    }, [api, apiEndpoint, selectedId]);
+
+    // Selection management
+    const select = useCallback((id) => {
+        setSelectedId(id);
+    }, []);
+
+    const clearSelection = useCallback(() => {
+        setSelectedId(null);
+    }, []);
+
+    // Computed values
+    const selectedEntity = useMemo(() => {
+        return entities.find(entity => entity.id === selectedId) || null;
+    }, [entities, selectedId]);
+
+    const isEmpty = entities.length === 0;
+    const hasSelection = selectedId !== null;
+
+    // Load on mount
+    useEffect(() => {
+        load();
+    }, [load]);
+
+    return {
+        // Data
+        entities,
+        selectedEntity,
+        selectedId,
+
+        // State
+        loading,
+        error,
+        isEmpty,
+        hasSelection,
+
+        // Actions
+        load,
+        create,
+        update,
+        remove,
+        select,
+        clearSelection,
+
+        // Utilities
+        getById: (id) => entities.find(entity => entity.id === id),
+        filter: (predicate) => entities.filter(predicate),
+        find: (predicate) => entities.find(predicate)
+    };
+}
+
+// Usage
+function UserManager() {
+    const users = useEntityManager('user', '/users');
+
+    return (
+        <div>
+            <h2>User Manager</h2>
+
+            {users.loading && <p>Loading users...</p>}
+            {users.error && <p>Error: {users.error.message}</p>}
+
+            <div>
+                <button onClick={users.load}>Refresh</button>
+                <button onClick={users.clearSelection}>Clear Selection</button>
+            </div>
+
+            {users.isEmpty ? (
+                <p>No users found</p>
+            ) : (
+                <div>
+                    <ul>
+                        {users.entities.map(user => (
+                            <li 
+                                key={user.id}
+                                onClick={() => users.select(user.id)}
+                                style={{
+                                    cursor: 'pointer',
+                                    backgroundColor: users.selectedId === user.id ? '#e3f2fd' : 'transparent'
+                                }}
+                            >
+                                {user.name} - {user.email}
+                            </li>
+                        ))}
+                    </ul>
+
+                    {users.hasSelection && (
+                        <div>
+                            <h3>Selected User:</h3>
+                            <p>Name: {users.selectedEntity.name}</p>
+                            <p>Email: {users.selectedEntity.email}</p>
+                            <button onClick={() => users.remove(users.selectedId)}>
+                                Delete User
+                            </button>
+                        </div>
+                    )}
+                </div>
+            )}
+        </div>
+    );
+}
+
+// Main app cu providers
+function App() {
+    return (
+        <ApiProvider baseUrl="/api">
+            <UserManager />
+        </ApiProvider>
+    );
+}
+        """, language="javascript")
+
+    with tab6:
+        st.markdown('<h2 class="section-header">Întrebări de Interviu - React Hooks</h2>', unsafe_allow_html=True)
+
+        st.markdown("### Întrebări de Nivel Începător")
+
+        with st.expander("1. Ce sunt React Hooks și care sunt avantajele lor?"):
+            st.markdown("""
+            **Răspuns complet:**
+
+            React Hooks sunt funcții speciale care permit folosirea state-ului și a altor funcționalități React 
+            în componente funcționale, fără a fi nevoie să le converți în class components.
+
+            **Avantaje principale:**
+
+            **1. Simplificare cod:**
+            - Elimină complexitatea class components
+            - Nu mai e nevoie de `this` binding
+            - Sintaxă mai curată și mai puțin verbose
+
+            **2. Reutilizarea logicii:**
+            - Custom hooks pentru logica comună
+            - Composition mai ușoară decât inheritance
+            - Separarea concerns-urilor
+
+            **3. Performance îmbunătățit:**
+            - Bundle size mai mic
+            - Optimizări mai ușoare cu useCallback și useMemo
+            - Hot reloading mai bun
+
+            **4. Testare mai ușoară:**
+            - Funcții pure pentru custom hooks
+            - Mock-ing mai simplu
+            - Izolarea logicii de UI
+
+            **Exemplu comparativ:**
+            ```javascript
+            // Class component (înainte)
+            class Counter extends Component {
+                constructor(props) {
+                    super(props);
+                    this.state = { count: 0 };
+                    this.increment = this.increment.bind(this);
+                }
+
+                increment() {
+                    this.setState({ count: this.state.count + 1 });
+                }
+
+                render() {
+                    return (
+                        <button onClick={this.increment}>
+                            {this.state.count}
+                        </button>
+                    );
+                }
+            }
+
+            // Functional component cu hooks (acum)
+            function Counter() {
+                const [count, setCount] = useState(0);
+
+                return (
+                    <button onClick={() => setCount(count + 1)}>
+                        {count}
+                    </button>
+                );
+            }
+            ```
+            """)
+
+        with st.expander("2. Care sunt regulile Hooks-urilor și de ce există?"):
+            st.markdown("""
+            **Regulile Hooks-urilor:**
+
+            **1. Apelează Hooks-urile doar la nivelul superior**
+            - Nu în loop-uri, condiții sau funcții nested
+            - Doar în componente React sau custom hooks
+
+            **2. Ordinea trebuie să fie consistentă**
+            - Același număr și aceeași ordine la fiecare render
+            - React se bazează pe ordine pentru asocierea state-ului
+
+            **De ce aceste reguli:**
+
+            **React folosește un index intern:**
+            ```javascript
+            // React menține intern ceva similar cu:
+            const hooks = [];
+            let currentHookIndex = 0;
+
+            function useState(initial) {
+                const index = currentHookIndex++;
+                if (hooks[index] === undefined) {
+                    hooks[index] = initial;
+                }
+                return [hooks[index], (value) => hooks[index] = value];
+            }
+            ```
+
+            **❌ Ce NU trebuie să faci:**
+            ```javascript
+            function BadComponent({ condition }) {
+                if (condition) {
+                    const [state, setState] = useState(0); // GREȘIT!
+                }
+
+                for (let i = 0; i < 3; i++) {
+                    useEffect(() => {}); // GREȘIT!
+                }
+
+                return <div>...</div>;
+            }
+            ```
+
+            **✅ Varianta corectă:**
+            ```javascript
+            function GoodComponent({ condition }) {
+                const [state, setState] = useState(condition ? 0 : null);
+
+                useEffect(() => {
+                    // Logica condițională INSIDE hook
+                    if (condition) {
+                        // do something
+                    }
+                });
+
+                return <div>...</div>;
+            }
+            ```
+            """)
+
+        st.markdown("### Întrebări de Nivel Intermediar")
+
+        with st.expander("3. Explică diferența între useState și useReducer. Când folosești fiecare?"):
+            st.markdown("""
+            **useState vs useReducer:**
+
+            | Criteriu | useState | useReducer |
+            |----------|----------|------------|
+            | **Complexitate state** | Simplu (primitive, obiecte mici) | Complex (obiecte mari, logică complexă) |
+            | **Updates** | Directe | Prin actions și reducer |
+            | **Predictibilitate** | Menos predictibil | Foarte predictibil |
+            | **Testare** | Mai greu de testat | Ușor de testat (pure functions) |
+            | **Performance** | OK pentru state simplu | Optimizat pentru state complex |
+
+            **Când folosești useState:**
+            ```javascript
+            // State simplu - primitive values
+            const [count, setCount] = useState(0);
+            const [name, setName] = useState('');
+            const [isVisible, setIsVisible] = useState(false);
+
+            // Obiecte mici cu updates simple
+            const [user, setUser] = useState({ name: '', email: '' });
+            ```
+
+            **Când folosești useReducer:**
+            ```javascript
+            // State complex cu multiple proprietăți interdependente
+            const [state, dispatch] = useReducer(formReducer, {
+                fields: { name: '', email: '', password: '' },
+                errors: {},
+                isSubmitting: false,
+                submitCount: 0
+            });
+
+            // Logică complexă de actualizare
+            function formReducer(state, action) {
+                switch (action.type) {
+                    case 'SET_FIELD':
+                        return {
+                            ...state,
+                            fields: {
+                                ...state.fields,
+                                [action.field]: action.value
+                            },
+                            errors: {
+                                ...state.errors,
+                                [action.field]: null // Clear error
+                            }
+                        };
+
+                    case 'SET_ERRORS':
+                        return {
+                            ...state,
+                            errors: action.errors,
+                            isSubmitting: false
+                        };
+
+                    case 'START_SUBMIT':
+                        return {
+                            ...state,
+                            isSubmitting: true,
+                            submitCount: state.submitCount + 1
+                        };
+
+                    default:
+                        return state;
+                }
+            }
+            ```
+
+            **Regula generală:** Începe cu useState, migrează la useReducer când:
+            - Ai mai mult de 3-4 state variables relacionate
+            - Logica de update devine complexă
+            - Ai nevoie de predictibilitate pentru debugging
+            - Vrei să testezi logica separat de componente
+            """)
+
+        with st.expander("4. Cum funcționează dependency arrays în useEffect și de ce sunt importante?"):
+            st.markdown("""
+            **Dependency Arrays controlează când se re-execută efectele:**
+
+            **1. Fără dependency array - rulează după fiecare render:**
+            ```javascript
+            useEffect(() => {
+                console.log('Runs after every render');
+                document.title = `Count: ${count}`;
+            }); // Fără array - ATENȚIE la performance!
+            ```
+
+            **2. Array gol - rulează doar la mount/unmount:**
+            ```javascript
+            useEffect(() => {
+                console.log('Runs only on mount');
+                const interval = setInterval(() => {
+                    // Logic here
+                }, 1000);
+
+                return () => clearInterval(interval); // Cleanup
+            }, []); // Array gol
+            ```
+
+            **3. Cu dependencies - rulează când se schimbă dependencies:**
+            ```javascript
+            useEffect(() => {
+                console.log('Runs when userId changes');
+                fetchUserData(userId);
+            }, [userId]); // Rulează când userId se schimbă
+            ```
+
+            **Probleme comune și soluții:**
+
+            **❌ Missing dependencies (ESLint warning):**
+            ```javascript
+            function UserProfile({ userId }) {
+                const [user, setUser] = useState(null);
+
+                useEffect(() => {
+                    fetchUser(userId).then(setUser); // userId e dependency!
+                }, []); // GREȘIT - missing userId
+
+                return <div>{user?.name}</div>;
+            }
+            ```
+
+            **✅ Correct dependencies:**
+            ```javascript
+            function UserProfile({ userId }) {
+                const [user, setUser] = useState(null);
+
+                useEffect(() => {
+                    fetchUser(userId).then(setUser);
+                }, [userId]); // Correct - include userId
+
+                return <div>{user?.name}</div>;
+            }
+            ```
+
+            **Stale closures problem:**
+            ```javascript
+            // ❌ PROBLEMĂ - stale closure
+            function Timer() {
+                const [count, setCount] = useState(0);
+
+                useEffect(() => {
+                    const interval = setInterval(() => {
+                        setCount(count + 1); // count este "stale"
+                    }, 1000);
+
+                    return () => clearInterval(interval);
+                }, []); // Empty deps - count nu se actualizează
+
+                return <div>{count}</div>;
+            }
+
+            // ✅ SOLUȚIE - functional update
+            function Timer() {
+                const [count, setCount] = useState(0);
+
+                useEffect(() => {
+                    const interval = setInterval(() => {
+                        setCount(prevCount => prevCount + 1); // Functional update
+                    }, 1000);
+
+                    return () => clearInterval(interval);
+                }, []); // OK - nu depinde de count
+
+                return <div>{count}</div>;
+            }
+            ```
+
+            **Object dependencies - atenție la referințe:**
+            ```javascript
+            // ❌ Object se recreează la fiecare render
+            function SearchResults({ query }) {
+                const searchOptions = { query, limit: 10, sort: 'date' };
+
+                useEffect(() => {
+                    search(searchOptions); // Effect se rulează la fiecare render!
+                }, [searchOptions]);
+            }
+
+            // ✅ useMemo pentru object dependencies
+            function SearchResults({ query }) {
+                const searchOptions = useMemo(() => ({
+                    query,
+                    limit: 10,
+                    sort: 'date'
+                }), [query]);
+
+                useEffect(() => {
+                    search(searchOptions);
+                }, [searchOptions]); // OK - object e memoized
+            }
+            ```
+            """)
+
+        with st.expander("5. Explică diferența între useMemo și useCallback cu exemple practice"):
+            st.markdown("""
+            **useMemo vs useCallback - Concepte:**
+
+            - **useMemo**: Memoizează **valoarea rezultată** dintr-un calcul
+            - **useCallback**: Memoizează **funcția în sine**
+
+            **useMemo - Pentru expensive calculations:**
+            ```javascript
+            function ExpensiveComponent({ items, filter }) {
+                // ❌ Fără useMemo - calculul se face la fiecare render
+                const expensiveValue = items
+                    .filter(item => item.category === filter)
+                    .map(item => heavyProcessing(item))
+                    .reduce((sum, value) => sum + value, 0);
+
+                // ✅ Cu useMemo - calculul se face doar când dependencies se schimbă
+                const optimizedValue = useMemo(() => {
+                    console.log('Performing expensive calculation...');
+                    return items
+                        .filter(item => item.category === filter)
+                        .map(item => heavyProcessing(item))
+                        .reduce((sum, value) => sum + value, 0);
+                }, [items, filter]);
+
+                return <div>Result: {optimizedValue}</div>;
+            }
+            ```
+
+            **useCallback - Pentru function references:**
+            ```javascript
+            function ParentComponent({ items }) {
+                const [filter, setFilter] = useState('');
+
+                // ❌ Fără useCallback - funcția se recrează la fiecare render
+                const handleItemClick = (itemId) => {
+                    console.log('Clicked:', itemId);
+                    // Some logic here
+                };
+
+                // ✅ Cu useCallback - funcția se recrează doar când e necesar
+                const optimizedHandleClick = useCallback((itemId) => {
+                    console.log('Clicked:', itemId);
+                    // Some logic here
+                }, []); // Empty deps - funcția nu se schimbă niciodată
+
+                return (
+                    <div>
+                        {items.map(item => (
+                            <ItemComponent
+                                key={item.id}
+                                item={item}
+                                onClick={optimizedHandleClick} // Referință stabilă
+                            />
+                        ))}
+                    </div>
+                );
+            }
+
+            // Component copil optimizat cu React.memo
+            const ItemComponent = React.memo(({ item, onClick }) => {
+                console.log(`Rendering ${item.name}`); // Se printează doar când e necesar
+
+                return (
+                    <div onClick={() => onClick(item.id)}>
+                        {item.name}
+                    </div>
+                );
+            });
+            ```
+
+            **Combinarea useMemo și useCallback:**
+            ```javascript
+            function SearchComponent({ users, onSelectionChange }) {
+                const [searchTerm, setSearchTerm] = useState('');
+                const [selectedUsers, setSelectedUsers] = useState(new Set());
+
+                // useMemo pentru filtered data
+                const filteredUsers = useMemo(() => {
+                    console.log('Filtering users...');
+                    return users.filter(user =>
+                        user.name.toLowerCase().includes(searchTerm.toLowerCase())
+                    );
+                }, [users, searchTerm]);
+
+                // useCallback pentru event handlers
+                const handleUserToggle = useCallback((userId) => {
+                    setSelectedUsers(prev => {
+                        const newSet = new Set(prev);
+                        if (newSet.has(userId)) {
+                            newSet.delete(userId);
+                        } else {
+                            newSet.add(userId);
+                        }
+                        return newSet;
+                    });
+                }, []);
+
+                // useCallback cu dependencies
+                const handleSelectionComplete = useCallback(() => {
+                    onSelectionChange(Array.from(selectedUsers));
+                }, [selectedUsers, onSelectionChange]);
+
+                // useMemo pentru computed values
+                const selectionStats = useMemo(() => ({
+                    total: filteredUsers.length,
+                    selected: selectedUsers.size,
+                    percentage: filteredUsers.length > 0 
+                        ? (selectedUsers.size / filteredUsers.length * 100).toFixed(1)
+                        : 0
+                }), [filteredUsers.length, selectedUsers.size]);
+
+                return (
+                    <div>
+                        <input
+                            value={searchTerm}
+                            onChange={(e) => setSearchTerm(e.target.value)}
+                            placeholder="Search users..."
+                        />
+
+                        <p>
+                            Selected {selectionStats.selected} of {selectionStats.total} 
+                            ({selectionStats.percentage}%)
+                        </p>
+
+                        {filteredUsers.map(user => (
+                            <UserItem
+                                key={user.id}
+                                user={user}
+                                isSelected={selectedUsers.has(user.id)}
+                                onToggle={handleUserToggle}
+                            />
+                        ))}
+
+                        <button onClick={handleSelectionComplete}>
+                            Confirm Selection
+                        </button>
+                    </div>
+                );
+            }
+            ```
+
+            **Când să folosești fiecare:**
+
+            **useMemo:**
+            - Expensive calculations (filtering, sorting, complex math)
+            - Creating objects/arrays care se transmit ca props
+            - Computed values bazate pe multiple dependencies
+
+            **useCallback:**
+            - Event handlers care se transmit la componente copil
+            - Functions care sunt dependencies în alte hooks
+            - API calls sau async operations
+            - Când vrei să previi re-render-uri inutile
+            """)
+
+        st.markdown("### Întrebări de Nivel Avansat")
+
+        with st.expander("6. Cum creezi un custom hook complex și care sunt best practices?"):
+            st.markdown("""
+            **Principii pentru Custom Hooks de calitate:**
+
+            **1. Single Responsibility Principle:**
+            ```javascript
+            // ❌ Hook care face prea multe lucruri
+            function useBadHook() {
+                const [user, setUser] = useState(null);
+                const [notifications, setNotifications] = useState([]);
+                const [theme, setTheme] = useState('light');
+                const [cart, setCart] = useState([]);
+                // ... prea multe responsabilități
+            }
+
+            // ✅ Hooks focalizate pe o singură responsabilitate
+            function useUser() {
+                const [user, setUser] = useState(null);
+                const [loading, setLoading] = useState(false);
+
+                const login = useCallback(async (credentials) => {
+                    setLoading(true);
+                    try {
+                        const userData = await authAPI.login(credentials);
+                        setUser(userData);
+                        return userData;
+                    } finally {
+                        setLoading(false);
+                    }
+                }, []);
+
+                const logout = useCallback(() => {
+                    setUser(null);
+                    authAPI.logout();
+                }, []);
+
+                return { user, loading, login, logout };
+            }
+            ```
+
+            **2. Composition over Complexity:**
+            ```javascript
+            // Hook de bază pentru API calls
+            function useApi() {
+                const [loading, setLoading] = useState(false);
+                const [error, setError] = useState(null);
+
+                const execute = useCallback(async (apiCall) => {
+                    try {
+                        setLoading(true);
+                        setError(null);
+                        return await apiCall();
+                    } catch (err) {
+                        setError(err);
+                        throw err;
+                    } finally {
+                        setLoading(false);
+                    }
+                }, []);
+
+                return { loading, error, execute };
+            }
+
+            // Hook specializat care combină useApi cu cache
+            function useApiWithCache(cacheKey) {
+                const { loading, error, execute } = useApi();
+                const cache = useRef(new Map());
+
+                const cachedExecute = useCallback(async (apiCall, options = {}) => {
+                    const { forceRefresh = false, cacheTime = 5 * 60 * 1000 } = options;
+
+                    if (!forceRefresh && cache.current.has(cacheKey)) {
+                        const cached = cache.current.get(cacheKey);
+                        const isExpired = Date.now() - cached.timestamp > cacheTime;
+
+                        if (!isExpired) {
+                            return cached.data;
+                        }
+                    }
+
+                    const result = await execute(apiCall);
+                    cache.current.set(cacheKey, {
+                        data: result,
+                        timestamp: Date.now()
+                    });
+
+                    return result;
+                }, [execute, cacheKey]);
+
+                const clearCache = useCallback(() => {
+                    cache.current.delete(cacheKey);
+                }, [cacheKey]);
+
+                return { loading, error, execute: cachedExecute, clearCache };
+            }
+
+            // Hook de nivel înalt pentru entities
+            function useEntityCollection(entityName, apiEndpoint) {
+                const [entities, setEntities] = useState([]);
+                const [selectedId, setSelectedId] = useState(null);
+                const { loading, error, execute } = useApiWithCache(entityName);
+
+                const load = useCallback(() => {
+                    return execute(() => fetch(apiEndpoint).then(r => r.json()))
+                        .then(setEntities);
+                }, [execute, apiEndpoint]);
+
+                const create = useCallback(async (data) => {
+                    const newEntity = await execute(() => 
+                        fetch(apiEndpoint, {
+                            method: 'POST',
+                            body: JSON.stringify(data),
+                            headers: { 'Content-Type': 'application/json' }
+                        }).then(r => r.json())
+                    );
+
+                    setEntities(prev => [...prev, newEntity]);
+                    return newEntity;
+                }, [execute, apiEndpoint]);
+
+                // Auto-load pe mount
+                useEffect(() => {
+                    load();
+                }, [load]);
+
+                return {
+                    entities,
+                    selectedId,
+                    loading,
+                    error,
+                    load,
+                    create,
+                    select: setSelectedId,
+                    selectedEntity: entities.find(e => e.id === selectedId)
+                };
+            }
+            ```
+
+            **3. Type Safety și Validation:**
+            ```javascript
+            // Hook cu TypeScript pentru type safety
+            interface UseFormOptions<T> {
+                initialValues: T;
+                validationSchema?: Record<keyof T, (value: any) => string | null>;
+                onSubmit?: (values: T) => Promise<void> | void;
+            }
+
+            function useForm<T extends Record<string, any>>(options: UseFormOptions<T>) {
+                const [values, setValues] = useState<T>(options.initialValues);
+                const [errors, setErrors] = useState<Partial<Record<keyof T, string>>>({});
+                const [touched, setTouched] = useState<Partial<Record<keyof T, boolean>>>({});
+                const [isSubmitting, setIsSubmitting] = useState(false);
+
+                const setValue = useCallback((field: keyof T, value: any) => {
+                    setValues(prev => ({ ...prev, [field]: value }));
+
+                    // Validate field
+                    if (options.validationSchema?.[field]) {
+                        const error = options.validationSchema[field](value);
+                        setErrors(prev => ({ ...prev, [field]: error }));
+                    }
+                }, [options.validationSchema]);
+
+                const setTouchedField = useCallback((field: keyof T) => {
+                    setTouched(prev => ({ ...prev, [field]: true }));
+                }, []);
+
+                const handleSubmit = useCallback(async (e?: React.FormEvent) => {
+                    e?.preventDefault();
+                    setIsSubmitting(true);
+
+                    try {
+                        await options.onSubmit?.(values);
+                    } finally {
+                        setIsSubmitting(false);
+                    }
+                }, [options.onSubmit, values]);
+
+                return {
+                    values,
+                    errors,
+                    touched,
+                    isSubmitting,
+                    setValue,
+                    setTouched: setTouchedField,
+                    handleSubmit
+                };
+            }
+            ```
+
+            **4. Testing Strategy:**
+            ```javascript
+            // Hook testabil
+            function useCounter(initialValue = 0, options = {}) {
+                const { min = -Infinity, max = Infinity, step = 1 } = options;
+                const [count, setCount] = useState(initialValue);
+
+                const increment = useCallback(() => {
+                    setCount(prev => Math.min(prev + step, max));
+                }, [step, max]);
+
+                const decrement = useCallback(() => {
+                    setCount(prev => Math.max(prev - step, min));
+                }, [step, min]);
+
+                const reset = useCallback(() => {
+                    setCount(initialValue);
+                }, [initialValue]);
+
+                return {
+                    count,
+                    increment,
+                    decrement,
+                    reset,
+                    canIncrement: count < max,
+                    canDecrement: count > min
+                };
+            }
+
+            // Test pentru hook
+            import { renderHook, act } from '@testing-library/react-hooks';
+
+            describe('useCounter', () => {
+                it('should increment within bounds', () => {
+                    const { result } = renderHook(() => 
+                        useCounter(0, { min: 0, max: 5, step: 2 })
+                    );
+
+                    act(() => {
+                        result.current.increment();
+                    });
+
+                    expect(result.current.count).toBe(2);
+                    expect(result.current.canIncrement).toBe(true);
+
+                    act(() => {
+                        result.current.increment();
+                        result.current.increment(); // Should hit max
+                    });
+
+                    expect(result.current.count).toBe(5);
+                    expect(result.current.canIncrement).toBe(false);
+                });
+            });
+            ```
+
+            **Best Practices Summary:**
+            - **Naming**: Începe cu 'use' și folosește nume descriptive
+            - **Dependencies**: Minimizează și optimizează dependency arrays
+            - **Error Handling**: Include loading și error states
+            - **Cleanup**: Returnează cleanup functions unde e necesar
+            - **Documentation**: Documentează parametrii și return values
+            - **Testing**: Scrie teste pentru logica complexă
+            - **TypeScript**: Folosește typing pentru safety
+            """)
+
+        with st.expander("7. Explică conceptul de 'stale closures' și cum să le eviți"):
+            st.markdown("""
+            **Stale Closures - Problema:**
+
+            Stale closures apar când o funcție "înghețată" în closure referențiază 
+            o valoare veche a unei variabile care s-a schimbat între timp.
+
+            **Exemplu clasic - Timer cu stale closure:**
+            ```javascript
+            // ❌ PROBLEMĂ - count este "stale" în setInterval
+            function BrokenTimer() {
+                const [count, setCount] = useState(0);
+
+                useEffect(() => {
+                    const timer = setInterval(() => {
+                        // count aici este întotdeauna 0!
+                        setCount(count + 1); // Numai primul increment funcționează
+                    }, 1000);
+
+                    return () => clearInterval(timer);
+                }, []); // Empty deps - effect rulează o singură dată
+
+                return <div>Count: {count}</div>;
+            }
+
+            // ✅ SOLUȚIE 1 - Functional update
+            function FixedTimer() {
+                const [count, setCount] = useState(0);
+
+                useEffect(() => {
+                    const timer = setInterval(() => {
+                        // Folosește previous value din state
+                        setCount(prevCount => prevCount + 1);
+                    }, 1000);
+
+                    return () => clearInterval(timer);
+                }, []); // OK - nu depinde de count
+
+                return <div>Count: {count}</div>;
+            }
+
+            // ✅ SOLUȚIE 2 - Include în dependencies
+            function FixedTimer2() {
+                const [count, setCount] = useState(0);
+
+                useEffect(() => {
+                    const timer = setInterval(() => {
+                        setCount(count + 1); // count este fresh
+                    }, 1000);
+
+                    return () => clearInterval(timer);
+                }, [count]); // Include count în dependencies
+
+                return <div>Count: {count}</div>;
+            }
+            ```
+
+            **Problema cu event listeners:**
+            ```javascript
+            // ❌ PROBLEMĂ - handleClick capturează valoarea inițială
+            function ProblematicComponent() {
+                const [count, setCount] = useState(0);
+
+                useEffect(() => {
+                    const handleClick = () => {
+                        console.log('Count is:', count); // Întotdeauna 0!
+                        setCount(count + 1); // Nu va funcționa corect
+                    };
+
+                    document.addEventListener('click', handleClick);
+
+                    return () => {
+                        document.removeEventListener('click', handleClick);
+                    };
+                }, []); // Empty deps - count rămâne stale
+
+                return <div>Count: {count}</div>;
+            }
+
+            // ✅ SOLUȚIE - useRef pentru current value
+            function FixedComponent() {
+                const [count, setCount] = useState(0);
+                const countRef = useRef(count);
+
+                // Păstrează ref-ul sincronizat
+                useEffect(() => {
+                    countRef.current = count;
+                });
+
+                useEffect(() => {
+                    const handleClick = () => {
+                        console.log('Count is:', countRef.current); // Întotdeauna fresh!
+                        setCount(prevCount => prevCount + 1);
+                    };
+
+                    document.addEventListener('click', handleClick);
+
+                    return () => {
+                        document.removeEventListener('click', handleClick);
+                    };
+                }, []); // OK - handleClick nu depinde de count
+
+                return <div>Count: {count}</div>;
+            }
+            ```
+
+            **Custom hook pentru current value:**
+            ```javascript
+            // Hook util pentru a obține întotdeauna current value
+            function useCurrentValue(value) {
+                const ref = useRef(value);
+
+                useEffect(() => {
+                    ref.current = value;
+                });
+
+                return ref;
+            }
+
+            // Utilizare
+            function ComponentWithCurrentValue() {
+                const [count, setCount] = useState(0);
+                const [name, setName] = useState('');
+
+                const currentCount = useCurrentValue(count);
+                const currentName = useCurrentValue(name);
+
+                useEffect(() => {
+                    const handleSomeEvent = () => {
+                        // Folosește întotdeauna valorile curente
+                        console.log('Current count:', currentCount.current);
+                        console.log('Current name:', currentName.current);
+                    };
+
+                    someEventEmitter.on('event', handleSomeEvent);
+
+                    return () => {
+                        someEventEmitter.off('event', handleSomeEvent);
+                    };
+                }, []); // Nu e nevoie de dependencies
+
+                return (
+                    <div>
+                        <p>Count: {count}</p>
+                        <button onClick={() => setCount(c => c + 1)}>+</button>
+
+                        <input 
+                            value={name} 
+                            onChange={(e) => setName(e.target.value)} 
+                        />
+                    </div>
+                );
+            }
+            ```
+
+            **Stale closures în async functions:**
+            ```javascript
+            // ❌ PROBLEMĂ - async function cu stale closure
+            function AsyncProblem() {
+                const [user, setUser] = useState(null);
+                const [data, setData] = useState(null);
+
+                useEffect(() => {
+                    const fetchData = async () => {
+                        // Dacă user se schimbă în timpul acestui request...
+                        const result = await api.getData(user.id);
+
+                        // ...user poate fi deja diferit aici!
+                        if (result.userId === user.id) { // Verificare stale!
+                            setData(result);
+                        }
+                    };
+
+                    if (user) {
+                        fetchData();
+                    }
+                }, [user]); // user în dependencies, dar tot e risc de stale closure
+
+                return <div>{data?.content}</div>;
+            }
+
+            // ✅ SOLUȚIE - Cleanup cu AbortController
+            function AsyncFixed() {
+                const [user, setUser] = useState(null);
+                const [data, setData] = useState(null);
+
+                useEffect(() => {
+                    if (!user) return;
+
+                    const abortController = new AbortController();
+
+                    const fetchData = async () => {
+                        try {
+                            const result = await api.getData(user.id, {
+                                signal: abortController.signal
+                            });
+
+                            // Nu verificăm user.id - dacă ajungem aici,
+                            // înseamnă că request-ul nu a fost abortat
+                            setData(result);
+                        } catch (error) {
+                            if (error.name !== 'AbortError') {
+                                console.error('Fetch error:', error);
+                            }
+                        }
+                    };
+
+                    fetchData();
+
+                    // Cleanup - anulează request-ul dacă user se schimbă
+                    return () => {
+                        abortController.abort();
+                    };
+                }, [user]);
+
+                return <div>{data?.content}</div>;
+            }
+            ```
+
+            **Strategii de prevenire:**
+
+            **1. Functional Updates:**
+            ```javascript
+            // Folosește funcții pentru a accesa previous state
+            setState(prevState => prevState + 1);
+            ```
+
+            **2. useRef pentru Current Values:**
+            ```javascript
+            const currentValueRef = useRef(value);
+            useEffect(() => { currentValueRef.current = value; });
+            ```
+
+            **3. Include în Dependencies:**
+            ```javascript
+            useEffect(() => {
+                // Use value here
+            }, [value]); // Include toate valorile folosite
+            ```
+
+            **4. AbortController pentru Async:**
+            ```javascript
+            useEffect(() => {
+                const controller = new AbortController();
+                fetchData(controller.signal);
+                return () => controller.abort();
+            }, [dependencies]);
+            ```
+
+            **5. Custom Hooks pentru Pattern-uri Comune:**
+            ```javascript
+            function useLatestValue(value) {
+                const ref = useRef(value);
+                ref.current = value;
+                return ref;
+            }
+            ```
+            """)
+
+        st.markdown("### Exerciții Practice Complexe")
+
+        with st.expander("Exercițiul 1: Construiește un useInfiniteScroll hook"):
+            st.markdown("""
+            **Cerințe:**
+            - Detectează când user-ul ajunge aproape de sfârșitul listei
+            - Încarcă mai multe date automat
+            - Gestionează loading și error states
+            - Suportă refresh și retry
+            - Optimizat pentru performance
+
+            **Funcționalități extra:**
+            - Threshold configurabil pentru loading
+            - Cache pentru pagini încărcate
+            - Virtual scrolling pentru liste mari
+            - Suport pentru search și filtering
+
+            **Interfața hook-ului:**
+            ```javascript
+            const {
+                items,
+                loading,
+                error,
+                hasMore,
+                loadMore,
+                refresh,
+                retry
+            } = useInfiniteScroll(fetchFunction, options);
+            ```
+            """)
+
+        with st.expander("Exercițiul 2: Implementează useUndoRedo cu complex state"):
+            st.markdown("""
+            **Cerințe:**
+            - Suportă undo/redo pentru orice tip de state
+            - Limit configurabil pentru history size
+            - Branch handling pentru undo apoi modificare nouă
+            - Serialization pentru persistence
+            - Optimizații pentru performance cu state mari
+
+            **Advanced features:**
+            - Batch operations pentru multiple changes
+            - Conditional checkpoints (nu salva fiecare keystroke)
+            - Time-based auto checkpoints
+            - Integration cu keyboard shortcuts
+
+            **API Design:**
+            ```javascript
+            const {
+                state,
+                setState,
+                undo,
+                redo,
+                canUndo,
+                canRedo,
+                history,
+                clearHistory,
+                createCheckpoint
+            } = useUndoRedo(initialState, options);
+            ```
+            """)
+
+        st.markdown("### Best Practices Finale")
+
+        st.markdown("""
+        **Performance Optimization:**
+        1. **Folosește useCallback pentru event handlers** care se transmit ca props
+        2. **useMemo pentru expensive calculations** și object/array dependencies
+        3. **React.memo pentru componente** care primesc props stabile
+        4. **Lazy initialization** pentru useState cu valori expensive
+
+        **Code Organization:**
+        1. **Custom hooks pentru logica reutilizabilă** - separă business logic de UI
+        2. **Hook composition** pentru funcționalități complexe
+        3. **TypeScript pentru type safety** și developer experience mai bună
+        4. **Naming conventions** clare și consistente
+
+        **Testing:**
+        1. **Unit tests pentru custom hooks** cu renderHook
+        2. **Integration tests** pentru hook interactions
+        3. **Mocking dependencies** pentru isolated testing
+        4. **Performance testing** pentru hooks cu expensive operations
+
+        **Error Handling:**
+        1. **Error boundaries** pentru hook-uri care pot crash
+        2. **Graceful degradation** când hooks fail
+        3. **Proper cleanup** pentru resources (timers, subscriptions)
+        4. **User feedback** pentru loading și error states
+
+        **Security:**
+        1. **Input validation** în custom hooks
+        2. **Sanitization** pentru data handling
+        3. **Rate limiting** pentru API calls
+        4. **Memory leak prevention** cu proper cleanup
+        """)
+
+    st.markdown("""
+    <div class="summary-box">
+    <h3>Rezumat Capitol</h3>
+    <p><strong>React Hooks</strong> au transformat fundamental modul în care scriem componente React. 
+    De la hooks-urile de bază (useState, useEffect) la custom hooks complexe și patterns avansate, 
+    stăpânirea acestor concepte este esențială pentru dezvoltarea aplicațiilor React moderne. 
+    Practică cu exemple reale, testează hook-urile tale custom și urmează best practices-urile 
+    pentru a scrie cod React de înaltă calitate și performant.</p>
+    </div>
+    """, unsafe_allow_html=True)
 
 
 def blog_app_page():
-    """Blog Application Project"""
-    st.markdown('<h1 class="chapter-header">Aplicația Blog - Proiect Complet</h1>', unsafe_allow_html=True)
+    """Aplicația de Blog - Tutorial Complet React"""
+    st.markdown('<h1 class="chapter-header">Construirea unei Aplicații de Blog Complete</h1>', unsafe_allow_html=True)
 
     st.markdown("""
-    <div class="info-box">
-        <h3>Ce vom construi:</h3>
-        <p>O aplicație completă de blog cu funcționalități CRUD.</p>
+    <div class="intro-box">
+    <h3>Obiectivele Aplicației</h3>
+    <p>Vom construi o aplicație de blog completă care demonstrează toate conceptele React învățate: 
+    State & Props, Event Handling, Hooks, data fetching, form handling și optimizarea performance-ului. 
+    Aplicația va include autentificare, CRUD operations, search, comentarii și interfață responsive.</p>
     </div>
     """, unsafe_allow_html=True)
 
-    # Add blog app content here
+    tab1, tab2, tab3, tab4, tab5, tab6 = st.tabs([
+        "Planning & Arhitectură",
+        "API & Data Layer",
+        "Core Components",
+        "State Management",
+        "Advanced Features",
+        "Deployment & Testing"
+    ])
+
+    with tab1:
+        st.markdown('<h2 class="section-header">Planning și Arhitectura Aplicației</h2>', unsafe_allow_html=True)
+
+        st.markdown("""
+        ### Structura Aplicației
+
+        **Features principale:**
+        - 📝 **Posts Management** - Creare, editare, ștergere, vizualizare
+        - 👤 **User Authentication** - Login, register, profile management
+        - 💬 **Comments System** - Comentarii cu replies și reactions
+        - 🔍 **Search & Filter** - Căutare după title, content, tags, autor
+        - 📱 **Responsive Design** - Funcțional pe mobile și desktop
+        - ⚡ **Real-time Updates** - Live notifications și updates
+        """)
+
+        st.code("""
+// Structura de foldere a proiectului
+src/
+├── components/          # Componente reutilizabile
+│   ├── ui/             # UI primitives (Button, Input, Modal)
+│   ├── forms/          # Form components (PostForm, CommentForm)
+│   ├── layout/         # Layout components (Header, Footer, Sidebar)
+│   └── features/       # Feature-specific components
+├── hooks/              # Custom hooks
+│   ├── useApi.js       # API communication
+│   ├── useAuth.js      # Authentication logic
+│   ├── usePosts.js     # Posts management
+│   └── useComments.js  # Comments logic
+├── context/            # React Context providers
+│   ├── AuthContext.js  # Authentication state
+│   ├── ThemeContext.js # Theme management
+│   └── NotificationContext.js
+├── services/           # API services și utilities
+│   ├── api.js          # API client
+│   ├── auth.js         # Authentication service
+│   └── storage.js      # Local storage utilities
+├── utils/              # Helper functions
+│   ├── validation.js   # Form validation
+│   ├── formatting.js   # Date, text formatting
+│   └── constants.js    # App constants
+└── pages/              # Page components
+    ├── HomePage.js      # Posts list și hero
+    ├── PostPage.js      # Individual post view
+    ├── CreatePost.js    # Create/Edit post
+    ├── ProfilePage.js   # User profile
+    └── LoginPage.js     # Authentication
+        """, language="javascript")
+
+        st.markdown("### Componente și Props Flow")
+
+        st.code("""
+// Diagramă conceptuală a componentelor și data flow
+
+App
+├── AuthProvider (Context: user, login, logout)
+│   ├── ThemeProvider (Context: theme, toggleTheme)
+│   │   ├── NotificationProvider (Context: notifications, addNotification)
+│   │   │   ├── Router
+│   │   │   │   ├── Header (Props: user, onLogout)
+│   │   │   │   ├── Routes
+│   │   │   │   │   ├── HomePage
+│   │   │   │   │   │   ├── PostsList (Props: posts, loading, onLoadMore)
+│   │   │   │   │   │   │   └── PostCard (Props: post, onLike, onShare)
+│   │   │   │   │   │   ├── SearchFilters (Props: filters, onFilterChange)
+│   │   │   │   │   │   └── CreatePostButton (Props: onClick)
+│   │   │   │   │   ├── PostPage
+│   │   │   │   │   │   ├── PostDetail (Props: post, onEdit, onDelete)
+│   │   │   │   │   │   └── CommentsSection
+│   │   │   │   │   │       ├── CommentsList (Props: comments, onReply)
+│   │   │   │   │   │       └── CommentForm (Props: postId, onSubmit)
+│   │   │   │   │   └── CreatePost
+│   │   │   │   │       └── PostForm (Props: initialData, onSubmit, onCancel)
+│   │   │   │   └── Footer
+│   │   │   └── NotificationContainer
+
+// Data Flow Patterns demonstrează:
+// - Props drilling vs Context pentru state global
+// - Event bubbling pentru user interactions
+// - Custom hooks pentru business logic
+// - State lifting pentru shared state
+        """, language="javascript")
+
+        st.markdown("### API Design și Mock Data")
+
+        st.code("""
+// API endpoints pentru aplicația noastră
+const API_ENDPOINTS = {
+    // Authentication
+    LOGIN: '/api/auth/login',
+    REGISTER: '/api/auth/register',
+    LOGOUT: '/api/auth/logout',
+    ME: '/api/auth/me',
+
+    // Posts
+    POSTS: '/api/posts',
+    POST_BY_ID: (id) => `/api/posts/${id}`,
+    POST_LIKE: (id) => `/api/posts/${id}/like`,
+    POST_SEARCH: '/api/posts/search',
+
+    // Comments
+    COMMENTS: (postId) => `/api/posts/${postId}/comments`,
+    COMMENT_BY_ID: (id) => `/api/comments/${id}`,
+    COMMENT_REPLY: (id) => `/api/comments/${id}/reply`,
+
+    // Users
+    USERS: '/api/users',
+    USER_PROFILE: (id) => `/api/users/${id}`,
+    USER_POSTS: (id) => `/api/users/${id}/posts`
+};
+
+// Mock data structure pentru development
+const MOCK_DATA = {
+    users: [
+        {
+            id: 1,
+            username: 'john_doe',
+            email: 'john@example.com',
+            firstName: 'John',
+            lastName: 'Doe',
+            avatar: 'https://api.dicebear.com/7.x/avataaars/svg?seed=John',
+            bio: 'Passionate developer și blogger',
+            createdAt: '2024-01-15T10:00:00Z',
+            postsCount: 12,
+            followersCount: 150
+        }
+    ],
+
+    posts: [
+        {
+            id: 1,
+            title: 'Introducere în React Hooks',
+            slug: 'introducere-react-hooks',
+            content: 'React Hooks au revoluționat modul în care scriem componente...',
+            excerpt: 'Învață cum să folosești React Hooks pentru componente mai curate și reutilizabile.',
+            author: {
+                id: 1,
+                username: 'john_doe',
+                firstName: 'John',
+                lastName: 'Doe',
+                avatar: 'https://api.dicebear.com/7.x/avataaars/svg?seed=John'
+            },
+            tags: ['react', 'javascript', 'frontend', 'hooks'],
+            coverImage: 'https://picsum.photos/800/400?random=1',
+            publishedAt: '2024-08-01T10:00:00Z',
+            updatedAt: '2024-08-01T10:00:00Z',
+            readTime: 8,
+            likesCount: 42,
+            commentsCount: 7,
+            isLiked: false,
+            isPublished: true,
+            category: 'Tutorial'
+        }
+    ],
+
+    comments: [
+        {
+            id: 1,
+            postId: 1,
+            parentId: null, // null pentru top-level comments
+            author: {
+                id: 2,
+                username: 'jane_smith',
+                firstName: 'Jane',
+                lastName: 'Smith',
+                avatar: 'https://api.dicebear.com/7.x/avataaars/svg?seed=Jane'
+            },
+            content: 'Excelent tutorial! M-a ajutat să înțeleg useState mult mai bine.',
+            createdAt: '2024-08-01T14:30:00Z',
+            updatedAt: '2024-08-01T14:30:00Z',
+            likesCount: 5,
+            isLiked: true,
+            replies: []
+        }
+    ]
+};
+
+// API Service Layer - abstractizează comunicarea cu serverul
+class ApiService {
+    constructor(baseURL = 'http://localhost:3001') {
+        this.baseURL = baseURL;
+        this.token = localStorage.getItem('authToken');
+    }
+
+    // Generic request method cu error handling
+    async request(endpoint, options = {}) {
+        const url = `${this.baseURL}${endpoint}`;
+        const headers = {
+            'Content-Type': 'application/json',
+            ...options.headers
+        };
+
+        // Add auth token dacă există
+        if (this.token) {
+            headers.Authorization = `Bearer ${this.token}`;
+        }
+
+        try {
+            const response = await fetch(url, {
+                ...options,
+                headers
+            });
+
+            // Handle HTTP errors
+            if (!response.ok) {
+                const errorData = await response.json().catch(() => ({}));
+                throw new Error(errorData.message || `HTTP ${response.status}: ${response.statusText}`);
+            }
+
+            // Handle empty responses
+            const contentType = response.headers.get('content-type');
+            if (contentType && contentType.includes('application/json')) {
+                return await response.json();
+            }
+
+            return response;
+        } catch (error) {
+            // Network errors, parsing errors, etc.
+            console.error('API Request failed:', error);
+            throw error;
+        }
+    }
+
+    // Authentication methods
+    async login(credentials) {
+        const response = await this.request(API_ENDPOINTS.LOGIN, {
+            method: 'POST',
+            body: JSON.stringify(credentials)
+        });
+
+        if (response.token) {
+            this.token = response.token;
+            localStorage.setItem('authToken', response.token);
+        }
+
+        return response;
+    }
+
+    async logout() {
+        try {
+            await this.request(API_ENDPOINTS.LOGOUT, { method: 'POST' });
+        } finally {
+            this.token = null;
+            localStorage.removeItem('authToken');
+        }
+    }
+
+    // Posts methods
+    async getPosts(params = {}) {
+        const queryString = new URLSearchParams(params).toString();
+        const endpoint = queryString ? `${API_ENDPOINTS.POSTS}?${queryString}` : API_ENDPOINTS.POSTS;
+        return this.request(endpoint);
+    }
+
+    async getPost(id) {
+        return this.request(API_ENDPOINTS.POST_BY_ID(id));
+    }
+
+    async createPost(postData) {
+        return this.request(API_ENDPOINTS.POSTS, {
+            method: 'POST',
+            body: JSON.stringify(postData)
+        });
+    }
+
+    async updatePost(id, postData) {
+        return this.request(API_ENDPOINTS.POST_BY_ID(id), {
+            method: 'PUT',
+            body: JSON.stringify(postData)
+        });
+    }
+
+    async deletePost(id) {
+        return this.request(API_ENDPOINTS.POST_BY_ID(id), {
+            method: 'DELETE'
+        });
+    }
+
+    async likePost(id) {
+        return this.request(API_ENDPOINTS.POST_LIKE(id), {
+            method: 'POST'
+        });
+    }
+}
+
+// Singleton instance
+export const apiService = new ApiService();
+        """, language="javascript")
+
+    with tab2:
+        st.markdown('<h2 class="section-header">API Integration și Data Layer</h2>', unsafe_allow_html=True)
+
+        st.markdown("### Custom Hooks pentru Data Management")
+
+        st.code("""
+// hooks/useApi.js - Generic API hook cu loading și error handling
+import { useState, useCallback, useRef } from 'react';
+
+export function useApi() {
+    const [loading, setLoading] = useState(false);
+    const [error, setError] = useState(null);
+
+    // AbortController pentru cleanup
+    const abortControllerRef = useRef(null);
+
+    const execute = useCallback(async (apiCall, options = {}) => {
+        const { 
+            showLoading = true, 
+            onSuccess, 
+            onError,
+            abortPrevious = true 
+        } = options;
+
+        try {
+            // Abort previous request dacă e necesar
+            if (abortPrevious && abortControllerRef.current) {
+                abortControllerRef.current.abort();
+            }
+
+            // Create new AbortController
+            abortControllerRef.current = new AbortController();
+
+            if (showLoading) setLoading(true);
+            setError(null);
+
+            // Execute API call cu abort signal
+            const result = await apiCall(abortControllerRef.current.signal);
+
+            onSuccess?.(result);
+            return result;
+
+        } catch (err) {
+            if (err.name !== 'AbortError') {
+                setError(err);
+                onError?.(err);
+                throw err;
+            }
+        } finally {
+            if (showLoading) setLoading(false);
+        }
+    }, []);
+
+    // Cancel ongoing requests
+    const cancel = useCallback(() => {
+        if (abortControllerRef.current) {
+            abortControllerRef.current.abort();
+        }
+    }, []);
+
+    // Clear error
+    const clearError = useCallback(() => {
+        setError(null);
+    }, []);
+
+    return {
+        loading,
+        error,
+        execute,
+        cancel,
+        clearError
+    };
+}
+
+// hooks/useAuth.js - Authentication logic cu Context
+import { createContext, useContext, useReducer, useEffect, useCallback } from 'react';
+import { apiService } from '../services/api';
+
+// Auth reducer pentru complex state management
+const authReducer = (state, action) => {
+    switch (action.type) {
+        case 'LOGIN_START':
+            return {
+                ...state,
+                loading: true,
+                error: null
+            };
+
+        case 'LOGIN_SUCCESS':
+            return {
+                ...state,
+                loading: false,
+                isAuthenticated: true,
+                user: action.payload.user,
+                token: action.payload.token,
+                error: null
+            };
+
+        case 'LOGIN_FAILURE':
+            return {
+                ...state,
+                loading: false,
+                isAuthenticated: false,
+                user: null,
+                token: null,
+                error: action.payload
+            };
+
+        case 'LOGOUT':
+            return {
+                ...state,
+                isAuthenticated: false,
+                user: null,
+                token: null,
+                error: null
+            };
+
+        case 'UPDATE_USER':
+            return {
+                ...state,
+                user: { ...state.user, ...action.payload }
+            };
+
+        case 'CLEAR_ERROR':
+            return {
+                ...state,
+                error: null
+            };
+
+        default:
+            return state;
+    }
+};
+
+const initialAuthState = {
+    isAuthenticated: false,
+    user: null,
+    token: null,
+    loading: false,
+    error: null
+};
+
+// Context pentru Auth
+const AuthContext = createContext();
+
+export function AuthProvider({ children }) {
+    const [state, dispatch] = useReducer(authReducer, initialAuthState);
+
+    // Load user from localStorage la mount
+    useEffect(() => {
+        const token = localStorage.getItem('authToken');
+        const userData = localStorage.getItem('userData');
+
+        if (token && userData) {
+            try {
+                const user = JSON.parse(userData);
+                dispatch({
+                    type: 'LOGIN_SUCCESS',
+                    payload: { user, token }
+                });
+                // Set token în api service
+                apiService.token = token;
+            } catch (error) {
+                // Invalid stored data
+                localStorage.removeItem('authToken');
+                localStorage.removeItem('userData');
+            }
+        }
+    }, []);
+
+    // Login function
+    const login = useCallback(async (credentials) => {
+        dispatch({ type: 'LOGIN_START' });
+
+        try {
+            const response = await apiService.login(credentials);
+
+            // Store în localStorage
+            localStorage.setItem('authToken', response.token);
+            localStorage.setItem('userData', JSON.stringify(response.user));
+
+            dispatch({
+                type: 'LOGIN_SUCCESS',
+                payload: response
+            });
+
+            return response;
+        } catch (error) {
+            dispatch({
+                type: 'LOGIN_FAILURE',
+                payload: error.message
+            });
+            throw error;
+        }
+    }, []);
+
+    // Logout function
+    const logout = useCallback(async () => {
+        try {
+            await apiService.logout();
+        } finally {
+            // Clear storage indiferent de API response
+            localStorage.removeItem('authToken');
+            localStorage.removeItem('userData');
+            dispatch({ type: 'LOGOUT' });
+        }
+    }, []);
+
+    // Register function
+    const register = useCallback(async (userData) => {
+        dispatch({ type: 'LOGIN_START' });
+
+        try {
+            const response = await apiService.register(userData);
+
+            localStorage.setItem('authToken', response.token);
+            localStorage.setItem('userData', JSON.stringify(response.user));
+
+            dispatch({
+                type: 'LOGIN_SUCCESS',
+                payload: response
+            });
+
+            return response;
+        } catch (error) {
+            dispatch({
+                type: 'LOGIN_FAILURE',
+                payload: error.message
+            });
+            throw error;
+        }
+    }, []);
+
+    // Update user profile
+    const updateProfile = useCallback(async (updates) => {
+        try {
+            const updatedUser = await apiService.updateProfile(updates);
+
+            // Update localStorage
+            localStorage.setItem('userData', JSON.stringify(updatedUser));
+
+            dispatch({
+                type: 'UPDATE_USER',
+                payload: updatedUser
+            });
+
+            return updatedUser;
+        } catch (error) {
+            throw error;
+        }
+    }, []);
+
+    const clearError = useCallback(() => {
+        dispatch({ type: 'CLEAR_ERROR' });
+    }, []);
+
+    const value = {
+        ...state,
+        login,
+        logout,
+        register,
+        updateProfile,
+        clearError
+    };
+
+    return (
+        <AuthContext.Provider value={value}>
+            {children}
+        </AuthContext.Provider>
+    );
+}
+
+// Custom hook pentru folosirea auth context
+export function useAuth() {
+    const context = useContext(AuthContext);
+    if (!context) {
+        throw new Error('useAuth must be used within an AuthProvider');
+    }
+    return context;
+}
+
+// hooks/usePosts.js - Posts management cu caching
+import { useState, useCallback, useMemo } from 'react';
+import { apiService } from '../services/api';
+import { useApi } from './useApi';
+
+export function usePosts() {
+    const [posts, setPosts] = useState([]);
+    const [currentPost, setCurrentPost] = useState(null);
+    const [totalPages, setTotalPages] = useState(0);
+    const [currentPage, setCurrentPage] = useState(1);
+    const [filters, setFilters] = useState({
+        search: '',
+        category: '',
+        tag: '',
+        author: ''
+    });
+
+    const { loading, error, execute } = useApi();
+
+    // Load posts cu pagination și filtering
+    const loadPosts = useCallback(async (page = 1, newFilters = {}) => {
+        const params = {
+            page,
+            limit: 10,
+            ...filters,
+            ...newFilters
+        };
+
+        const result = await execute(() => apiService.getPosts(params));
+
+        if (page === 1) {
+            setPosts(result.posts);
+        } else {
+            // Append pentru infinite scroll
+            setPosts(prev => [...prev, ...result.posts]);
+        }
+
+        setCurrentPage(page);
+        setTotalPages(result.totalPages);
+
+        return result;
+    }, [execute, filters]);
+
+    // Load single post
+    const loadPost = useCallback(async (id) => {
+        const post = await execute(() => apiService.getPost(id));
+        setCurrentPost(post);
+        return post;
+    }, [execute]);
+
+    // Create new post
+    const createPost = useCallback(async (postData) => {
+        const newPost = await execute(() => apiService.createPost(postData));
+
+        // Add la începutul listei
+        setPosts(prev => [newPost, ...prev]);
+
+        return newPost;
+    }, [execute]);
+
+    // Update post
+    const updatePost = useCallback(async (id, updates) => {
+        const updatedPost = await execute(() => apiService.updatePost(id, updates));
+
+        // Update în listă
+        setPosts(prev => prev.map(post => 
+            post.id === id ? updatedPost : post
+        ));
+
+        // Update current post dacă e același
+        if (currentPost?.id === id) {
+            setCurrentPost(updatedPost);
+        }
+
+        return updatedPost;
+    }, [execute, currentPost]);
+
+    // Delete post
+    const deletePost = useCallback(async (id) => {
+        await execute(() => apiService.deletePost(id));
+
+        // Remove din listă
+        setPosts(prev => prev.filter(post => post.id !== id));
+
+        // Clear current post dacă e același
+        if (currentPost?.id === id) {
+            setCurrentPost(null);
+        }
+    }, [execute, currentPost]);
+
+    // Like/unlike post
+    const toggleLike = useCallback(async (id) => {
+        const result = await execute(() => apiService.likePost(id));
+
+        // Update în listă
+        setPosts(prev => prev.map(post => 
+            post.id === id 
+                ? { 
+                    ...post, 
+                    isLiked: result.isLiked,
+                    likesCount: result.likesCount 
+                }
+                : post
+        ));
+
+        // Update current post
+        if (currentPost?.id === id) {
+            setCurrentPost(prev => ({
+                ...prev,
+                isLiked: result.isLiked,
+                likesCount: result.likesCount
+            }));
+        }
+
+        return result;
+    }, [execute, currentPost]);
+
+    // Update filters
+    const updateFilters = useCallback((newFilters) => {
+        setFilters(prev => ({ ...prev, ...newFilters }));
+        // Reset la prima pagină când schimbăm filtrele
+        setCurrentPage(1);
+    }, []);
+
+    // Load more pentru infinite scroll
+    const loadMore = useCallback(() => {
+        if (currentPage < totalPages && !loading) {
+            return loadPosts(currentPage + 1);
+        }
+    }, [currentPage, totalPages, loading, loadPosts]);
+
+    // Refresh posts
+    const refresh = useCallback(() => {
+        return loadPosts(1, filters);
+    }, [loadPosts, filters]);
+
+    // Computed values
+    const hasMore = currentPage < totalPages;
+    const isEmpty = posts.length === 0 && !loading;
+
+    return {
+        // Data
+        posts,
+        currentPost,
+        filters,
+
+        // Pagination
+        currentPage,
+        totalPages,
+        hasMore,
+
+        // State
+        loading,
+        error,
+        isEmpty,
+
+        // Actions
+        loadPosts,
+        loadPost,
+        createPost,
+        updatePost,
+        deletePost,
+        toggleLike,
+        updateFilters,
+        loadMore,
+        refresh,
+
+        // Utilities
+        getPostById: (id) => posts.find(post => post.id === id),
+        searchPosts: (query) => posts.filter(post => 
+            post.title.toLowerCase().includes(query.toLowerCase()) ||
+            post.content.toLowerCase().includes(query.toLowerCase())
+        )
+    };
+}
+        """, language="javascript")
+
+        st.markdown("### Error Handling și Loading States")
+
+        st.code("""
+// components/ui/ErrorBoundary.js - Error boundary pentru catching JS errors
+import React from 'react';
+
+class ErrorBoundary extends React.Component {
+    constructor(props) {
+        super(props);
+        this.state = { hasError: false, error: null, errorInfo: null };
+    }
+
+    static getDerivedStateFromError(error) {
+        return { hasError: true };
+    }
+
+    componentDidCatch(error, errorInfo) {
+        this.setState({
+            error,
+            errorInfo
+        });
+
+        // Log error pentru monitoring
+        console.error('Error caught by boundary:', error, errorInfo);
+
+        // Send error la logging service în production
+        if (process.env.NODE_ENV === 'production') {
+            // logErrorToService(error, errorInfo);
+        }
+    }
+
+    render() {
+        if (this.state.hasError) {
+            if (this.props.fallback) {
+                return this.props.fallback(this.state.error, this.state.errorInfo);
+            }
+
+            return (
+                <div className="error-boundary">
+                    <h2>😵 Something went wrong</h2>
+                    <details style={{ whiteSpace: 'pre-wrap' }}>
+                        <summary>Error details (pentru development)</summary>
+                        {this.state.error && this.state.error.toString()}
+                        <br />
+                        {this.state.errorInfo.componentStack}
+                    </details>
+                    <button 
+                        onClick={() => this.setState({ hasError: false, error: null, errorInfo: null })}
+                    >
+                        Try Again
+                    </button>
+                </div>
+            );
+        }
+
+        return this.props.children;
+    }
+}
+
+// components/ui/LoadingSpinner.js - Reusable loading component
+export function LoadingSpinner({ size = 'medium', text = 'Loading...' }) {
+    const sizeClasses = {
+        small: 'w-4 h-4',
+        medium: 'w-8 h-8',
+        large: 'w-12 h-12'
+    };
+
+    return (
+        <div className="flex items-center justify-center space-x-2">
+            <div className={`animate-spin rounded-full border-2 border-gray-300 border-t-blue-600 ${sizeClasses[size]}`}></div>
+            {text && <span className="text-gray-600">{text}</span>}
+        </div>
+    );
+}
+
+// components/ui/ErrorMessage.js - Error display cu retry functionality
+export function ErrorMessage({ error, onRetry, className = '' }) {
+    const getErrorMessage = (error) => {
+        if (typeof error === 'string') return error;
+        if (error?.message) return error.message;
+        if (error?.error) return error.error;
+        return 'An unexpected error occurred';
+    };
+
+    const isNetworkError = error?.message?.includes('fetch') || 
+                          error?.name === 'NetworkError' ||
+                          error?.code === 'NETWORK_ERROR';
+
+    return (
+        <div className={`bg-red-50 border border-red-200 rounded-lg p-4 ${className}`}>
+            <div className="flex items-start">
+                <div className="flex-shrink-0">
+                    <svg className="h-5 w-5 text-red-400" viewBox="0 0 20 20" fill="currentColor">
+                        <path fillRule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zM8.707 7.293a1 1 0 00-1.414 1.414L8.586 10l-1.293 1.293a1 1 0 101.414 1.414L10 11.414l1.293 1.293a1 1 0 001.414-1.414L11.414 10l1.293-1.293a1 1 0 00-1.414-1.414L10 8.586 8.707 7.293z" clipRule="evenodd" />
+                    </svg>
+                </div>
+
+                <div className="ml-3 flex-1">
+                    <h3 className="text-sm font-medium text-red-800">
+                        {isNetworkError ? 'Connection Error' : 'Error'}
+                    </h3>
+                    <p className="mt-1 text-sm text-red-700">
+                        {getErrorMessage(error)}
+                    </p>
+
+                    {isNetworkError && (
+                        <p className="mt-1 text-xs text-red-600">
+                            Please check your internet connection and try again.
+                        </p>
+                    )}
+
+                    {onRetry && (
+                        <div className="mt-3">
+                            <button
+                                onClick={onRetry}
+                                className="bg-red-100 hover:bg-red-200 text-red-800 px-3 py-1 rounded text-sm font-medium transition-colors"
+                            >
+                                Try Again
+                            </button>
+                        </div>
+                    )}
+                </div>
+            </div>
+        </div>
+    );
+}
+
+// hooks/useErrorHandler.js - Global error handling
+import { useCallback } from 'react';
+import { useNotification } from './useNotification';
+
+export function useErrorHandler() {
+    const { addNotification } = useNotification();
+
+    const handleError = useCallback((error, options = {}) => {
+        const {
+            showNotification = true,
+            notificationType = 'error',
+            customMessage,
+            logError = true
+        } = options;
+
+        // Log error pentru debugging
+        if (logError) {
+            console.error('Error handled:', error);
+        }
+
+        // Show user-friendly notification
+        if (showNotification) {
+            const message = customMessage || getErrorMessage(error);
+            addNotification({
+                type: notificationType,
+                message,
+                duration: 5000
+            });
+        }
+
+        // Report error la monitoring service în production
+        if (process.env.NODE_ENV === 'production') {
+            // reportError(error);
+        }
+
+        return error;
+    }, [addNotification]);
+
+    const getErrorMessage = (error) => {
+        // Network errors
+        if (error?.message?.includes('fetch') || error?.name === 'NetworkError') {
+            return 'Connection error. Please check your internet and try again.';
+        }
+
+        // Authentication errors
+        if (error?.status === 401 || error?.message?.includes('unauthorized')) {
+            return 'Session expired. Please log in again.';
+        }
+
+        // Permission errors
+        if (error?.status === 403) {
+            return 'You do not have permission to perform this action.';
+        }
+
+        // Not found errors
+        if (error?.status === 404) {
+            return 'The requested resource was not found.';
+        }
+
+        // Server errors
+        if (error?.status >= 500) {
+            return 'Server error. Please try again later.';
+        }
+
+        // Custom error messages
+        if (error?.message) {
+            return error.message;
+        }
+
+        return 'An unexpected error occurred. Please try again.';
+    };
+
+    return { handleError };
+}
+
+// Wrapper component pentru automatic error handling
+export function withErrorHandling(WrappedComponent) {
+    return function ErrorHandledComponent(props) {
+        const { handleError } = useErrorHandler();
+
+        return (
+            <ErrorBoundary
+                fallback={(error, errorInfo) => (
+                    <ErrorMessage 
+                        error={error} 
+                        onRetry={() => window.location.reload()}
+                    />
+                )}
+            >
+                <WrappedComponent 
+                    {...props} 
+                    onError={handleError}
+                />
+            </ErrorBoundary>
+        );
+    };
+}
+        """, language="javascript")
+
+    with tab3:
+        st.markdown('<h2 class="section-header">Core Components Implementation</h2>', unsafe_allow_html=True)
+
+        st.markdown("### Layout Components cu Context Integration")
+
+        st.code("""
+// components/layout/Header.js - Main navigation cu authentication
+import React from 'react';
+import { Link, useNavigate } from 'react-router-dom';
+import { useAuth } from '../../hooks/useAuth';
+import { useTheme } from '../../hooks/useTheme';
+
+export function Header() {
+    const { user, isAuthenticated, logout } = useAuth();
+    const { theme, toggleTheme } = useTheme();
+    const navigate = useNavigate();
+
+    const handleLogout = async () => {
+        try {
+            await logout();
+            navigate('/');
+        } catch (error) {
+            console.error('Logout failed:', error);
+        }
+    };
+
+    return (
+        <header className="bg-white dark:bg-gray-800 shadow-md border-b border-gray-200 dark:border-gray-700">
+            <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+                <div className="flex justify-between items-center h-16">
+                    {/* Logo și Navigation */}
+                    <div className="flex items-center space-x-8">
+                        <Link 
+                            to="/" 
+                            className="flex items-center space-x-2 text-xl font-bold text-gray-900 dark:text-white"
+                        >
+                            <svg className="w-8 h-8 text-blue-600" fill="currentColor" viewBox="0 0 20 20">
+                                <path d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
+                            </svg>
+                            <span>DevBlog</span>
+                        </Link>
+
+                        <nav className="hidden md:flex space-x-6">
+                            <Link 
+                                to="/" 
+                                className="text-gray-700 dark:text-gray-300 hover:text-blue-600 dark:hover:text-blue-400 transition-colors"
+                            >
+                                Home
+                            </Link>
+                            <Link 
+                                to="/posts" 
+                                className="text-gray-700 dark:text-gray-300 hover:text-blue-600 dark:hover:text-blue-400 transition-colors"
+                            >
+                                Posts
+                            </Link>
+                            {isAuthenticated && (
+                                <Link 
+                                    to="/create" 
+                                    className="text-gray-700 dark:text-gray-300 hover:text-blue-600 dark:hover:text-blue-400 transition-colors"
+                                >
+                                    Write
+                                </Link>
+                            )}
+                        </nav>
+                    </div>
+
+                    {/* Search Bar */}
+                    <div className="hidden md:block flex-1 max-w-lg mx-8">
+                        <SearchBar />
+                    </div>
+
+                    {/* User Actions */}
+                    <div className="flex items-center space-x-4">
+                        {/* Theme Toggle */}
+                        <button
+                            onClick={toggleTheme}
+                            className="p-2 rounded-lg bg-gray-100 dark:bg-gray-700 hover:bg-gray-200 dark:hover:bg-gray-600 transition-colors"
+                            aria-label="Toggle theme"
+                        >
+                            {theme === 'light' ? (
+                                <svg className="w-5 h-5" fill="currentColor" viewBox="0 0 20 20">
+                                    <path d="M17.293 13.293A8 8 0 016.707 2.707a8.001 8.001 0 1010.586 10.586z" />
+                                </svg>
+                            ) : (
+                                <svg className="w-5 h-5" fill="currentColor" viewBox="0 0 20 20">
+                                    <path fillRule="evenodd" d="M10 2a1 1 0 011 1v1a1 1 0 11-2 0V3a1 1 0 011-1zm4 8a4 4 0 11-8 0 4 4 0 018 0zm-.464 4.95l.707.707a1 1 0 001.414-1.414l-.707-.707a1 1 0 00-1.414 1.414zm2.12-10.607a1 1 0 010 1.414l-.706.707a1 1 0 11-1.414-1.414l.707-.707a1 1 0 011.414 0zM17 11a1 1 0 100-2h-1a1 1 0 100 2h1zm-7 4a1 1 0 011 1v1a1 1 0 11-2 0v-1a1 1 0 011-1zM5.05 6.464A1 1 0 106.465 5.05l-.708-.707a1 1 0 00-1.414 1.414l.707.707zm1.414 8.486l-.707.707a1 1 0 01-1.414-1.414l.707-.707a1 1 0 011.414 1.414zM4 11a1 1 0 100-2H3a1 1 0 000 2h1z" clipRule="evenodd" />
+                                </svg>
+                            )}
+                        </button>
+
+                        {isAuthenticated ? (
+                            <UserMenu user={user} onLogout={handleLogout} />
+                        ) : (
+                            <div className="flex items-center space-x-2">
+                                <Link
+                                    to="/login"
+                                    className="px-4 py-2 text-gray-700 dark:text-gray-300 hover:text-blue-600 dark:hover:text-blue-400 transition-colors"
+                                >
+                                    Login
+                                </Link>
+                                <Link
+                                    to="/register"
+                                    className="px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors"
+                                >
+                                    Sign Up
+                                </Link>
+                            </div>
+                        )}
+                    </div>
+                </div>
+            </div>
+        </header>
+    );
+}
+
+// UserMenu component cu dropdown
+function UserMenu({ user, onLogout }) {
+    const [isOpen, setIsOpen] = useState(false);
+    const menuRef = useRef(null);
+
+    // Close menu când se face click outside
+    useEffect(() => {
+        function handleClickOutside(event) {
+            if (menuRef.current && !menuRef.current.contains(event.target)) {
+                setIsOpen(false);
+            }
+        }
+
+        document.addEventListener('mousedown', handleClickOutside);
+        return () => document.removeEventListener('mousedown', handleClickOutside);
+    }, []);
+
+    return (
+        <div className="relative" ref={menuRef}>
+            <button
+                onClick={() => setIsOpen(!isOpen)}
+                className="flex items-center space-x-2 p-2 rounded-lg hover:bg-gray-100 dark:hover:bg-gray-700 transition-colors"
+            >
+                <img
+                    src={user.avatar || `https://api.dicebear.com/7.x/avataaars/svg?seed=${user.username}`}
+                    alt={user.username}
+                    className="w-8 h-8 rounded-full"
+                />
+                <span className="hidden md:block text-gray-700 dark:text-gray-300">
+                    {user.firstName || user.username}
+                </span>
+                <svg 
+                    className={`w-4 h-4 text-gray-500 transition-transform ${isOpen ? 'rotate-180' : ''}`}
+                    fill="currentColor" 
+                    viewBox="0 0 20 20"
+                >
+                    <path fillRule="evenodd" d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z" clipRule="evenodd" />
+                </svg>
+            </button>
+
+            {isOpen && (
+                <div className="absolute right-0 mt-2 w-48 bg-white dark:bg-gray-800 rounded-lg shadow-lg border border-gray-200 dark:border-gray-700 py-1 z-50">
+                    <Link
+                        to={`/profile/${user.id}`}
+                        className="block px-4 py-2 text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-700 transition-colors"
+                        onClick={() => setIsOpen(false)}
+                    >
+                        Profile
+                    </Link>
+                    <Link
+                        to="/settings"
+                        className="block px-4 py-2 text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-700 transition-colors"
+                        onClick={() => setIsOpen(false)}
+                    >
+                        Settings
+                    </Link>
+                    <Link
+                        to="/my-posts"
+                        className="block px-4 py-2 text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-700 transition-colors"
+                        onClick={() => setIsOpen(false)}
+                    >
+                        My Posts
+                    </Link>
+                    <hr className="my-1 border-gray-200 dark:border-gray-600" />
+                    <button
+                        onClick={() => {
+                            setIsOpen(false);
+                            onLogout();
+                        }}
+                        className="block w-full text-left px-4 py-2 text-red-600 hover:bg-gray-100 dark:hover:bg-gray-700 transition-colors"
+                    >
+                        Logout
+                    </button>
+                </div>
+            )}
+        </div>
+    );
+}
+
+// components/features/SearchBar.js - Search cu debounce
+import { useState, useCallback } from 'react';
+import { useNavigate } from 'react-router-dom';
+import { useDebounce } from '../../hooks/useDebounce';
+
+function SearchBar() {
+    const [query, setQuery] = useState('');
+    const [isOpen, setIsOpen] = useState(false);
+    const [suggestions, setSuggestions] = useState([]);
+    const [loading, setLoading] = useState(false);
+
+    const navigate = useNavigate();
+    const debouncedQuery = useDebounce(query, 300);
+
+    // Load suggestions când query se schimbă
+    useEffect(() => {
+        if (debouncedQuery.length >= 2) {
+            loadSuggestions(debouncedQuery);
+        } else {
+            setSuggestions([]);
+            setIsOpen(false);
+        }
+    }, [debouncedQuery]);
+
+    const loadSuggestions = async (searchQuery) => {
+        try {
+            setLoading(true);
+            const response = await apiService.searchSuggestions(searchQuery);
+            setSuggestions(response.suggestions);
+            setIsOpen(response.suggestions.length > 0);
+        } catch (error) {
+            console.error('Failed to load suggestions:', error);
+        } finally {
+            setLoading(false);
+        }
+    };
+
+    const handleSubmit = (e) => {
+        e.preventDefault();
+        if (query.trim()) {
+            navigate(`/search?q=${encodeURIComponent(query.trim())}`);
+            setIsOpen(false);
+        }
+    };
+
+    const handleSuggestionClick = (suggestion) => {
+        setQuery(suggestion.title);
+        setIsOpen(false);
+
+        if (suggestion.type === 'post') {
+            navigate(`/posts/${suggestion.id}`);
+        } else if (suggestion.type === 'user') {
+            navigate(`/profile/${suggestion.id}`);
+        } else {
+            navigate(`/search?q=${encodeURIComponent(suggestion.title)}`);
+        }
+    };
+
+    return (
+        <div className="relative">
+            <form onSubmit={handleSubmit} className="relative">
+                <input
+                    type="text"
+                    value={query}
+                    onChange={(e) => setQuery(e.target.value)}
+                    placeholder="Search posts, authors..."
+                    className="w-full pl-10 pr-4 py-2 border border-gray-300 dark:border-gray-600 rounded-lg bg-white dark:bg-gray-700 text-gray-900 dark:text-gray-100 focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                />
+                <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
+                    <svg className="h-5 w-5 text-gray-400" fill="currentColor" viewBox="0 0 20 20">
+                        <path fillRule="evenodd" d="M8 4a4 4 0 100 8 4 4 0 000-8zM2 8a6 6 0 1110.89 3.476l4.817 4.817a1 1 0 01-1.414 1.414l-4.816-4.816A6 6 0 012 8z" clipRule="evenodd" />
+                    </svg>
+                </div>
+                {loading && (
+                    <div className="absolute inset-y-0 right-0 pr-3 flex items-center">
+                        <div className="animate-spin rounded-full h-4 w-4 border-2 border-gray-300 border-t-blue-600"></div>
+                    </div>
+                )}
+            </form>
+
+            {isOpen && suggestions.length > 0 && (
+                <div className="absolute z-50 w-full mt-1 bg-white dark:bg-gray-800 rounded-lg shadow-lg border border-gray-200 dark:border-gray-700 max-h-96 overflow-y-auto">
+                    {suggestions.map((suggestion, index) => (
+                        <button
+                            key={index}
+                            onClick={() => handleSuggestionClick(suggestion)}
+                            className="w-full px-4 py-3 text-left hover:bg-gray-50 dark:hover:bg-gray-700 border-b border-gray-100 dark:border-gray-600 last:border-b-0 transition-colors"
+                        >
+                            <div className="flex items-center space-x-3">
+                                {suggestion.type === 'post' && (
+                                    <svg className="w-4 h-4 text-gray-400" fill="currentColor" viewBox="0 0 20 20">
+                                        <path fillRule="evenodd" d="M4 4a2 2 0 012-2h4.586A2 2 0 0112 2.586L15.414 6A2 2 0 0116 7.414V16a2 2 0 01-2 2H6a2 2 0 01-2-2V4z" clipRule="evenodd" />
+                                    </svg>
+                                )}
+                                {suggestion.type === 'user' && (
+                                    <svg className="w-4 h-4 text-gray-400" fill="currentColor" viewBox="0 0 20 20">
+                                        <path fillRule="evenodd" d="M10 9a3 3 0 100-6 3 3 0 000 6zm-7 9a7 7 0 1114 0H3z" clipRule="evenodd" />
+                                    </svg>
+                                )}
+                                <div className="flex-1 min-w-0">
+                                    <p className="text-sm font-medium text-gray-900 dark:text-gray-100 truncate">
+                                        {suggestion.title}
+                                    </p>
+                                    {suggestion.subtitle && (
+                                        <p className="text-xs text-gray-500 dark:text-gray-400 truncate">
+                                            {suggestion.subtitle}
+                                        </p>
+                                    )}
+                                </div>
+                            </div>
+                        </button>
+                    ))}
+                </div>
+            )}
+        </div>
+    );
+}
+        """, language="javascript")
+
+        st.markdown("### Posts Components cu Event Handling")
+
+        st.code("""
+// components/features/PostCard.js - Individual post card cu interactions
+import React, { useState, useCallback } from 'react';
+import { Link } from 'react-router-dom';
+import { formatDistanceToNow } from 'date-fns';
+import { useAuth } from '../../hooks/useAuth';
+
+export function PostCard({ 
+    post, 
+    onLike, 
+    onShare, 
+    onDelete, 
+    showActions = true,
+    className = '' 
+}) {
+    const { user, isAuthenticated } = useAuth();
+    const [isLiking, setIsLiking] = useState(false);
+    const [showShareMenu, setShowShareMenu] = useState(false);
+
+    // Like/unlike functionality cu optimistic updates
+    const handleLike = useCallback(async (e) => {
+        e.preventDefault(); // Prevent navigation dacă e în Link
+
+        if (!isAuthenticated) {
+            // Redirect to login sau show modal
+            return;
+        }
+
+        if (isLiking) return; // Prevent double clicks
+
+        try {
+            setIsLiking(true);
+            await onLike(post.id);
+        } catch (error) {
+            console.error('Failed to like post:', error);
+        } finally {
+            setIsLiking(false);
+        }
+    }, [post.id, onLike, isAuthenticated, isLiking]);
+
+    // Share functionality
+    const handleShare = useCallback((platform) => {
+        const url = `${window.location.origin}/posts/${post.id}`;
+        const text = `Check out this post: ${post.title}`;
+
+        switch (platform) {
+            case 'twitter':
+                window.open(`https://twitter.com/intent/tweet?text=${encodeURIComponent(text)}&url=${encodeURIComponent(url)}`);
+                break;
+            case 'facebook':
+                window.open(`https://www.facebook.com/sharer/sharer.php?u=${encodeURIComponent(url)}`);
+                break;
+            case 'linkedin':
+                window.open(`https://www.linkedin.com/sharing/share-offsite/?url=${encodeURIComponent(url)}`);
+                break;
+            case 'copy':
+                navigator.clipboard.writeText(url);
+                // Show toast notification
+                break;
+            default:
+                onShare?.(post.id, platform);
+        }
+
+        setShowShareMenu(false);
+    }, [post.id, post.title, onShare]);
+
+    // Delete cu confirmation
+    const handleDelete = useCallback(async () => {
+        if (window.confirm('Are you sure you want to delete this post?')) {
+            try {
+                await onDelete(post.id);
+            } catch (error) {
+                console.error('Failed to delete post:', error);
+            }
+        }
+    }, [post.id, onDelete]);
+
+    const canEdit = user?.id === post.author.id;
+    const isLiked = post.isLiked;
+    const likesCount = post.likesCount;
+
+    return (
+        <article className={`bg-white dark:bg-gray-800 rounded-lg shadow-md hover:shadow-lg transition-shadow duration-200 overflow-hidden ${className}`}>
+            {/* Cover Image */}
+            {post.coverImage && (
+                <Link to={`/posts/${post.id}`}>
+                    <img
+                        src={post.coverImage}
+                        alt={post.title}
+                        className="w-full h-48 object-cover hover:scale-105 transition-transform duration-200"
+                    />
+                </Link>
+            )}
+
+            <div className="p-6">
+                {/* Author și Date */}
+                <div className="flex items-center space-x-3 mb-4">
+                    <Link to={`/profile/${post.author.id}`}>
+                        <img
+                            src={post.author.avatar || `https://api.dicebear.com/7.x/avataaars/svg?seed=${post.author.username}`}
+                            alt={post.author.username}
+                            className="w-10 h-10 rounded-full hover:ring-2 hover:ring-blue-500 transition-all"
+                        />
+                    </Link>
+                    <div className="flex-1 min-w-0">
+                        <Link 
+                            to={`/profile/${post.author.id}`}
+                            className="text-sm font-medium text-gray-900 dark:text-gray-100 hover:text-blue-600 dark:hover:text-blue-400 transition-colors"
+                        >
+                            {post.author.firstName} {post.author.lastName}
+                        </Link>
+                        <p className="text-xs text-gray-500 dark:text-gray-400">
+                            {formatDistanceToNow(new Date(post.publishedAt), { addSuffix: true })} 
+                            {post.readTime && ` • ${post.readTime} min read`}
+                        </p>
+                    </div>
+
+                    {/* More options pentru author */}
+                    {canEdit && (
+                        <div className="relative">
+                            <DropdownMenu
+                                trigger={
+                                    <button className="p-2 text-gray-400 hover:text-gray-600 dark:hover:text-gray-300 rounded-full hover:bg-gray-100 dark:hover:bg-gray-700 transition-colors">
+                                        <svg className="w-4 h-4" fill="currentColor" viewBox="0 0 20 20">
+                                            <path d="M10 6a2 2 0 110-4 2 2 0 010 4zM10 12a2 2 0 110-4 2 2 0 010 4zM10 18a2 2 0 110-4 2 2 0 010 4z" />
+                                        </svg>
+                                    </button>
+                                }
+                                items={[
+                                    {
+                                        label: 'Edit',
+                                        icon: 'edit',
+                                        onClick: () => navigate(`/posts/${post.id}/edit`)
+                                    },
+                                    {
+                                        label: 'Delete',
+                                        icon: 'delete',
+                                        onClick: handleDelete,
+                                        className: 'text-red-600 hover:bg-red-50'
+                                    }
+                                ]}
+                            />
+                        </div>
+                    )}
+                </div>
+
+                {/* Title și Content */}
+                <Link to={`/posts/${post.id}`} className="block group">
+                    <h2 className="text-xl font-bold text-gray-900 dark:text-gray-100 group-hover:text-blue-600 dark:group-hover:text-blue-400 transition-colors mb-2 line-clamp-2">
+                        {post.title}
+                    </h2>
+                    <p className="text-gray-600 dark:text-gray-300 mb-4 line-clamp-3">
+                        {post.excerpt}
+                    </p>
+                </Link>
+
+                {/* Tags */}
+                {post.tags && post.tags.length > 0 && (
+                    <div className="flex flex-wrap gap-2 mb-4">
+                        {post.tags.slice(0, 3).map(tag => (
+                            <Link
+                                key={tag}
+                                to={`/posts?tag=${tag}`}
+                                className="px-2 py-1 bg-gray-100 dark:bg-gray-700 text-gray-700 dark:text-gray-300 text-xs rounded-full hover:bg-blue-100 dark:hover:bg-blue-900 hover:text-blue-700 dark:hover:text-blue-300 transition-colors"
+                            >
+                                #{tag}
+                            </Link>
+                        ))}
+                        {post.tags.length > 3 && (
+                            <span className="px-2 py-1 text-gray-500 text-xs">
+                                +{post.tags.length - 3} more
+                            </span>
+                        )}
+                    </div>
+                )}
+
+                {/* Actions Bar */}
+                {showActions && (
+                    <div className="flex items-center justify-between pt-4 border-t border-gray-200 dark:border-gray-700">
+                        <div className="flex items-center space-x-4">
+                            {/* Like Button */}
+                            <button
+                                onClick={handleLike}
+                                disabled={isLiking || !isAuthenticated}
+                                className={`flex items-center space-x-1 px-3 py-1 rounded-full transition-colors ${
+                                    isLiked 
+                                        ? 'text-red-600 bg-red-50 dark:bg-red-900/20' 
+                                        : 'text-gray-500 hover:text-red-600 hover:bg-red-50 dark:hover:bg-red-900/20'
+                                } ${isLiking ? 'opacity-50 cursor-not-allowed' : ''}`}
+                            >
+                                <svg 
+                                    className={`w-4 h-4 ${isLiked ? 'fill-current' : 'stroke-current fill-none'}`} 
+                                    viewBox="0 0 24 24"
+                                >
+                                    <path 
+                                        strokeLinecap="round" 
+                                        strokeLinejoin="round" 
+                                        strokeWidth={2} 
+                                        d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z" 
+                                    />
+                                </svg>
+                                <span className="text-sm">{likesCount}</span>
+                            </button>
+
+                            {/* Comments */}
+                            <Link
+                                to={`/posts/${post.id}#comments`}
+                                className="flex items-center space-x-1 px-3 py-1 text-gray-500 hover:text-blue-600 hover:bg-blue-50 dark:hover:bg-blue-900/20 rounded-full transition-colors"
+                            >
+                                <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M8 12h.01M12 12h.01M16 12h.01M21 12c0 4.418-4.03 8-9 8a9.863 9.863 0 01-4.255-.949L3 20l1.395-3.72C3.512 15.042 3 13.574 3 12c0-4.418 4.03-8 9-8s9 3.582 9 8z" />
+                                </svg>
+                                <span className="text-sm">{post.commentsCount}</span>
+                            </Link>
+                        </div>
+
+                        {/* Share Button */}
+                        <div className="relative">
+                            <button
+                                onClick={() => setShowShareMenu(!showShareMenu)}
+                                className="p-2 text-gray-500 hover:text-gray-700 dark:hover:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-700 rounded-full transition-colors"
+                                aria-label="Share post"
+                            >
+                                <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M8.684 13.342C8.886 12.938 9 12.482 9 12c0-.482-.114-.938-.316-1.342m0 2.684a3 3 0 110-2.684m0 2.684l6.632 3.316m-6.632-6l6.632-3.316m0 0a3 3 0 105.367-2.684 3 3 0 00-5.367 2.684zm0 9.316a3 3 0 105.367 2.684 3 3 0 00-5.367-2.684z" />
+                                </svg>
+                            </button>
+
+                            {showShareMenu && (
+                                <div className="absolute right-0 bottom-full mb-2 w-48 bg-white dark:bg-gray-800 rounded-lg shadow-lg border border-gray-200 dark:border-gray-700 py-1 z-10">
+                                    <button
+                                        onClick={() => handleShare('twitter')}
+                                        className="w-full px-4 py-2 text-left text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-700 transition-colors"
+                                    >
+                                        Share on Twitter
+                                    </button>
+                                    <button
+                                        onClick={() => handleShare('facebook')}
+                                        className="w-full px-4 py-2 text-left text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-700 transition-colors"
+                                    >
+                                        Share on Facebook
+                                    </button>
+                                    <button
+                                        onClick={() => handleShare('linkedin')}
+                                        className="w-full px-4 py-2 text-left text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-700 transition-colors"
+                                    >
+                                        Share on LinkedIn
+                                    </button>
+                                    <button
+                                        onClick={() => handleShare('copy')}
+                                        className="w-full px-4 py-2 text-left text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-700 transition-colors"
+                                    >
+                                        Copy Link
+                                    </button>
+                                </div>
+                            )}
+                        </div>
+                    </div>
+                )}
+            </div>
+        </article>
+    );
+}
+
+// components/features/PostsList.js - Lista de posts cu infinite scroll
+import { useEffect, useRef, useCallback } from 'react';
+import { usePosts } from '../../hooks/usePosts';
+import { LoadingSpinner } from '../ui/LoadingSpinner';
+import { ErrorMessage } from '../ui/ErrorMessage';
+
+export function PostsList({ filters = {}, className = '' }) {
+    const {
+        posts,
+        loading,
+        error,
+        hasMore,
+        loadPosts,
+        loadMore,
+        toggleLike,
+        refresh
+    } = usePosts();
+
+    // Ref pentru intersection observer
+    const loadMoreRef = useRef();
+
+    // Load posts la mount și când se schimbă filters
+    useEffect(() => {
+        loadPosts(1, filters);
+    }, [loadPosts, filters]);
+
+    // Intersection Observer pentru infinite scroll
+    useEffect(() => {
+        const observer = new IntersectionObserver(
+            (entries) => {
+                if (entries[0].isIntersecting && hasMore && !loading) {
+                    loadMore();
+                }
+            },
+            { threshold: 0.1 }
+        );
+
+        if (loadMoreRef.current) {
+            observer.observe(loadMoreRef.current);
+        }
+
+        return () => {
+            if (loadMoreRef.current) {
+                observer.unobserve(loadMoreRef.current);
+            }
+        };
+    }, [hasMore, loading, loadMore]);
+
+    const handleLike = useCallback(async (postId) => {
+        try {
+            await toggleLike(postId);
+        } catch (error) {
+            console.error('Failed to toggle like:', error);
+        }
+    }, [toggleLike]);
+
+    if (error && posts.length === 0) {
+        return (
+            <ErrorMessage 
+                error={error} 
+                onRetry={refresh}
+                className="max-w-md mx-auto"
+            />
+        );
+    }
+
+    return (
+        <div className={`space-y-6 ${className}`}>
+            {posts.length === 0 && !loading ? (
+                <div className="text-center py-12">
+                    <svg className="mx-auto h-12 w-12 text-gray-400" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
+                    </svg>
+                    <h3 className="mt-2 text-sm font-medium text-gray-900 dark:text-gray-100">No posts found</h3>
+                    <p className="mt-1 text-sm text-gray-500 dark:text-gray-400">
+                        {Object.keys(filters).length > 0 
+                            ? 'Try adjusting your search or filters.' 
+                            : 'Get started by creating a new post.'
+                        }
+                    </p>
+                </div>
+            ) : (
+                <>
+                    {posts.map(post => (
+                        <PostCard
+                            key={post.id}
+                            post={post}
+                            onLike={handleLike}
+                        />
+                    ))}
+
+                    {/* Infinite scroll trigger */}
+                    {hasMore && (
+                        <div ref={loadMoreRef} className="flex justify-center py-8">
+                            {loading && <LoadingSpinner text="Loading more posts..." />}
+                        </div>
+                    )}
+
+                    {!hasMore && posts.length > 0 && (
+                        <div className="text-center py-8 text-gray-500 dark:text-gray-400">
+                            You've reached the end! 🎉
+                        </div>
+                    )}
+                </>
+            )}
+        </div>
+    );
+}
+        """, language="javascript")
+
+    with tab4:
+        st.markdown('<h2 class="section-header">State Management și Form Handling</h2>', unsafe_allow_html=True)
+
+        st.markdown("### Advanced Form Components cu Validation")
+
+        st.code("""
+// components/forms/PostForm.js - Form complex pentru post creation/editing
+import React, { useState, useEffect, useCallback, useRef } from 'react';
+import { useNavigate } from 'react-router-dom';
+import { useFormValidation } from '../../hooks/useFormValidation';
+import { useAuth } from '../../hooks/useAuth';
+import { LoadingSpinner } from '../ui/LoadingSpinner';
+import { ErrorMessage } from '../ui/ErrorMessage';
+
+// Validation rules pentru post form
+const postValidationRules = {
+    title: [
+        (value) => !value?.trim() ? 'Title is required' : null,
+        (value) => value?.length < 5 ? 'Title must be at least 5 characters' : null,
+        (value) => value?.length > 100 ? 'Title must be less than 100 characters' : null
+    ],
+    content: [
+        (value) => !value?.trim() ? 'Content is required' : null,
+        (value) => value?.length < 50 ? 'Content must be at least 50 characters' : null
+    ],
+    excerpt: [
+        (value) => value && value.length > 200 ? 'Excerpt must be less than 200 characters' : null
+    ],
+    tags: [
+        (value) => Array.isArray(value) && value.length > 10 ? 'Maximum 10 tags allowed' : null
+    ],
+    category: [
+        (value) => !value ? 'Category is required' : null
+    ]
+};
+
+export function PostForm({ 
+    initialData = null, 
+    mode = 'create', // 'create' or 'edit'
+    onSubmit, 
+    onCancel 
+}) {
+    const { user } = useAuth();
+    const navigate = useNavigate();
+
+    // Initial form values
+    const initialValues = {
+        title: initialData?.title || '',
+        content: initialData?.content || '',
+        excerpt: initialData?.excerpt || '',
+        coverImage: initialData?.coverImage || '',
+        tags: initialData?.tags || [],
+        category: initialData?.category || '',
+        isPublished: initialData?.isPublished ?? true
+    };
+
+    const {
+        values,
+        errors,
+        touched,
+        isSubmitting,
+        setValue,
+        setTouched: setFieldTouched,
+        handleSubmit,
+        isValid
+    } = useFormValidation(initialValues, postValidationRules);
+
+    const [tagInput, setTagInput] = useState('');
+    const [imagePreview, setImagePreview] = useState(initialData?.coverImage || '');
+    const [autoSaving, setAutoSaving] = useState(false);
+    const [lastSaved, setLastSaved] = useState(null);
+
+    // Auto-save functionality
+    const autoSaveTimeoutRef = useRef();
+    const isInitialMount = useRef(true);
+
+    // Auto-save effect
+    useEffect(() => {
+        // Skip auto-save pe prima render
+        if (isInitialMount.current) {
+            isInitialMount.current = false;
+            return;
+        }
+
+        // Clear existing timeout
+        if (autoSaveTimeoutRef.current) {
+            clearTimeout(autoSaveTimeoutRef.current);
+        }
+
+        // Set new timeout pentru auto-save
+        autoSaveTimeoutRef.current = setTimeout(() => {
+            if (mode === 'edit' && isValid && values.title.trim() && values.content.trim()) {
+                autoSave();
+            }
+        }, 2000); // Auto-save după 2 secunde de inactivitate
+
+        return () => {
+            if (autoSaveTimeoutRef.current) {
+                clearTimeout(autoSaveTimeoutRef.current);
+            }
+        };
+    }, [values, isValid, mode]);
+
+    const autoSave = async () => {
+        try {
+            setAutoSaving(true);
+
+            const draftData = {
+                ...values,
+                isDraft: true,
+                lastModified: new Date().toISOString()
+            };
+
+            // Save ca draft
+            await onSubmit(draftData, { isDraft: true });
+            setLastSaved(new Date());
+        } catch (error) {
+            console.error('Auto-save failed:', error);
+        } finally {
+            setAutoSaving(false);
+        }
+    };
+
+    // Tag handling
+    const addTag = useCallback((tag) => {
+        const normalizedTag = tag.trim().toLowerCase();
+        if (normalizedTag && !values.tags.includes(normalizedTag)) {
+            setValue('tags', [...values.tags, normalizedTag]);
+        }
+        setTagInput('');
+    }, [values.tags, setValue]);
+
+    const removeTag = useCallback((tagToRemove) => {
+        setValue('tags', values.tags.filter(tag => tag !== tagToRemove));
+    }, [values.tags, setValue]);
+
+    const handleTagKeyPress = (e) => {
+        if (e.key === 'Enter' || e.key === ',') {
+            e.preventDefault();
+            addTag(tagInput);
+        }
+    };
+
+    // Image handling
+    const handleImageUpload = useCallback(async (file) => {
+        try {
+            // Create preview
+            const reader = new FileReader();
+            reader.onload = (e) => setImagePreview(e.target.result);
+            reader.readAsDataURL(file);
+
+            // Upload to server (mock implementation)
+            const formData = new FormData();
+            formData.append('image', file);
+
+            // const response = await apiService.uploadImage(formData);
+            // setValue('coverImage', response.url);
+
+            // Pentru demo, folosim preview URL
+            setValue('coverImage', URL.createObjectURL(file));
+        } catch (error) {
+            console.error('Image upload failed:', error);
+        }
+    }, [setValue]);
+
+    const handleImageChange = (e) => {
+        const file = e.target.files[0];
+        if (file) {
+            if (file.size > 5 * 1024 * 1024) { // 5MB limit
+                alert('Image size must be less than 5MB');
+                return;
+            }
+
+            if (!file.type.startsWith('image/')) {
+                alert('Please select a valid image file');
+                return;
+            }
+
+            handleImageUpload(file);
+        }
+    };
+
+    // Submit handling
+    const handleFormSubmit = handleSubmit(async (formData) => {
+        try {
+            const submitData = {
+                ...formData,
+                author: user.id,
+                publishedAt: formData.isPublished ? new Date().toISOString() : null,
+                updatedAt: new Date().toISOString()
+            };
+
+            await onSubmit(submitData);
+
+            // Navigate după success
+            navigate(mode === 'create' ? '/posts' : `/posts/${initialData.id}`);
+        } catch (error) {
+            console.error('Form submission failed:', error);
+        }
+    });
+
+    // Content statistics
+    const contentStats = {
+        characters: values.content.length,
+        words: values.content.trim() ? values.content.trim().split(/\s+/).length : 0,
+        readTime: Math.ceil((values.content.trim().split(/\s+/).length || 0) / 200) // 200 words per minute
+    };
+
+    return (
+        <form onSubmit={handleFormSubmit} className="max-w-4xl mx-auto space-y-6">
+            {/* Header cu save status */}
+            <div className="flex items-center justify-between">
+                <h1 className="text-2xl font-bold text-gray-900 dark:text-gray-100">
+                    {mode === 'create' ? 'Create New Post' : 'Edit Post'}
+                </h1>
+
+                <div className="flex items-center space-x-4">
+                    {/* Auto-save status */}
+                    <div className="text-sm text-gray-500 dark:text-gray-400">
+                        {autoSaving && (
+                            <span className="flex items-center space-x-1">
+                                <div className="animate-spin rounded-full h-3 w-3 border border-gray-400 border-t-transparent"></div>
+                                <span>Saving...</span>
+                            </span>
+                        )}
+                        {lastSaved && !autoSaving && (
+                            <span>
+                                Saved {formatDistanceToNow(lastSaved, { addSuffix: true })}
+                            </span>
+                        )}
+                    </div>
+
+                    {/* Action buttons */}
+                    <button
+                        type="button"
+                        onClick={onCancel}
+                        className="px-4 py-2 text-gray-700 dark:text-gray-300 border border-gray-300 dark:border-gray-600 rounded-lg hover:bg-gray-50 dark:hover:bg-gray-700 transition-colors"
+                    >
+                        Cancel
+                    </button>
+
+                    <button
+                        type="submit"
+                        disabled={!isValid || isSubmitting}
+                        className="px-6 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 disabled:opacity-50 disabled:cursor-not-allowed transition-colors"
+                    >
+                        {isSubmitting ? (
+                            <span className="flex items-center space-x-2">
+                                <LoadingSpinner size="small" />
+                                <span>{mode === 'create' ? 'Creating...' : 'Saving...'}</span>
+                            </span>
+                        ) : (
+                            mode === 'create' ? 'Publish Post' : 'Save Changes'
+                        )}
+                    </button>
+                </div>
+            </div>
+
+            <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
+                {/* Main content */}
+                <div className="lg:col-span-2 space-y-6">
+                    {/* Title */}
+                    <div>
+                        <input
+                            type="text"
+                            placeholder="Post title..."
+                            value={values.title}
+                            onChange={(e) => setValue('title', e.target.value)}
+                            onBlur={() => setFieldTouched('title')}
+                            className={`w-full text-3xl font-bold bg-transparent border-none outline-none resize-none placeholder-gray-400 dark:placeholder-gray-500 text-gray-900 dark:text-gray-100 ${
+                                touched.title && errors.title ? 'text-red-600' : ''
+                            }`}
+                        />
+                        {touched.title && errors.title && (
+                            <p className="mt-1 text-sm text-red-600">{errors.title}</p>
+                        )}
+                    </div>
+
+                    {/* Cover Image */}
+                    <div>
+                        <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
+                            Cover Image
+                        </label>
+
+                        {imagePreview ? (
+                            <div className="relative">
+                                <img
+                                    src={imagePreview}
+                                    alt="Cover preview"
+                                    className="w-full h-64 object-cover rounded-lg"
+                                />
+                                <button
+                                    type="button"
+                                    onClick={() => {
+                                        setImagePreview('');
+                                        setValue('coverImage', '');
+                                    }}
+                                    className="absolute top-2 right-2 p-1 bg-red-600 text-white rounded-full hover:bg-red-700 transition-colors"
+                                >
+                                    <svg className="w-4 h-4" fill="currentColor" viewBox="0 0 20 20">
+                                        <path fillRule="evenodd" d="M4.293 4.293a1 1 0 011.414 0L10 8.586l4.293-4.293a1 1 0 111.414 1.414L11.414 10l4.293 4.293a1 1 0 01-1.414 1.414L10 11.414l-4.293 4.293a1 1 0 01-1.414-1.414L8.586 10 4.293 5.707a1 1 0 010-1.414z" clipRule="evenodd" />
+                                    </svg>
+                                </button>
+                            </div>
+                        ) : (
+                            <div className="border-2 border-dashed border-gray-300 dark:border-gray-600 rounded-lg p-6 text-center">
+                                <input
+                                    type="file"
+                                    accept="image/*"
+                                    onChange={handleImageChange}
+                                    className="hidden"
+                                    id="cover-image"
+                                />
+                                <label
+                                    htmlFor="cover-image"
+                                    className="cursor-pointer flex flex-col items-center space-y-2"
+                                >
+                                    <svg className="w-12 h-12 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 48 48">
+                                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M28 8H12a4 4 0 00-4 4v20m32-12v8m0 0v8a4 4 0 01-4 4H12a4 4 0 01-4-4v-4m32-4l-3.172-3.172a4 4 0 00-5.656 0L28 28M8 32l9.172-9.172a4 4 0 015.656 0L28 28m0 0l4 4m4-24h8m-4-4v8m-12 4h.02" />
+                                    </svg>
+                                    <div className="text-sm text-gray-600 dark:text-gray-400">
+                                        <span className="font-medium text-blue-600 hover:text-blue-500">Upload an image</span>
+                                        <span> or drag and drop</span>
+                                    </div>
+                                    <p className="text-xs text-gray-500">PNG, JPG, GIF up to 5MB</p>
+                                </label>
+                            </div>
+                        )}
+                    </div>
+
+                    {/* Content */}
+                    <div>
+                        <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
+                            Content
+                        </label>
+                        <textarea
+                            placeholder="Tell your story..."
+                            value={values.content}
+                            onChange={(e) => setValue('content', e.target.value)}
+                            onBlur={() => setFieldTouched('content')}
+                            rows={20}
+                            className={`w-full p-4 border border-gray-300 dark:border-gray-600 rounded-lg bg-white dark:bg-gray-800 text-gray-900 dark:text-gray-100 focus:ring-2 focus:ring-blue-500 focus:border-transparent resize-vertical ${
+                                touched.content && errors.content ? 'border-red-500' : ''
+                            }`}
+                        />
+                        {touched.content && errors.content && (
+                            <p className="mt-1 text-sm text-red-600">{errors.content}</p>
+                        )}
+
+                        {/* Content stats */}
+                        <div className="mt-2 flex items-center space-x-4 text-sm text-gray-500 dark:text-gray-400">
+                            <span>{contentStats.characters} characters</span>
+                            <span>{contentStats.words} words</span>
+                            <span>{contentStats.readTime} min read</span>
+                        </div>
+                    </div>
+                </div>
+
+                {/* Sidebar */}
+                <div className="space-y-6">
+                    {/* Publish settings */}
+                    <div className="bg-gray-50 dark:bg-gray-800 rounded-lg p-4">
+                        <h3 className="text-lg font-medium text-gray-900 dark:text-gray-100 mb-4">Publish Settings</h3>
+
+                        <div className="space-y-4">
+                            {/* Published status */}
+                            <label className="flex items-center space-x-3">
+                                <input
+                                    type="checkbox"
+                                    checked={values.isPublished}
+                                    onChange={(e) => setValue('isPublished', e.target.checked)}
+                                    className="rounded border-gray-300 dark:border-gray-600 text-blue-600 focus:ring-blue-500"
+                                />
+                                <span className="text-sm text-gray-700 dark:text-gray-300">
+                                    Publish immediately
+                                </span>
+                            </label>
+
+                            {/* Category */}
+                            <div>
+                                <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">
+                                    Category
+                                </label>
+                                <select
+                                    value={values.category}
+                                    onChange={(e) => setValue('category', e.target.value)}
+                                    onBlur={() => setFieldTouched('category')}
+                                    className={`w-full p-2 border border-gray-300 dark:border-gray-600 rounded-lg bg-white dark:bg-gray-700 text-gray-900 dark:text-gray-100 focus:ring-2 focus:ring-blue-500 focus:border-transparent ${
+                                        touched.category && errors.category ? 'border-red-500' : ''
+                                    }`}
+                                >
+                                    <option value="">Select category</option>
+                                    <option value="tutorial">Tutorial</option>
+                                    <option value="opinion">Opinion</option>
+                                    <option value="news">News</option>
+                                    <option value="review">Review</option>
+                                    <option value="case-study">Case Study</option>
+                                </select>
+                                {touched.category && errors.category && (
+                                    <p className="mt-1 text-sm text-red-600">{errors.category}</p>
+                                )}
+                            </div>
+                        </div>
+                    </div>
+
+                    {/* Tags */}
+                    <div className="bg-gray-50 dark:bg-gray-800 rounded-lg p-4">
+                        <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
+                            Tags
+                        </label>
+
+                        <div className="space-y-2">
+                            <input
+                                type="text"
+                                placeholder="Add tags..."
+                                value={tagInput}
+                                onChange={(e) => setTagInput(e.target.value)}
+                                onKeyPress={handleTagKeyPress}
+                                className="w-full p-2 border border-gray-300 dark:border-gray-600 rounded-lg bg-white dark:bg-gray-700 text-gray-900 dark:text-gray-100 focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                            />
+
+                            <div className="flex flex-wrap gap-2">
+                                {values.tags.map(tag => (
+                                    <span
+                                        key={tag}
+                                        className="inline-flex items-center px-2 py-1 bg-blue-100 dark:bg-blue-900 text-blue-800 dark:text-blue-200 text-sm rounded-full"
+                                    >
+                                        #{tag}
+                                        <button
+                                            type="button"
+                                            onClick={() => removeTag(tag)}
+                                            className="ml-1 text-blue-600 hover:text-blue-800 dark:text-blue-300 dark:hover:text-blue-100"
+                                        >
+                                            <svg className="w-3 h-3" fill="currentColor" viewBox="0 0 20 20">
+                                                <path fillRule="evenodd" d="M4.293 4.293a1 1 0 011.414 0L10 8.586l4.293-4.293a1 1 0 111.414 1.414L11.414 10l4.293 4.293a1 1 0 01-1.414 1.414L10 11.414l-4.293 4.293a1 1 0 01-1.414-1.414L8.586 10 4.293 5.707a1 1 0 010-1.414z" clipRule="evenodd" />
+                                            </svg>
+                                        </button>
+                                    </span>
+                                ))}
+                            </div>
+
+                            {touched.tags && errors.tags && (
+                                <p className="text-sm text-red-600">{errors.tags}</p>
+                            )}
+                        </div>
+                    </div>
+
+                    {/* Excerpt */}
+                    <div className="bg-gray-50 dark:bg-gray-800 rounded-lg p-4">
+                        <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
+                            Excerpt
+                        </label>
+                        <textarea
+                            placeholder="Brief description of your post..."
+                            value={values.excerpt}
+                            onChange={(e) => setValue('excerpt', e.target.value)}
+                            onBlur={() => setFieldTouched('excerpt')}
+                            rows={3}
+                            className={`w-full p-2 border border-gray-300 dark:border-gray-600 rounded-lg bg-white dark:bg-gray-700 text-gray-900 dark:text-gray-100 focus:ring-2 focus:ring-blue-500 focus:border-transparent resize-vertical ${
+                                touched.excerpt && errors.excerpt ? 'border-red-500' : ''
+                            }`}
+                        />
+                        {touched.excerpt && errors.excerpt && (
+                            <p className="mt-1 text-sm text-red-600">{errors.excerpt}</p>
+                        )}
+                    </div>
+                </div>
+            </div>
+        </form>
+    );
+}
+        """, language="javascript")
+
+    with tab5:
+        st.markdown('<h2 class="section-header">Advanced Features și Performance</h2>', unsafe_allow_html=True)
+
+        st.markdown("### Comments System cu Real-time Updates")
+
+        st.code("""
+// components/features/CommentsSection.js - Sistema complexă de comentarii
+import React, { useState, useEffect, useCallback, useMemo } from 'react';
+import { formatDistanceToNow } from 'date-fns';
+import { useAuth } from '../../hooks/useAuth';
+import { useComments } from '../../hooks/useComments';
+import { LoadingSpinner } from '../ui/LoadingSpinner';
+import { ErrorMessage } from '../ui/ErrorMessage';
+
+export function CommentsSection({ postId, className = '' }) {
+    const { user, isAuthenticated } = useAuth();
+    const {
+        comments,
+        loading,
+        error,
+        loadComments,
+        addComment,
+        updateComment,
+        deleteComment,
+        toggleLike
+    } = useComments(postId);
+
+    const [newComment, setNewComment] = useState('');
+    const [replyingTo, setReplyingTo] = useState(null);
+    const [editingComment, setEditingComment] = useState(null);
+    const [submitting, setSubmitting] = useState(false);
+
+    // Load comments la mount
+    useEffect(() => {
+        loadComments();
+    }, [loadComments]);
+
+    // Organizarea comentariilor în thread-uri
+    const organizedComments = useMemo(() => {
+        const topLevel = comments.filter(comment => !comment.parentId);
+        const replies = comments.filter(comment => comment.parentId);
+
+        return topLevel.map(comment => ({
+            ...comment,
+            replies: replies.filter(reply => reply.parentId === comment.id)
+                .sort((a, b) => new Date(a.createdAt) - new Date(b.createdAt))
+        })).sort((a, b) => new Date(b.createdAt) - new Date(a.createdAt));
+    }, [comments]);
+
+    // Submit new comment
+    const handleSubmitComment = useCallback(async (content, parentId = null) => {
+        if (!content.trim() || submitting) return;
+
+        try {
+            setSubmitting(true);
+            await addComment({
+                content: content.trim(),
+                parentId,
+                postId
+            });
+
+            // Reset form
+            if (parentId) {
+                setReplyingTo(null);
+            } else {
+                setNewComment('');
+            }
+        } catch (error) {
+            console.error('Failed to submit comment:', error);
+        } finally {
+            setSubmitting(false);
+        }
+    }, [addComment, postId, submitting]);
+
+    // Update comment
+    const handleUpdateComment = useCallback(async (commentId, content) => {
+        if (!content.trim()) return;
+
+        try {
+            await updateComment(commentId, { content: content.trim() });
+            setEditingComment(null);
+        } catch (error) {
+            console.error('Failed to update comment:', error);
+        }
+    }, [updateComment]);
+
+    // Delete comment cu confirmation
+    const handleDeleteComment = useCallback(async (commentId) => {
+        if (window.confirm('Are you sure you want to delete this comment?')) {
+            try {
+                await deleteComment(commentId);
+            } catch (error) {
+                console.error('Failed to delete comment:', error);
+            }
+        }
+    }, [deleteComment]);
+
+    // Like/unlike comment
+    const handleToggleLike = useCallback(async (commentId) => {
+        if (!isAuthenticated) return;
+
+        try {
+            await toggleLike(commentId);
+        } catch (error) {
+            console.error('Failed to toggle like:', error);
+        }
+    }, [toggleLike, isAuthenticated]);
+
+    if (error) {
+        return <ErrorMessage error={error} onRetry={loadComments} />;
+    }
+
+    return (
+        <section id="comments" className={`bg-white dark:bg-gray-800 rounded-lg shadow-md p-6 ${className}`}>
+            <div className="border-b border-gray-200 dark:border-gray-700 pb-4 mb-6">
+                <h2 className="text-xl font-semibold text-gray-900 dark:text-gray-100">
+                    Comments ({comments.length})
+                </h2>
+            </div>
+
+            {/* New comment form */}
+            {isAuthenticated ? (
+                <CommentForm
+                    onSubmit={(content) => handleSubmitComment(content)}
+                    submitting={submitting}
+                    placeholder="Share your thoughts..."
+                    buttonText="Post Comment"
+                />
+            ) : (
+                <div className="bg-gray-50 dark:bg-gray-700 rounded-lg p-4 text-center mb-6">
+                    <p className="text-gray-600 dark:text-gray-400 mb-2">
+                        Join the conversation!
+                    </p>
+                    <Link
+                        to="/login"
+                        className="text-blue-600 hover:text-blue-700 dark:text-blue-400 dark:hover:text-blue-300 font-medium"
+                    >
+                        Sign in to comment
+                    </Link>
+                </div>
+            )}
+
+            {/* Comments list */}
+            {loading && comments.length === 0 ? (
+                <div className="flex justify-center py-8">
+                    <LoadingSpinner text="Loading comments..." />
+                </div>
+            ) : (
+                <div className="space-y-6">
+                    {organizedComments.length === 0 ? (
+                        <div className="text-center py-8">
+                            <svg className="mx-auto h-12 w-12 text-gray-400" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M8 12h.01M12 12h.01M16 12h.01M21 12c0 4.418-4.03 8-9 8a9.863 9.863 0 01-4.255-.949L3 20l1.395-3.72C3.512 15.042 3 13.574 3 12c0-4.418 4.03-8 9-8s9 3.582 9 8z" />
+                            </svg>
+                            <h3 className="mt-2 text-sm font-medium text-gray-900 dark:text-gray-100">
+                                No comments yet
+                            </h3>
+                            <p className="mt-1 text-sm text-gray-500 dark:text-gray-400">
+                                Be the first to share your thoughts!
+                            </p>
+                        </div>
+                    ) : (
+                        organizedComments.map(comment => (
+                            <CommentThread
+                                key={comment.id}
+                                comment={comment}
+                                currentUser={user}
+                                isAuthenticated={isAuthenticated}
+                                replyingTo={replyingTo}
+                                editingComment={editingComment}
+                                onReply={setReplyingTo}
+                                onEdit={setEditingComment}
+                                onDelete={handleDeleteComment}
+                                onLike={handleToggleLike}
+                                onSubmitReply={handleSubmitComment}
+                                onSubmitEdit={handleUpdateComment}
+                                submitting={submitting}
+                            />
+                        ))
+                    )}
+                </div>
+            )}
+        </section>
+    );
+}
+
+// Individual comment component
+function CommentThread({
+    comment,
+    currentUser,
+    isAuthenticated,
+    replyingTo,
+    editingComment,
+    onReply,
+    onEdit,
+    onDelete,
+    onLike,
+    onSubmitReply,
+    onSubmitEdit,
+    submitting
+}) {
+    const isAuthor = currentUser?.id === comment.author.id;
+    const isReplying = replyingTo === comment.id;
+    const isEditing = editingComment === comment.id;
+
+    return (
+        <div className="flex space-x-3">
+            {/* Avatar */}
+            <img
+                src={comment.author.avatar || `https://api.dicebear.com/7.x/avataaars/svg?seed=${comment.author.username}`}
+                alt={comment.author.username}
+                className="w-10 h-10 rounded-full flex-shrink-0"
+            />
+
+            <div className="flex-1 min-w-0">
+                {/* Comment header */}
+                <div className="flex items-center space-x-2 mb-1">
+                    <span className="text-sm font-medium text-gray-900 dark:text-gray-100">
+                        {comment.author.firstName} {comment.author.lastName}
+                    </span>
+                    <span className="text-xs text-gray-500 dark:text-gray-400">
+                        @{comment.author.username}
+                    </span>
+                    <span className="text-xs text-gray-500 dark:text-gray-400">•</span>
+                    <time className="text-xs text-gray-500 dark:text-gray-400">
+                        {formatDistanceToNow(new Date(comment.createdAt), { addSuffix: true })}
+                    </time>
+                    {comment.updatedAt !== comment.createdAt && (
+                        <span className="text-xs text-gray-400">(edited)</span>
+                    )}
+                </div>
+
+                {/* Comment content */}
+                {isEditing ? (
+                    <CommentForm
+                        initialValue={comment.content}
+                        onSubmit={(content) => onSubmitEdit(comment.id, content)}
+                        onCancel={() => onEdit(null)}
+                        submitting={submitting}
+                        placeholder="Edit your comment..."
+                        buttonText="Save Changes"
+                        showCancel
+                    />
+                ) : (
+                    <div className="text-gray-700 dark:text-gray-300 mb-2 whitespace-pre-wrap">
+                        {comment.content}
+                    </div>
+                )}
+
+                {/* Comment actions */}
+                {!isEditing && (
+                    <div className="flex items-center space-x-4 text-sm">
+                        {/* Like button */}
+                        <button
+                            onClick={() => onLike(comment.id)}
+                            disabled={!isAuthenticated}
+                            className={`flex items-center space-x-1 px-2 py-1 rounded-full transition-colors ${
+                                comment.isLiked
+                                    ? 'text-red-600 bg-red-50 dark:bg-red-900/20'
+                                    : 'text-gray-500 hover:text-red-600 hover:bg-red-50 dark:hover:bg-red-900/20'
+                            } ${!isAuthenticated ? 'opacity-50 cursor-not-allowed' : ''}`}
+                        >
+                            <svg 
+                                className={`w-4 h-4 ${comment.isLiked ? 'fill-current' : 'stroke-current fill-none'}`}
+                                viewBox="0 0 24 24"
+                            >
+                                <path 
+                                    strokeLinecap="round" 
+                                    strokeLinejoin="round" 
+                                    strokeWidth={2} 
+                                    d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z" 
+                                />
+                            </svg>
+                            <span>{comment.likesCount}</span>
+                        </button>
+
+                        {/* Reply button */}
+                        {isAuthenticated && (
+                            <button
+                                onClick={() => onReply(isReplying ? null : comment.id)}
+                                className="text-gray-500 hover:text-blue-600 dark:hover:text-blue-400 transition-colors"
+                            >
+                                {isReplying ? 'Cancel' : 'Reply'}
+                            </button>
+                        )}
+
+                        {/* Edit/Delete pentru author */}
+                        {isAuthor && (
+                            <>
+                                <button
+                                    onClick={() => onEdit(comment.id)}
+                                    className="text-gray-500 hover:text-gray-700 dark:hover:text-gray-300 transition-colors"
+                                >
+                                    Edit
+                                </button>
+                                <button
+                                    onClick={() => onDelete(comment.id)}
+                                    className="text-gray-500 hover:text-red-600 transition-colors"
+                                >
+                                    Delete
+                                </button>
+                            </>
+                        )}
+                    </div>
+                )}
+
+                {/* Reply form */}
+                {isReplying && (
+                    <div className="mt-3">
+                        <CommentForm
+                            onSubmit={(content) => onSubmitReply(content, comment.id)}
+                            onCancel={() => onReply(null)}
+                            submitting={submitting}
+                            placeholder={`Reply to ${comment.author.firstName}...`}
+                            buttonText="Post Reply"
+                            showCancel
+                        />
+                    </div>
+                )}
+
+                {/* Replies */}
+                {comment.replies && comment.replies.length > 0 && (
+                    <div className="mt-4 space-y-4">
+                        {comment.replies.map(reply => (
+                            <CommentThread
+                                key={reply.id}
+                                comment={reply}
+                                currentUser={currentUser}
+                                isAuthenticated={isAuthenticated}
+                                replyingTo={replyingTo}
+                                editingComment={editingComment}
+                                onReply={onReply}
+                                onEdit={onEdit}
+                                onDelete={onDelete}
+                                onLike={onLike}
+                                onSubmitReply={onSubmitReply}
+                                onSubmitEdit={onSubmitEdit}
+                                submitting={submitting}
+                            />
+                        ))}
+                    </div>
+                )}
+            </div>
+        </div>
+    );
+}
+
+// Reusable comment form
+function CommentForm({
+    initialValue = '',
+    onSubmit,
+    onCancel,
+    submitting,
+    placeholder,
+    buttonText,
+    showCancel = false
+}) {
+    const [content, setContent] = useState(initialValue);
+
+    const handleSubmit = (e) => {
+        e.preventDefault();
+        if (content.trim()) {
+            onSubmit(content);
+            if (!showCancel) {
+                setContent('');
+            }
+        }
+    };
+
+    const handleCancel = () => {
+        setContent(initialValue);
+        onCancel?.();
+    };
+
+    return (
+        <form onSubmit={handleSubmit} className="space-y-3">
+            <textarea
+                value={content}
+                onChange={(e) => setContent(e.target.value)}
+                placeholder={placeholder}
+                rows={3}
+                className="w-full p-3 border border-gray-300 dark:border-gray-600 rounded-lg bg-white dark:bg-gray-700 text-gray-900 dark:text-gray-100 focus:ring-2 focus:ring-blue-500 focus:border-transparent resize-vertical"
+                disabled={submitting}
+            />
+
+            <div className="flex items-center space-x-2">
+                <button
+                    type="submit"
+                    disabled={!content.trim() || submitting}
+                    className="px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 disabled:opacity-50 disabled:cursor-not-allowed transition-colors"
+                >
+                    {submitting ? (
+                        <span className="flex items-center space-x-2">
+                            <div className="animate-spin rounded-full h-4 w-4 border-2 border-white border-t-transparent"></div>
+                            <span>Posting...</span>
+                        </span>
+                    ) : (
+                        buttonText
+                    )}
+                </button>
+
+                {showCancel && (
+                    <button
+                        type="button"
+                        onClick={handleCancel}
+                        className="px-4 py-2 text-gray-600 dark:text-gray-400 hover:text-gray-800 dark:hover:text-gray-200 transition-colors"
+                    >
+                        Cancel
+                    </button>
+                )}
+            </div>
+        </form>
+    );
+}
+
+// hooks/useComments.js - Comments management hook
+import { useState, useCallback } from 'react';
+import { apiService } from '../services/api';
+import { useApi } from './useApi';
+
+export function useComments(postId) {
+    const [comments, setComments] = useState([]);
+    const { loading, error, execute } = useApi();
+
+    // Load comments pentru post
+    const loadComments = useCallback(async () => {
+        const result = await execute(() => apiService.getComments(postId));
+        setComments(result);
+        return result;
+    }, [execute, postId]);
+
+    // Add new comment
+    const addComment = useCallback(async (commentData) => {
+        const newComment = await execute(() => apiService.createComment(commentData));
+
+        // Add la lista locală
+        setComments(prev => {
+            if (commentData.parentId) {
+                // Reply la comment existent
+                return prev.map(comment => 
+                    comment.id === commentData.parentId
+                        ? { ...comment, replies: [...(comment.replies || []), newComment] }
+                        : comment
+                );
+            } else {
+                // New top-level comment
+                return [newComment, ...prev];
+            }
+        });
+
+        return newComment;
+    }, [execute]);
+
+    // Update comment
+    const updateComment = useCallback(async (commentId, updates) => {
+        const updatedComment = await execute(() => apiService.updateComment(commentId, updates));
+
+        // Update în lista locală
+        const updateCommentInTree = (comments) => {
+            return comments.map(comment => {
+                if (comment.id === commentId) {
+                    return { ...comment, ...updatedComment };
+                }
+                if (comment.replies) {
+                    return {
+                        ...comment,
+                        replies: updateCommentInTree(comment.replies)
+                    };
+                }
+                return comment;
+            });
+        };
+
+        setComments(prev => updateCommentInTree(prev));
+
+        return updatedComment;
+    }, [execute]);
+
+    // Delete comment
+    const deleteComment = useCallback(async (commentId) => {
+        await execute(() => apiService.deleteComment(commentId));
+
+        // Remove din lista locală
+        const removeCommentFromTree = (comments) => {
+            return comments.filter(comment => {
+                if (comment.id === commentId) {
+                    return false;
+                }
+                if (comment.replies) {
+                    comment.replies = removeCommentFromTree(comment.replies);
+                }
+                return true;
+            });
+        };
+
+        setComments(prev => removeCommentFromTree(prev));
+    }, [execute]);
+
+    // Toggle like
+    const toggleLike = useCallback(async (commentId) => {
+        const result = await execute(() => apiService.toggleCommentLike(commentId));
+
+        // Update în lista locală
+        const updateLikeInTree = (comments) => {
+            return comments.map(comment => {
+                if (comment.id === commentId) {
+                    return {
+                        ...comment,
+                        isLiked: result.isLiked,
+                        likesCount: result.likesCount
+                    };
+                }
+                if (comment.replies) {
+                    return {
+                        ...comment,
+                        replies: updateLikeInTree(comment.replies)
+                    };
+                }
+                return comment;
+            });
+        };
+
+        setComments(prev => updateLikeInTree(prev));
+
+        return result;
+    }, [execute]);
+
+    return {
+        comments,
+        loading,
+        error,
+        loadComments,
+        addComment,
+        updateComment,
+        deleteComment,
+        toggleLike
+    };
+}
+        """, language="javascript")
+
+        st.markdown("### Performance Optimizations și Virtual Scrolling")
+
+        st.code("""
+// hooks/useVirtualScrolling.js - Virtual scrolling pentru liste mari
+import { useState, useEffect, useCallback, useMemo } from 'react';
+
+export function useVirtualScrolling({
+    items = [],
+    itemHeight = 80,
+    containerHeight = 600,
+    overscan = 5
+}) {
+    const [scrollTop, setScrollTop] = useState(0);
+
+    // Calculează ce items sunt vizibile
+    const visibleRange = useMemo(() => {
+        const startIndex = Math.max(0, Math.floor(scrollTop / itemHeight) - overscan);
+        const endIndex = Math.min(
+            items.length - 1,
+            Math.floor((scrollTop + containerHeight) / itemHeight) + overscan
+        );
+
+        return { startIndex, endIndex };
+    }, [scrollTop, itemHeight, containerHeight, overscan, items.length]);
+
+    // Items vizibile cu offset pentru poziționare
+    const visibleItems = useMemo(() => {
+        const { startIndex, endIndex } = visibleRange;
+        const visible = [];
+
+        for (let i = startIndex; i <= endIndex; i++) {
+            if (items[i]) {
+                visible.push({
+                    index: i,
+                    item: items[i],
+                    offsetY: i * itemHeight
+                });
+            }
+        }
+
+        return visible;
+    }, [visibleRange, items, itemHeight]);
+
+    // Total height pentru scrollbar
+    const totalHeight = items.length * itemHeight;
+
+    // Scroll handler
+    const onScroll = useCallback((e) => {
+        setScrollTop(e.target.scrollTop);
+    }, []);
+
+    return {
+        visibleItems,
+        totalHeight,
+        onScroll,
+        containerProps: {
+            style: {
+                height: containerHeight,
+                overflow: 'auto'
+            },
+            onScroll
+        }
+    };
+}
+
+// components/ui/VirtualList.js - Virtual list component
+export function VirtualList({
+    items,
+    renderItem,
+    itemHeight = 80,
+    height = 400,
+    className = '',
+    ...props
+}) {
+    const {
+        visibleItems,
+        totalHeight,
+        containerProps
+    } = useVirtualScrolling({
+        items,
+        itemHeight,
+        containerHeight: height
+    });
+
+    return (
+        <div
+            {...containerProps}
+            className={`relative ${className}`}
+            {...props}
+        >
+            {/* Spacer pentru total height */}
+            <div style={{ height: totalHeight, position: 'relative' }}>
+                {/* Visible items */}
+                {visibleItems.map(({ index, item, offsetY }) => (
+                    <div
+                        key={index}
+                        style={{
+                            position: 'absolute',
+                            top: offsetY,
+                            width: '100%',
+                            height: itemHeight
+                        }}
+                    >
+                        {renderItem(item, index)}
+                    </div>
+                ))}
+            </div>
+        </div>
+    );
+}
+
+// hooks/useInfiniteScroll.js - Infinite scroll cu virtual scrolling
+export function useInfiniteScroll({
+    fetchMore,
+    hasMore,
+    threshold = 100
+}) {
+    const [isFetching, setIsFetching] = useState(false);
+
+    const handleScroll = useCallback((e) => {
+        const { scrollTop, scrollHeight, clientHeight } = e.target;
+
+        // Check dacă user-ul e aproape de bottom
+        if (scrollHeight - scrollTop - clientHeight < threshold && hasMore && !isFetching) {
+            setIsFetching(true);
+
+            fetchMore()
+                .then(() => setIsFetching(false))
+                .catch(() => setIsFetching(false));
+        }
+    }, [fetchMore, hasMore, isFetching, threshold]);
+
+    return { isFetching, handleScroll };
+}
+
+// components/features/OptimizedPostsList.js - Posts list cu virtual scrolling
+import React, { useMemo } from 'react';
+import { VirtualList } from '../ui/VirtualList';
+import { PostCard } from './PostCard';
+import { useInfiniteScroll } from '../../hooks/useInfiniteScroll';
+
+export function OptimizedPostsList({ posts, onLoadMore, hasMore, onLike }) {
+    const { isFetching, handleScroll } = useInfiniteScroll({
+        fetchMore: onLoadMore,
+        hasMore,
+        threshold: 200
+    });
+
+    // Memoize post card renderer pentru performance
+    const renderPost = useMemo(() => (post, index) => (
+        <div className="px-4 py-2">
+            <PostCard
+                post={post}
+                onLike={onLike}
+                className="h-full"
+            />
+        </div>
+    ), [onLike]);
+
+    return (
+        <div className="space-y-4">
+            <VirtualList
+                items={posts}
+                renderItem={renderPost}
+                itemHeight={320} // Approximate height pentru post card
+                height={800}
+                onScroll={handleScroll}
+                className="space-y-4"
+            />
+
+            {isFetching && (
+                <div className="flex justify-center py-4">
+                    <LoadingSpinner text="Loading more posts..." />
+                </div>
+            )}
+
+            {!hasMore && posts.length > 0 && (
+                <div className="text-center py-4 text-gray-500">
+                    You've reached the end! 🎉
+                </div>
+            )}
+        </div>
+    );
+}
+
+// hooks/usePerformanceMonitor.js - Performance monitoring
+export function usePerformanceMonitor(componentName) {
+    const renderStartTime = useRef(performance.now());
+    const renderCount = useRef(0);
+
+    useEffect(() => {
+        renderCount.current += 1;
+        const renderTime = performance.now() - renderStartTime.current;
+
+        // Log performance metrics
+        if (process.env.NODE_ENV === 'development') {
+            console.log(`${componentName} render #${renderCount.current}: ${renderTime.toFixed(2)}ms`);
+        }
+
+        // Report la analytics în production
+        if (process.env.NODE_ENV === 'production' && renderTime > 16) { // Slower than 60fps
+            // analytics.track('slow_render', {
+            //     component: componentName,
+            //     renderTime,
+            //     renderCount: renderCount.current
+            // });
+        }
+
+        renderStartTime.current = performance.now();
+    });
+
+    return { renderCount: renderCount.current };
+}
+
+// components/features/PerformantPostCard.js - Optimized post card
+const PerformantPostCard = React.memo(({ post, onLike, onShare }) => {
+    usePerformanceMonitor('PostCard');
+
+    // Memoize expensive computations
+    const formattedDate = useMemo(() => 
+        formatDistanceToNow(new Date(post.publishedAt), { addSuffix: true }),
+        [post.publishedAt]
+    );
+
+    const readTime = useMemo(() => 
+        Math.ceil((post.content?.split(' ').length || 0) / 200),
+        [post.content]
+    );
+
+    // Stable event handlers
+    const handleLike = useCallback(() => {
+        onLike(post.id);
+    }, [post.id, onLike]);
+
+    const handleShare = useCallback((platform) => {
+        onShare(post.id, platform);
+    }, [post.id, onShare]);
+
+    return (
+        <article className="bg-white dark:bg-gray-800 rounded-lg shadow-md hover:shadow-lg transition-shadow">
+            {/* Post content */}
+            <PostCardContent
+                post={post}
+                formattedDate={formattedDate}
+                readTime={readTime}
+                onLike={handleLike}
+                onShare={handleShare}
+            />
+        </article>
+    );
+}, (prevProps, nextProps) => {
+    // Custom comparison function pentru React.memo
+    return (
+        prevProps.post.id === nextProps.post.id &&
+        prevProps.post.likesCount === nextProps.post.likesCount &&
+        prevProps.post.isLiked === nextProps.post.isLiked &&
+        prevProps.post.commentsCount === nextProps.post.commentsCount
+    );
+});
+
+// Lazy loading pentru images
+function LazyImage({ src, alt, className, ...props }) {
+    const [loaded, setLoaded] = useState(false);
+    const [inView, setInView] = useState(false);
+    const imgRef = useRef();
+
+    useEffect(() => {
+        const observer = new IntersectionObserver(
+            ([entry]) => {
+                if (entry.isIntersecting) {
+                    setInView(true);
+                    observer.disconnect();
+                }
+            },
+            { threshold: 0.1 }
+        );
+
+        if (imgRef.current) {
+            observer.observe(imgRef.current);
+        }
+
+        return () => observer.disconnect();
+    }, []);
+
+    return (
+        <div ref={imgRef} className={className} {...props}>
+            {inView && (
+                <img
+                    src={src}
+                    alt={alt}
+                    className={`transition-opacity duration-300 ${loaded ? 'opacity-100' : 'opacity-0'}`}
+                    onLoad={() => setLoaded(true)}
+                    loading="lazy"
+                />
+            )}
+            {!loaded && inView && (
+                <div className="bg-gray-200 dark:bg-gray-700 animate-pulse w-full h-full flex items-center justify-center">
+                    <svg className="w-8 h-8 text-gray-400" fill="currentColor" viewBox="0 0 20 20">
+                        <path fillRule="evenodd" d="M4 3a2 2 0 00-2 2v10a2 2 0 002 2h12a2 2 0 002-2V5a2 2 0 00-2-2H4zm12 12H4l4-8 3 6 2-4 3 6z" clipRule="evenodd" />
+                    </svg>
+                </div>
+            )}
+        </div>
+    );
+}
+
+// Service Worker pentru caching
+// public/sw.js
+const CACHE_NAME = 'blog-app-v1';
+const urlsToCache = [
+    '/',
+    '/static/js/bundle.js',
+    '/static/css/main.css',
+    '/manifest.json'
+];
+
+self.addEventListener('install', (event) => {
+    event.waitUntil(
+        caches.open(CACHE_NAME)
+            .then((cache) => cache.addAll(urlsToCache))
+    );
+});
+
+self.addEventListener('fetch', (event) => {
+    event.respondWith(
+        caches.match(event.request)
+            .then((response) => {
+                // Return cached version or fetch from network
+                return response || fetch(event.request);
+            })
+    );
+});
+
+// utils/performance.js - Performance utilities
+export const performanceUtils = {
+    // Debounce function pentru search
+    debounce: (func, wait) => {
+        let timeout;
+        return function executedFunction(...args) {
+            const later = () => {
+                clearTimeout(timeout);
+                func(...args);
+            };
+            clearTimeout(timeout);
+            timeout = setTimeout(later, wait);
+        };
+    },
+
+    // Throttle function pentru scroll events
+    throttle: (func, limit) => {
+        let inThrottle;
+        return function() {
+            const args = arguments;
+            const context = this;
+            if (!inThrottle) {
+                func.apply(context, args);
+                inThrottle = true;
+                setTimeout(() => inThrottle = false, limit);
+            }
+        };
+    },
+
+    // Lazy load components
+    lazyLoad: (importFunc) => {
+        return React.lazy(() => {
+            return new Promise(resolve => {
+                setTimeout(() => resolve(importFunc()), 100);
+            });
+        });
+    },
+
+    // Bundle size analyzer
+    analyzeBundleSize: () => {
+        if (process.env.NODE_ENV === 'development') {
+            import('webpack-bundle-analyzer').then(({ BundleAnalyzerPlugin }) => {
+                // Analysis logic
+            });
+        }
+    }
+};
+        """, language="javascript")
+
+    with tab6:
+        st.markdown('<h2 class="section-header">Deployment, Testing și Finalizare</h2>', unsafe_allow_html=True)
+
+        st.markdown("### Testing Strategy Completă")
+
+        st.code("""
+// tests/components/PostCard.test.js - Unit tests pentru components
+import React from 'react';
+import { render, screen, fireEvent, waitFor } from '@testing-library/react';
+import userEvent from '@testing-library/user-event';
+import { BrowserRouter } from 'react-router-dom';
+import { AuthProvider } from '../../context/AuthContext';
+import { PostCard } from '../../components/features/PostCard';
+
+// Mock data
+const mockPost = {
+    id: 1,
+    title: 'Test Post Title',
+    excerpt: 'This is a test excerpt for the post.',
+    content: 'Full post content here...',
+    author: {
+        id: 1,
+        username: 'testuser',
+        firstName: 'Test',
+        lastName: 'User',
+        avatar: 'https://example.com/avatar.jpg'
+    },
+    tags: ['react', 'testing', 'javascript'],
+    publishedAt: '2024-08-01T10:00:00Z',
+    readTime: 5,
+    likesCount: 42,
+    commentsCount: 7,
+    isLiked: false,
+    coverImage: 'https://example.com/cover.jpg'
+};
+
+const mockUser = {
+    id: 1,
+    username: 'testuser',
+    firstName: 'Test',
+    lastName: 'User'
+};
+
+// Test wrapper cu providers
+const TestWrapper = ({ children, user = mockUser }) => (
+    <BrowserRouter>
+        <AuthProvider initialUser={user}>
+            {children}
+        </AuthProvider>
+    </BrowserRouter>
+);
+
+describe('PostCard Component', () => {
+    const mockOnLike = jest.fn();
+    const mockOnShare = jest.fn();
+    const mockOnDelete = jest.fn();
+
+    beforeEach(() => {
+        jest.clearAllMocks();
+    });
+
+    test('renders post information correctly', () => {
+        render(
+            <TestWrapper>
+                <PostCard post={mockPost} onLike={mockOnLike} />
+            </TestWrapper>
+        );
+
+        // Check dacă toate elementele sunt afișate
+        expect(screen.getByText(mockPost.title)).toBeInTheDocument();
+        expect(screen.getByText(mockPost.excerpt)).toBeInTheDocument();
+        expect(screen.getByText(`${mockPost.author.firstName} ${mockPost.author.lastName}`)).toBeInTheDocument();
+        expect(screen.getByText(mockPost.likesCount.toString())).toBeInTheDocument();
+        expect(screen.getByText(mockPost.commentsCount.toString())).toBeInTheDocument();
+
+        // Check tags
+        mockPost.tags.slice(0, 3).forEach(tag => {
+            expect(screen.getByText(`#${tag}`)).toBeInTheDocument();
+        });
+    });
+
+    test('handles like interaction correctly', async () => {
+        const user = userEvent.setup();
+
+        render(
+            <TestWrapper>
+                <PostCard post={mockPost} onLike={mockOnLike} />
+            </TestWrapper>
+        );
+
+        const likeButton = screen.getByRole('button', { name: /like/i });
+        await user.click(likeButton);
+
+        expect(mockOnLike).toHaveBeenCalledWith(mockPost.id);
+    });
+
+    test('shows edit/delete options for post author', () => {
+        render(
+            <TestWrapper user={mockUser}>
+                <PostCard 
+                    post={mockPost} 
+                    onLike={mockOnLike}
+                    onDelete={mockOnDelete}
+                />
+            </TestWrapper>
+        );
+
+        // Buttons should be visible pentru author
+        expect(screen.getByRole('button', { name: /edit/i })).toBeInTheDocument();
+        expect(screen.getByRole('button', { name: /delete/i })).toBeInTheDocument();
+    });
+
+    test('does not show edit/delete options for other users', () => {
+        const otherUser = { ...mockUser, id: 2 };
+
+        render(
+            <TestWrapper user={otherUser}>
+                <PostCard post={mockPost} onLike={mockOnLike} />
+            </TestWrapper>
+        );
+
+        // Buttons should not be visible pentru non-author
+        expect(screen.queryByRole('button', { name: /edit/i })).not.toBeInTheDocument();
+        expect(screen.queryByRole('button', { name: /delete/i })).not.toBeInTheDocument();
+    });
+
+    test('handles delete with confirmation', async () => {
+        const user = userEvent.setup();
+
+        // Mock window.confirm
+        const confirmSpy = jest.spyOn(window, 'confirm').mockReturnValue(true);
+
+        render(
+            <TestWrapper user={mockUser}>
+                <PostCard 
+                    post={mockPost} 
+                    onLike={mockOnLike}
+                    onDelete={mockOnDelete}
+                />
+            </TestWrapper>
+        );
+
+        const deleteButton = screen.getByRole('button', { name: /delete/i });
+        await user.click(deleteButton);
+
+        expect(confirmSpy).toHaveBeenCalledWith('Are you sure you want to delete this post?');
+        expect(mockOnDelete).toHaveBeenCalledWith(mockPost.id);
+
+        confirmSpy.mockRestore();
+    });
+
+    test('handles share functionality', async () => {
+        const user = userEvent.setup();
+
+        render(
+            <TestWrapper>
+                <PostCard 
+                    post={mockPost} 
+                    onLike={mockOnLike}
+                    onShare={mockOnShare}
+                />
+            </TestWrapper>
+        );
+
+        // Open share menu
+        const shareButton = screen.getByLabelText(/share post/i);
+        await user.click(shareButton);
+
+        // Check dacă share options sunt visible
+        expect(screen.getByText('Share on Twitter')).toBeInTheDocument();
+        expect(screen.getByText('Share on Facebook')).toBeInTheDocument();
+
+        // Click pe Twitter share
+        const twitterShare = screen.getByText('Share on Twitter');
+        await user.click(twitterShare);
+
+        // Note: În real test, ar trebui să verifici dacă window.open e apelat
+    });
+
+    test('displays loading state for like button', async () => {
+        const slowMockOnLike = jest.fn(() => new Promise(resolve => setTimeout(resolve, 1000)));
+
+        render(
+            <TestWrapper>
+                <PostCard post={mockPost} onLike={slowMockOnLike} />
+            </TestWrapper>
+        );
+
+        const likeButton = screen.getByRole('button', { name: /like/i });
+        fireEvent.click(likeButton);
+
+        // Check loading state
+        expect(likeButton).toBeDisabled();
+        expect(likeButton).toHaveClass('opacity-50');
+    });
+});
+
+// tests/hooks/usePosts.test.js - Custom hooks testing
+import { renderHook, act } from '@testing-library/react-hooks';
+import { usePosts } from '../../hooks/usePosts';
+import { apiService } from '../../services/api';
+
+// Mock API service
+jest.mock('../../services/api');
+
+describe('usePosts Hook', () => {
+    const mockPosts = [
+        { id: 1, title: 'Post 1', likesCount: 5 },
+        { id: 2, title: 'Post 2', likesCount: 10 }
+    ];
+
+    beforeEach(() => {
+        jest.clearAllMocks();
+        apiService.getPosts.mockResolvedValue({
+            posts: mockPosts,
+            totalPages: 2
+        });
+    });
+
+    test('loads posts on mount', async () => {
+        const { result, waitForNextUpdate } = renderHook(() => usePosts());
+
+        act(() => {
+            result.current.loadPosts();
+        });
+
+        await waitForNextUpdate();
+
+        expect(result.current.posts).toEqual(mockPosts);
+        expect(result.current.loading).toBe(false);
+        expect(apiService.getPosts).toHaveBeenCalledWith({
+            page: 1,
+            limit: 10
+        });
+    });
+
+    test('handles like toggle correctly', async () => {
+        apiService.likePost.mockResolvedValue({
+            isLiked: true,
+            likesCount: 6
+        });
+
+        const { result, waitForNextUpdate } = renderHook(() => usePosts());
+
+        // Load posts first
+        act(() => {
+            result.current.loadPosts();
+        });
+        await waitForNextUpdate();
+
+        // Toggle like
+        act(() => {
+            result.current.toggleLike(1);
+        });
+        await waitForNextUpdate();
+
+        expect(result.current.posts[0].likesCount).toBe(6);
+        expect(result.current.posts[0].isLiked).toBe(true);
+    });
+
+    test('handles errors gracefully', async () => {
+        const errorMessage = 'Network error';
+        apiService.getPosts.mockRejectedValue(new Error(errorMessage));
+
+        const { result, waitForNextUpdate } = renderHook(() => usePosts());
+
+        act(() => {
+            result.current.loadPosts();
+        });
+
+        await waitForNextUpdate();
+
+        expect(result.current.error).toBeTruthy();
+        expect(result.current.error.message).toBe(errorMessage);
+        expect(result.current.posts).toEqual([]);
+    });
+});
+
+// tests/integration/BlogFlow.test.js - Integration tests
+import React from 'react';
+import { render, screen, waitFor } from '@testing-library/react';
+import userEvent from '@testing-library/user-event';
+import { BrowserRouter } from 'react-router-dom';
+import { App } from '../../App';
+import { server } from '../mocks/server';
+
+// Setup MSW pentru API mocking
+beforeAll(() => server.listen());
+afterEach(() => server.resetHandlers());
+afterAll(() => server.close());
+
+describe('Blog Application Flow', () => {
+    test('complete user journey from login to post creation', async () => {
+        const user = userEvent.setup();
+
+        render(
+            <BrowserRouter>
+                <App />
+            </BrowserRouter>
+        );
+
+        // 1. User navigates to login
+        const loginButton = screen.getByText('Login');
+        await user.click(loginButton);
+
+        // 2. User fills login form
+        const emailInput = screen.getByLabelText(/email/i);
+        const passwordInput = screen.getByLabelText(/password/i);
+        const submitButton = screen.getByRole('button', { name: /sign in/i });
+
+        await user.type(emailInput, 'test@example.com');
+        await user.type(passwordInput, 'password123');
+        await user.click(submitButton);
+
+        // 3. Wait pentru successful login
+        await waitFor(() => {
+            expect(screen.getByText('Welcome back!')).toBeInTheDocument();
+        });
+
+        // 4. Navigate to create post
+        const createButton = screen.getByText('Write');
+        await user.click(createButton);
+
+        // 5. Fill post form
+        const titleInput = screen.getByPlaceholderText(/post title/i);
+        const contentInput = screen.getByPlaceholderText(/tell your story/i);
+
+        await user.type(titleInput, 'My Test Post');
+        await user.type(contentInput, 'This is the content of my test post. It needs to be long enough to meet the minimum requirements for posting.');
+
+        // 6. Add tags
+        const tagInput = screen.getByPlaceholderText(/add tags/i);
+        await user.type(tagInput, 'react{enter}');
+        await user.type(tagInput, 'testing{enter}');
+
+        // 7. Select category
+        const categorySelect = screen.getByLabelText(/category/i);
+        await user.selectOptions(categorySelect, 'tutorial');
+
+        // 8. Submit post
+        const publishButton = screen.getByRole('button', { name: /publish post/i });
+        await user.click(publishButton);
+
+        // 9. Verify post creation success
+        await waitFor(() => {
+            expect(screen.getByText('Post published successfully!')).toBeInTheDocument();
+        });
+
+        // 10. Verify redirect to posts page
+        expect(screen.getByText('My Test Post')).toBeInTheDocument();
+    });
+});
+
+// tests/mocks/server.js - MSW setup pentru API mocking
+import { rest } from 'msw';
+import { setupServer } from 'msw/node';
+
+const handlers = [
+    // Auth endpoints
+    rest.post('/api/auth/login', (req, res, ctx) => {
+        return res(
+            ctx.json({
+                user: {
+                    id: 1,
+                    username: 'testuser',
+                    email: 'test@example.com',
+                    firstName: 'Test',
+                    lastName: 'User'
+                },
+                token: 'mock-jwt-token'
+            })
+        );
+    }),
+
+    // Posts endpoints
+    rest.get('/api/posts', (req, res, ctx) => {
+        return res(
+            ctx.json({
+                posts: [
+                    {
+                        id: 1,
+                        title: 'Test Post',
+                        excerpt: 'Test excerpt',
+                        author: {
+                            id: 1,
+                            username: 'testuser',
+                            firstName: 'Test',
+                            lastName: 'User'
+                        },
+                        likesCount: 0,
+                        commentsCount: 0,
+                        isLiked: false,
+                        publishedAt: new Date().toISOString()
+                    }
+                ],
+                totalPages: 1
+            })
+        );
+    }),
+
+    rest.post('/api/posts', (req, res, ctx) => {
+        return res(
+            ctx.json({
+                id: 2,
+                title: 'My Test Post',
+                content: 'This is the content...',
+                author: {
+                    id: 1,
+                    username: 'testuser',
+                    firstName: 'Test',
+                    lastName: 'User'
+                }
+            })
+        );
+    })
+];
+
+export const server = setupServer(...handlers);
+        """, language="javascript")
+
+        st.markdown("### Deployment Configuration")
+
+        st.code("""
+// package.json - Scripts și dependencies pentru production
+{
+    "name": "react-blog-app",
+    "version": "1.0.0",
+    "private": true,
+    "dependencies": {
+        "react": "^18.2.0",
+        "react-dom": "^18.2.0",
+        "react-router-dom": "^6.8.0",
+        "date-fns": "^2.29.3",
+        "@headlessui/react": "^1.7.0",
+        "@heroicons/react": "^2.0.0"
+    },
+    "devDependencies": {
+        "@testing-library/jest-dom": "^5.16.5",
+        "@testing-library/react": "^13.4.0",
+        "@testing-library/user-event": "^14.4.3",
+        "msw": "^1.0.0",
+        "tailwindcss": "^3.2.4",
+        "webpack-bundle-analyzer": "^4.7.0"
+    },
+    "scripts": {
+        "start": "react-scripts start",
+        "build": "react-scripts build",
+        "test": "react-scripts test",
+        "test:coverage": "react-scripts test --coverage --watchAll=false",
+        "test:ci": "CI=true react-scripts test --coverage --watchAll=false",
+        "eject": "react-scripts eject",
+        "analyze": "npm run build && npx webpack-bundle-analyzer build/static/js/*.js",
+        "deploy": "npm run build && npm run deploy:netlify",
+        "deploy:netlify": "netlify deploy --prod --dir=build",
+        "deploy:vercel": "vercel --prod",
+        "lint": "eslint src/ --ext .js,.jsx,.ts,.tsx",
+        "lint:fix": "eslint src/ --ext .js,.jsx,.ts,.tsx --fix",
+        "format": "prettier --write src/**/*.{js,jsx,ts,tsx,json,css,md}"
+    },
+    "eslintConfig": {
+        "extends": [
+            "react-app",
+            "react-app/jest"
+        ]
+    },
+    "browserslist": {
+        "production": [
+            ">0.2%",
+            "not dead",
+            "not op_mini all"
+        ],
+        "development": [
+            "last 1 chrome version",
+            "last 1 firefox version",
+            "last 1 safari version"
+        ]
+    },
+    "jest": {
+        "collectCoverageFrom": [
+            "src/**/*.{js,jsx}",
+            "!src/index.js",
+            "!src/reportWebVitals.js",
+            "!src/**/*.test.{js,jsx}"
+        ],
+        "coverageThreshold": {
+            "global": {
+                "branches": 80,
+                "functions": 80,
+                "lines": 80,
+                "statements": 80
+            }
+        }
+    }
+}
+
+// netlify.toml - Netlify deployment configuration
+[build]
+  publish = "build"
+  command = "npm run build"
+
+[build.environment]
+  NODE_VERSION = "18"
+  NPM_VERSION = "8"
+
+[[redirects]]
+  from = "/*"
+  to = "/index.html"
+  status = 200
+
+[build.processing]
+  skip_processing = false
+
+[build.processing.css]
+  bundle = true
+  minify = true
+
+[build.processing.js]
+  bundle = true
+  minify = true
+
+[build.processing.html]
+  pretty_urls = true
+
+# vercel.json - Vercel deployment configuration
+{
+    "version": 2,
+    "builds": [
+        {
+            "src": "package.json",
+            "use": "@vercel/static-build",
+            "config": {
+                "distDir": "build"
+            }
+        }
+    ],
+    "routes": [
+        {
+            "src": "/static/(.*)",
+            "headers": {
+                "cache-control": "public, max-age=31536000, immutable"
+            }
+        },
+        {
+            "src": "/(.*)",
+            "dest": "/index.html"
+        }
+    ],
+    "env": {
+        "REACT_APP_API_URL": "@api-url",
+        "REACT_APP_ENV": "production"
+    }
+}
+
+# Dockerfile - Pentru containerization
+FROM node:18-alpine as build
+
+WORKDIR /app
+
+# Copy package files
+COPY package*.json ./
+
+# Install dependencies
+RUN npm ci --only=production
+
+# Copy source code
+COPY . .
+
+# Build aplicația
+RUN npm run build
+
+# Production stage
+FROM nginx:alpine
+
+# Copy built app
+COPY --from=build /app/build /usr/share/nginx/html
+
+# Copy nginx configuration
+COPY nginx.conf /etc/nginx/nginx.conf
+
+EXPOSE 80
+
+CMD ["nginx", "-g", "daemon off;"]
+
+# nginx.conf - Nginx configuration pentru production
+events {
+    worker_connections 1024;
+}
+
+http {
+    include       /etc/nginx/mime.types;
+    default_type  application/octet-stream;
+
+    # Gzip compression
+    gzip on;
+    gzip_vary on;
+    gzip_min_length 1024;
+    gzip_proxied expired no-cache no-store private must-revalidate auth;
+    gzip_types
+        text/plain
+        text/css
+        text/xml
+        text/javascript
+        application/javascript
+        application/xml+rss
+        application/json;
+
+    server {
+        listen 80;
+        server_name localhost;
+        root /usr/share/nginx/html;
+        index index.html;
+
+        # Cache static assets
+        location ~* \.(js|css|png|jpg|jpeg|gif|ico|svg)$ {
+            expires 1y;
+            add_header Cache-Control "public, immutable";
+        }
+
+        # Handle React Router
+        location / {
+            try_files $uri $uri/ /index.html;
+        }
+
+        # Security headers
+        add_header X-Frame-Options "SAMEORIGIN" always;
+        add_header X-Content-Type-Options "nosniff" always;
+        add_header X-XSS-Protection "1; mode=block" always;
+        add_header Referrer-Policy "strict-origin-when-cross-origin" always;
+    }
+}
+
+# .github/workflows/ci.yml - GitHub Actions pentru CI/CD
+name: CI/CD Pipeline
+
+on:
+  push:
+    branches: [ main, develop ]
+  pull_request:
+    branches: [ main ]
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+
+    strategy:
+      matrix:
+        node-version: [16.x, 18.x]
+
+    steps:
+    - uses: actions/checkout@v3
+
+    - name: Use Node.js ${{ matrix.node-version }}
+      uses: actions/setup-node@v3
+      with:
+        node-version: ${{ matrix.node-version }}
+        cache: 'npm'
+
+    - name: Install dependencies
+      run: npm ci
+
+    - name: Run linting
+      run: npm run lint
+
+    - name: Run tests
+      run: npm run test:ci
+
+    - name: Upload coverage to Codecov
+      uses: codecov/codecov-action@v3
+      with:
+        file: ./coverage/lcov.info
+
+    - name: Build application
+      run: npm run build
+
+    - name: Run bundle analyzer
+      run: npm run analyze
+
+  deploy:
+    needs: test
+    runs-on: ubuntu-latest
+    if: github.ref == 'refs/heads/main'
+
+    steps:
+    - uses: actions/checkout@v3
+
+    - name: Setup Node.js
+      uses: actions/setup-node@v3
+      with:
+        node-version: '18'
+        cache: 'npm'
+
+    - name: Install dependencies
+      run: npm ci
+
+    - name: Build for production
+      run: npm run build
+      env:
+        REACT_APP_API_URL: ${{ secrets.API_URL }}
+        REACT_APP_ENV: production
+
+    - name: Deploy to Netlify
+      uses: nwtgck/actions-netlify@v2.0
+      with:
+        publish-dir: './build'
+        production-branch: main
+        github-token: ${{ secrets.GITHUB_TOKEN }}
+        deploy-message: "Deploy from GitHub Actions"
+      env:
+        NETLIFY_AUTH_TOKEN: ${{ secrets.NETLIFY_AUTH_TOKEN }}
+        NETLIFY_SITE_ID: ${{ secrets.NETLIFY_SITE_ID }}
+
+# .env.example - Environment variables template
+# API Configuration
+REACT_APP_API_URL=http://localhost:3001
+REACT_APP_WS_URL=ws://localhost:3001
+
+# Authentication
+REACT_APP_JWT_SECRET=your-jwt-secret-here
+
+# External Services
+REACT_APP_GOOGLE_ANALYTICS_ID=GA-XXXXXXXXX
+REACT_APP_SENTRY_DSN=https://your-sentry-dsn
+
+# Feature Flags
+REACT_APP_ENABLE_COMMENTS=true
+REACT_APP_ENABLE_DARK_MODE=true
+REACT_APP_ENABLE_PWA=true
+
+# Development
+REACT_APP_DEBUG=false
+REACT_APP_MOCK_API=false
+        """, language="bash")
+
+        st.markdown("### Performance Monitoring și Analytics")
+
+        st.code("""
+// utils/analytics.js - Analytics și monitoring setup
+import { getCLS, getFID, getFCP, getLCP, getTTFB } from 'web-vitals';
+
+class Analytics {
+    constructor() {
+        this.isProduction = process.env.NODE_ENV === 'production';
+        this.userId = null;
+        this.sessionId = this.generateSessionId();
+
+        if (this.isProduction) {
+            this.initializeAnalytics();
+            this.trackWebVitals();
+        }
+    }
+
+    generateSessionId() {
+        return Date.now().toString(36) + Math.random().toString(36).substr(2);
+    }
+
+    initializeAnalytics() {
+        // Google Analytics 4
+        if (window.gtag && process.env.REACT_APP_GOOGLE_ANALYTICS_ID) {
+            window.gtag('config', process.env.REACT_APP_GOOGLE_ANALYTICS_ID, {
+                session_id: this.sessionId,
+                custom_map: { custom_dimension_1: 'user_type' }
+            });
+        }
+
+        // Sentry pentru error tracking
+        if (process.env.REACT_APP_SENTRY_DSN) {
+            import('@sentry/react').then(Sentry => {
+                Sentry.init({
+                    dsn: process.env.REACT_APP_SENTRY_DSN,
+                    environment: process.env.NODE_ENV,
+                    tracesSampleRate: 0.1,
+                    beforeSend: (event, hint) => {
+                        // Filter out development errors
+                        if (process.env.NODE_ENV === 'development') {
+                            return null;
+                        }
+                        return event;
+                    }
+                });
+            });
+        }
+    }
+
+    trackWebVitals() {
+        const sendToAnalytics = (metric) => {
+            // Send la Google Analytics
+            if (window.gtag) {
+                window.gtag('event', metric.name, {
+                    event_category: 'Web Vitals',
+                    event_label: metric.id,
+                    value: Math.round(metric.name === 'CLS' ? metric.value * 1000 : metric.value),
+                    non_interaction: true
+                });
+            }
+
+            // Send la custom analytics endpoint
+            this.track('web_vital', {
+                metric: metric.name,
+                value: metric.value,
+                id: metric.id,
+                page: window.location.pathname
+            });
+        };
+
+        getCLS(sendToAnalytics);
+        getFID(sendToAnalytics);
+        getFCP(sendToAnalytics);
+        getLCP(sendToAnalytics);
+        getTTFB(sendToAnalytics);
+    }
+
+    // Track page views
+    trackPageView(page, title) {
+        if (!this.isProduction) return;
+
+        if (window.gtag) {
+            window.gtag('config', process.env.REACT_APP_GOOGLE_ANALYTICS_ID, {
+                page_title: title,
+                page_location: window.location.href,
+                page_path: page
+            });
+        }
+
+        this.track('page_view', {
+            page,
+            title,
+            url: window.location.href,
+            referrer: document.referrer
+        });
+    }
+
+    // Track custom events
+    trackEvent(action, category, label, value) {
+        if (!this.isProduction) return;
+
+        if (window.gtag) {
+            window.gtag('event', action, {
+                event_category: category,
+                event_label: label,
+                value: value
+            });
+        }
+
+        this.track('event', {
+            action,
+            category,
+            label,
+            value
+        });
+    }
+
+    // Track user interactions
+    trackInteraction(element, action, context = {}) {
+        this.trackEvent(action, 'User Interaction', element, 1);
+
+        this.track('interaction', {
+            element,
+            action,
+            timestamp: Date.now(),
+            sessionId: this.sessionId,
+            ...context
+        });
+    }
+
+    // Track errors
+    trackError(error, context = {}) {
+        if (window.gtag) {
+            window.gtag('event', 'exception', {
+                description: error.message,
+                fatal: false
+            });
+        }
+
+        this.track('error', {
+            message: error.message,
+            stack: error.stack,
+            page: window.location.pathname,
+            userAgent: navigator.userAgent,
+            timestamp: Date.now(),
+            ...context
+        });
+    }
+
+    // Track performance metrics
+    trackPerformance(metrics) {
+        this.track('performance', {
+            ...metrics,
+            page: window.location.pathname,
+            timestamp: Date.now(),
+            sessionId: this.sessionId
+        });
+    }
+
+    // Set user information
+    setUser(userId, properties = {}) {
+        this.userId = userId;
+
+        if (window.gtag) {
+            window.gtag('config', process.env.REACT_APP_GOOGLE_ANALYTICS_ID, {
+                user_id: userId
+            });
+        }
+
+        this.track('user_identify', {
+            userId,
+            ...properties
+        });
+    }
+
+    // Generic track method
+    track(event, properties = {}) {
+        if (!this.isProduction) {
+            console.log('Analytics Event:', event, properties);
+            return;
+        }
+
+        // Send to custom analytics endpoint
+        fetch('/api/analytics', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({
+                event,
+                properties: {
+                    ...properties,
+                    userId: this.userId,
+                    sessionId: this.sessionId,
+                    timestamp: Date.now(),
+                    url: window.location.href,
+                    userAgent: navigator.userAgent
+                }
+            })
+        }).catch(error => {
+            console.error('Analytics tracking failed:', error);
+        });
+    }
+}
+
+// Singleton instance
+export const analytics = new Analytics();
+
+// React hook pentru analytics
+export function useAnalytics() {
+    const location = useLocation();
+
+    useEffect(() => {
+        analytics.trackPageView(location.pathname, document.title);
+    }, [location]);
+
+    return {
+        trackEvent: analytics.trackEvent.bind(analytics),
+        trackInteraction: analytics.trackInteraction.bind(analytics),
+        trackError: analytics.trackError.bind(analytics),
+        setUser: analytics.setUser.bind(analytics)
+    };
+}
+
+// Higher-order component pentru automatic tracking
+export function withAnalytics(WrappedComponent, componentName) {
+    return function AnalyticsWrappedComponent(props) {
+        const { trackInteraction } = useAnalytics();
+
+        const handleClick = useCallback((event) => {
+            trackInteraction(componentName, 'click', {
+                target: event.target.tagName,
+                text: event.target.textContent?.substring(0, 50)
+            });
+
+            props.onClick?.(event);
+        }, [trackInteraction, props.onClick]);
+
+        return (
+            <WrappedComponent
+                {...props}
+                onClick={handleClick}
+            />
+        );
+    };
+}
+
+// utils/monitoring.js - Application monitoring
+export class PerformanceMonitor {
+    constructor() {
+        this.metrics = new Map();
+        this.observers = [];
+
+        this.initializeObservers();
+    }
+
+    initializeObservers() {
+        // Performance Observer pentru navigation timing
+        if ('PerformanceObserver' in window) {
+            const navObserver = new PerformanceObserver((list) => {
+                list.getEntries().forEach((entry) => {
+                    this.recordMetric('navigation', {
+                        type: entry.type,
+                        duration: entry.duration,
+                        startTime: entry.startTime
+                    });
+                });
+            });
+
+            navObserver.observe({ entryTypes: ['navigation'] });
+            this.observers.push(navObserver);
+
+            // Long Task Observer
+            const longTaskObserver = new PerformanceObserver((list) => {
+                list.getEntries().forEach((entry) => {
+                    this.recordMetric('long-task', {
+                        duration: entry.duration,
+                        startTime: entry.startTime
+                    });
+
+                    analytics.trackEvent('long_task', 'Performance', 'Long Task Detected', entry.duration);
+                });
+            });
+
+            try {
+                longTaskObserver.observe({ entryTypes: ['longtask'] });
+                this.observers.push(longTaskObserver);
+            } catch (e) {
+                console.warn('Long Task Observer not supported');
+            }
+        }
+
+        // Memory usage monitoring
+        this.monitorMemoryUsage();
+
+        // Network information
+        this.monitorNetworkInfo();
+    }
+
+    recordMetric(name, data) {
+        if (!this.metrics.has(name)) {
+            this.metrics.set(name, []);
+        }
+
+        this.metrics.get(name).push({
+            ...data,
+            timestamp: Date.now()
+        });
+
+        // Send la analytics
+        analytics.trackPerformance({
+            metric: name,
+            ...data
+        });
+    }
+
+    monitorMemoryUsage() {
+        if ('memory' in performance) {
+            setInterval(() => {
+                this.recordMetric('memory', {
+                    used: performance.memory.usedJSHeapSize,
+                    total: performance.memory.totalJSHeapSize,
+                    limit: performance.memory.jsHeapSizeLimit
+                });
+            }, 30000); // Every 30 seconds
+        }
+    }
+
+    monitorNetworkInfo() {
+        if ('connection' in navigator) {
+            const connection = navigator.connection;
+
+            this.recordMetric('network', {
+                effectiveType: connection.effectiveType,
+                downlink: connection.downlink,
+                rtt: connection.rtt,
+                saveData: connection.saveData
+            });
+
+            connection.addEventListener('change', () => {
+                this.recordMetric('network-change', {
+                    effectiveType: connection.effectiveType,
+                    downlink: connection.downlink,
+                    rtt: connection.rtt
+                });
+            });
+        }
+    }
+
+    getMetrics(name) {
+        return this.metrics.get(name) || [];
+    }
+
+    getAverageMetric(name, property) {
+        const metrics = this.getMetrics(name);
+        if (metrics.length === 0) return 0;
+
+        const sum = metrics.reduce((acc, metric) => acc + (metric[property] || 0), 0);
+        return sum / metrics.length;
+    }
+
+    exportMetrics() {
+        const exported = {};
+        this.metrics.forEach((value, key) => {
+            exported[key] = value;
+        });
+        return exported;
+    }
+
+    cleanup() {
+        this.observers.forEach(observer => observer.disconnect());
+        this.metrics.clear();
+    }
+}
+
+// Initialize monitoring
+export const performanceMonitor = new PerformanceMonitor();
+
+// Cleanup on page unload
+window.addEventListener('beforeunload', () => {
+    performanceMonitor.cleanup();
+});
+        """, language="javascript")
+
+        st.markdown("### Rezumat și Concepte Învățate")
+
+        st.markdown("""
+        ### Concepte React Demonstrate în Aplicație
+
+        **1. State & Props Management:**
+        - **useState** pentru form state, UI state (modals, dropdowns)
+        - **useReducer** pentru complex state (auth, posts management)
+        - **Props drilling** vs **Context API** pentru state partajare
+        - **Prop validation** cu PropTypes și TypeScript
+
+        **2. Event Handling Avansat:**
+        - **SyntheticEvents** pentru cross-browser compatibility
+        - **Event delegation** pentru performance (comments system)
+        - **Custom event handlers** cu useCallback pentru optimization
+        - **Form events** cu validation și error handling
+        - **Keyboard events** pentru accessibility (Escape pentru modal close)
+
+        **3. Hooks Mastery:**
+        - **Built-in hooks**: useState, useEffect, useContext, useMemo, useCallback, useRef
+        - **Custom hooks**: useAuth, usePosts, useComments, useFormValidation, useDebounce
+        - **Hook composition** pentru functionality complex
+        - **Dependencies optimization** pentru performance
+
+        **4. Performance Optimization:**
+        - **React.memo** pentru component memoization
+        - **useMemo/useCallback** pentru expensive operations
+        - **Virtual scrolling** pentru liste mari
+        - **Lazy loading** pentru images și components
+        - **Code splitting** cu React.lazy
+
+        **5. Real-world Patterns:**
+        - **Error boundaries** pentru graceful error handling
+        - **Loading states** și **optimistic updates**
+        - **Infinite scrolling** cu intersection observer
+        - **Search cu debouncing** pentru API efficiency
+        - **Form handling** cu complex validation
+
+        **6. Architecture Patterns:**
+        - **Component composition** peste inheritance
+        - **Container/Presentational** component pattern
+        - **Custom hooks** pentru business logic separation
+        - **Service layer** pentru API communication
+        - **Context providers** pentru global state
+
+        **7. Testing Strategy:**
+        - **Unit tests** pentru individual components
+        - **Integration tests** pentru user flows
+        - **Custom hooks testing** cu renderHook
+        - **MSW** pentru API mocking
+        - **Coverage reporting** și CI/CD integration
+
+        **8. Production Readiness:**
+        - **Bundle optimization** cu webpack analyzer
+        - **PWA capabilities** cu service worker
+        - **SEO optimization** cu meta tags
+        - **Performance monitoring** cu web vitals
+        - **Analytics integration** pentru user tracking
+        - **Error tracking** cu Sentry
+        - **Deployment** cu Netlify/Vercel
+
+        ### Key Takeaways pentru Interview Preparation
+
+        **Demonstrates Deep React Knowledge:**
+        - Proper use of all major hooks cu real-world examples
+        - Performance optimization techniques în production scenarios
+        - Error handling și user experience considerations
+        - Testing strategies pentru maintainable code
+
+        **Shows Architecture Skills:**
+        - Separation of concerns între UI și business logic
+        - Scalable folder structure și component organization
+        - Proper state management strategy selection
+        - API integration cu error handling și loading states
+
+        **Production Experience:**
+        - Deployment pipeline setup cu CI/CD
+        - Performance monitoring și analytics integration
+        - Security considerations (XSS protection, auth handling)
+        - Accessibility features și responsive design
+
+        Această aplicație demonstrează toate conceptele React necesare pentru poziții senior de frontend development și oferă exemple concrete pentru discuții tehnice în interviuri.
+        """)
+
+    st.markdown("""
+    <div class="summary-box">
+    <h3>Finalizarea Proiectului</h3>
+    <p>Ai construit o aplicație completă de blog care demonstrează toate conceptele React învățate: 
+    de la hooks fundamentali la optimizări avansate de performance. Aplicația include authentication, 
+    CRUD operations, real-time comments, search functionality și este deployment-ready cu testing complet. 
+    Această implementare te pregătește pentru interviuri tehnice și dezvoltarea aplicațiilor React la nivel profesionist.</p>
+    <p><strong>Next Steps:</strong> Extinde aplicația cu notificații real-time, editor de text avansat, 
+    sistem de categorii, și integrations cu servicii externe pentru o experiență completă de production.</p>
+    </div>
+    """, unsafe_allow_html=True)
 
 
 def styling_page():
-    """Styling in React"""
+    """Styling in React - Tutorial Complet"""
     st.markdown('<h1 class="chapter-header">Styling în React</h1>', unsafe_allow_html=True)
 
     st.markdown("""
-    <div class="info-box">
-        <h3>Modalități de stilizare în React:</h3>
-        <p>React oferă multiple modalități de stilizare.</p>
+    <div class="intro-box">
+    <h3>Modalități de stilizare în React</h3>
+    <p>React oferă multiple modalități de stilizare, fiecare cu propriile avantaje și cazuri de utilizare. 
+    De la CSS tradițional la soluții moderne CSS-in-JS, vei învăța când și cum să folosești fiecare metodă 
+    pentru aplicații scalabile și maintainable.</p>
     </div>
     """, unsafe_allow_html=True)
 
     tabs = st.tabs(["CSS Clasic", "CSS Modules", "Styled Components", "Tailwind CSS"])
-    # Add styling content here
+
+    with tabs[0]:
+        st.markdown('<h2 class="section-header">CSS Clasic în React</h2>', unsafe_allow_html=True)
+
+        st.markdown("""
+        ### CSS Traditional cu React
+
+        Cea mai directă metodă de stilizare în React este folosirea CSS-ului tradițional.
+        React suportă atât **clase CSS** cât și **inline styles**.
+        """)
+
+        st.markdown("### 1. Inline Styles")
+
+        st.code("""
+// Inline styles în React - obiecte JavaScript
+function InlineStylesExample() {
+    // Styles ca obiecte JavaScript
+    const containerStyle = {
+        display: 'flex',
+        flexDirection: 'column',
+        alignItems: 'center',
+        padding: '20px',
+        backgroundColor: '#f0f2f5',
+        borderRadius: '8px',
+        boxShadow: '0 2px 4px rgba(0, 0, 0, 0.1)'
+    };
+
+    const titleStyle = {
+        fontSize: '2rem',
+        fontWeight: 'bold',
+        color: '#1a365d',
+        marginBottom: '16px',
+        textAlign: 'center'
+    };
+
+    const buttonStyle = {
+        backgroundColor: '#3182ce',
+        color: 'white',
+        border: 'none',
+        padding: '12px 24px',
+        borderRadius: '6px',
+        fontSize: '16px',
+        cursor: 'pointer',
+        transition: 'all 0.2s ease-in-out',
+        ':hover': { // Pseudo-selectors nu funcționează direct în inline styles
+            backgroundColor: '#2c5aa0'
+        }
+    };
+
+    return (
+        <div style={containerStyle}>
+            <h1 style={titleStyle}>Inline Styles Example</h1>
+            <button style={buttonStyle}>
+                Click Me
+            </button>
+        </div>
+    );
+}
+
+// Dynamic inline styles bazate pe props/state
+function DynamicInlineStyles({ isActive, theme = 'light' }) {
+    const [isHovered, setIsHovered] = useState(false);
+
+    // Styles calculaţi dinamic
+    const dynamicStyles = {
+        container: {
+            padding: '16px',
+            backgroundColor: theme === 'dark' ? '#2d3748' : '#ffffff',
+            color: theme === 'dark' ? '#ffffff' : '#2d3748',
+            border: `2px solid ${isActive ? '#48bb78' : '#e2e8f0'}`,
+            borderRadius: '8px',
+            transition: 'all 0.3s ease',
+            transform: isHovered ? 'scale(1.02)' : 'scale(1)',
+            cursor: 'pointer'
+        },
+        status: {
+            display: 'inline-block',
+            padding: '4px 8px',
+            borderRadius: '4px',
+            fontSize: '14px',
+            fontWeight: 'bold',
+            backgroundColor: isActive ? '#c6f6d5' : '#fed7d7',
+            color: isActive ? '#22543d' : '#742a2a'
+        }
+    };
+
+    return (
+        <div 
+            style={dynamicStyles.container}
+            onMouseEnter={() => setIsHovered(true)}
+            onMouseLeave={() => setIsHovered(false)}
+        >
+            <h3>Dynamic Component</h3>
+            <span style={dynamicStyles.status}>
+                {isActive ? 'Active' : 'Inactive'}
+            </span>
+            <p>Theme: {theme}</p>
+        </div>
+    );
+}
+
+// Avantaje inline styles:
+// ✅ Styling dinamic foarte uşor
+// ✅ Scoped automat la componentă
+// ✅ JavaScript variables în styles
+// ✅ Nu există CSS class name conflicts
+
+// Dezavantaje inline styles:
+// ❌ Nu există pseudo-selectors (:hover, :focus)
+// ❌ Nu există media queries
+// ❌ Performance mai slab pentru styles complexe
+// ❌ Dificil de maintainit pentru aplicaţii mari
+        """, language="javascript")
+
+        st.markdown("### 2. CSS Classes cu className")
+
+        st.code("""
+/* styles.css - CSS tradițional */
+.card {
+    background-color: #ffffff;
+    border-radius: 8px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    padding: 24px;
+    margin: 16px 0;
+    transition: transform 0.2s ease-in-out;
+}
+
+.card:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 8px 15px rgba(0, 0, 0, 0.15);
+}
+
+.card__title {
+    font-size: 1.5rem;
+    font-weight: 600;
+    color: #2d3748;
+    margin-bottom: 12px;
+}
+
+.card__content {
+    color: #4a5568;
+    line-height: 1.6;
+    margin-bottom: 16px;
+}
+
+.card__actions {
+    display: flex;
+    gap: 12px;
+    justify-content: flex-end;
+}
+
+.btn {
+    padding: 8px 16px;
+    border: none;
+    border-radius: 4px;
+    font-size: 14px;
+    font-weight: 500;
+    cursor: pointer;
+    transition: all 0.2s ease;
+}
+
+.btn--primary {
+    background-color: #3182ce;
+    color: white;
+}
+
+.btn--primary:hover {
+    background-color: #2c5aa0;
+}
+
+.btn--secondary {
+    background-color: #e2e8f0;
+    color: #4a5568;
+}
+
+.btn--secondary:hover {
+    background-color: #cbd5e0;
+}
+
+/* Responsive design */
+@media (max-width: 768px) {
+    .card {
+        padding: 16px;
+        margin: 8px 0;
+    }
+
+    .card__actions {
+        flex-direction: column;
+    }
+
+    .btn {
+        width: 100%;
+    }
+}
+
+/* Dark theme support */
+.dark .card {
+    background-color: #2d3748;
+    color: #ffffff;
+}
+
+.dark .card__title {
+    color: #ffffff;
+}
+
+.dark .card__content {
+    color: #a0aec0;
+}
+        """, language="css")
+
+        st.code("""
+// Component folosind CSS classes
+import React, { useState } from 'react';
+import './styles.css'; // Import CSS file
+
+function ClassNamesExample({ title, content, onSave, onCancel }) {
+    const [isDarkMode, setIsDarkMode] = useState(false);
+
+    // Conditional class names
+    const containerClass = `card ${isDarkMode ? 'dark' : ''}`;
+
+    return (
+        <div className={containerClass}>
+            <h2 className="card__title">{title}</h2>
+            <p className="card__content">{content}</p>
+
+            <div className="card__actions">
+                <button className="btn btn--secondary" onClick={onCancel}>
+                    Cancel
+                </button>
+                <button className="btn btn--primary" onClick={onSave}>
+                    Save
+                </button>
+            </div>
+
+            <button 
+                onClick={() => setIsDarkMode(!isDarkMode)}
+                className="btn btn--secondary"
+                style={{ marginTop: '12px' }}
+            >
+                Toggle {isDarkMode ? 'Light' : 'Dark'} Mode
+            </button>
+        </div>
+    );
+}
+
+// Dynamic class names cu conditionals
+function DynamicClasses({ isLoading, hasError, isSuccess }) {
+    // Multiple ways să construieşti class names
+
+    // 1. Template literals
+    const statusClass = `status ${isLoading ? 'status--loading' : ''} ${hasError ? 'status--error' : ''} ${isSuccess ? 'status--success' : ''}`;
+
+    // 2. Array join
+    const statusClassArray = [
+        'status',
+        isLoading && 'status--loading',
+        hasError && 'status--error', 
+        isSuccess && 'status--success'
+    ].filter(Boolean).join(' ');
+
+    // 3. Object cu keys
+    const statusClasses = {
+        'status': true,
+        'status--loading': isLoading,
+        'status--error': hasError,
+        'status--success': isSuccess
+    };
+
+    const statusClassFromObject = Object.keys(statusClasses)
+        .filter(key => statusClasses[key])
+        .join(' ');
+
+    return (
+        <div>
+            <div className={statusClass}>Template Literal Method</div>
+            <div className={statusClassArray}>Array Method</div>
+            <div className={statusClassFromObject}>Object Method</div>
+        </div>
+    );
+}
+
+// Helper library: classnames pentru managementul claslor
+// npm install classnames
+import classNames from 'classnames';
+
+function ClassNamesLibrary({ isActive, isDisabled, variant = 'primary' }) {
+    const buttonClass = classNames('btn', {
+        'btn--active': isActive,
+        'btn--disabled': isDisabled,
+        [`btn--${variant}`]: variant
+    });
+
+    const iconClass = classNames('icon', {
+        'icon--spin': isActive && !isDisabled
+    });
+
+    return (
+        <button className={buttonClass} disabled={isDisabled}>
+            <span className={iconClass}>⚡</span>
+            Button Text
+        </button>
+    );
+}
+
+// CSS cu CSS Variables pentru theming
+function CSSVariablesExample() {
+    const [primaryColor, setPrimaryColor] = useState('#3182ce');
+
+    // Setăm CSS variables dinamic
+    const cssVariables = {
+        '--primary-color': primaryColor,
+        '--primary-color-hover': darkenColor(primaryColor, 10),
+        '--border-radius': '8px',
+        '--spacing-unit': '8px'
+    };
+
+    return (
+        <div style={cssVariables} className="css-variables-container">
+            <h3>CSS Variables Example</h3>
+            <input 
+                type="color" 
+                value={primaryColor}
+                onChange={(e) => setPrimaryColor(e.target.value)}
+            />
+            <button className="themed-button">Themed Button</button>
+        </div>
+    );
+}
+
+function darkenColor(color, percent) {
+    // Helper function pentru culori mai închise
+    const amount = Math.round(2.55 * percent);
+    const num = parseInt(color.replace("#", ""), 16);
+    return "#" + (0x1000000 + (Math.max(0, Math.min(255, (num >> 16) - amount)) << 16) +
+        (Math.max(0, Math.min(255, (num >> 8 & 0x00FF) - amount)) << 8) +
+        Math.max(0, Math.min(255, (num & 0x0000FF) - amount))).toString(16).slice(1);
+}
+        """, language="javascript")
+
+        st.code("""
+/* CSS Variables pentru theming */
+.css-variables-container {
+    --primary-color: #3182ce;
+    --primary-color-hover: #2c5aa0;
+    --secondary-color: #718096;
+    --background-color: #ffffff;
+    --text-color: #2d3748;
+    --border-radius: 8px;
+    --spacing-unit: 8px;
+    --transition-speed: 0.2s;
+}
+
+.themed-button {
+    background-color: var(--primary-color);
+    color: white;
+    border: none;
+    padding: calc(var(--spacing-unit) * 1.5) calc(var(--spacing-unit) * 3);
+    border-radius: var(--border-radius);
+    font-size: 16px;
+    cursor: pointer;
+    transition: background-color var(--transition-speed) ease;
+}
+
+.themed-button:hover {
+    background-color: var(--primary-color-hover);
+}
+
+/* Dark theme override */
+.css-variables-container.dark {
+    --background-color: #2d3748;
+    --text-color: #ffffff;
+    --secondary-color: #a0aec0;
+}
+
+/* Responsive spacing cu CSS variables */
+@media (max-width: 768px) {
+    .css-variables-container {
+        --spacing-unit: 4px;
+        --border-radius: 4px;
+    }
+}
+        """, language="css")
+
+        st.markdown("### 3. SASS/SCSS în React")
+
+        st.code("""
+// Installation: npm install sass
+
+/* styles.scss - SASS/SCSS features */
+
+// Variables
+$primary-color: #3182ce;
+$secondary-color: #718096;
+$border-radius: 8px;
+$spacing-base: 8px;
+
+// Mixins
+@mixin flex-center {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+@mixin button-variant($bg-color, $text-color: white) {
+    background-color: $bg-color;
+    color: $text-color;
+    border: none;
+    padding: ($spacing-base * 1.5) ($spacing-base * 3);
+    border-radius: $border-radius;
+    cursor: pointer;
+    transition: all 0.2s ease;
+
+    &:hover {
+        background-color: darken($bg-color, 10%);
+        transform: translateY(-1px);
+    }
+
+    &:active {
+        transform: translateY(0);
+    }
+
+    &:disabled {
+        background-color: lighten($bg-color, 20%);
+        cursor: not-allowed;
+        transform: none;
+    }
+}
+
+@mixin responsive($breakpoint) {
+    @if $breakpoint == mobile {
+        @media (max-width: 767px) { @content; }
+    }
+    @if $breakpoint == tablet {
+        @media (min-width: 768px) and (max-width: 1023px) { @content; }
+    }
+    @if $breakpoint == desktop {
+        @media (min-width: 1024px) { @content; }
+    }
+}
+
+// Nested selectors cu SASS
+.card {
+    background: white;
+    border-radius: $border-radius;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    padding: $spacing-base * 3;
+    margin: $spacing-base * 2 0;
+
+    &__header {
+        @include flex-center;
+        margin-bottom: $spacing-base * 2;
+
+        &--centered {
+            text-align: center;
+        }
+    }
+
+    &__title {
+        font-size: 1.5rem;
+        font-weight: 600;
+        color: $primary-color;
+        margin: 0;
+
+        &--large {
+            font-size: 2rem;
+        }
+    }
+
+    &__content {
+        color: $secondary-color;
+        line-height: 1.6;
+        margin-bottom: $spacing-base * 2;
+
+        p {
+            margin-bottom: $spacing-base;
+
+            &:last-child {
+                margin-bottom: 0;
+            }
+        }
+    }
+
+    &__actions {
+        display: flex;
+        gap: $spacing-base * 1.5;
+        justify-content: flex-end;
+
+        @include responsive(mobile) {
+            flex-direction: column;
+            gap: $spacing-base;
+        }
+    }
+
+    // State classes
+    &--loading {
+        opacity: 0.7;
+        pointer-events: none;
+    }
+
+    &--error {
+        border-left: 4px solid #e53e3e;
+    }
+
+    &--success {
+        border-left: 4px solid #38a169;
+    }
+}
+
+// Button variants cu mixins
+.btn {
+    &--primary {
+        @include button-variant($primary-color);
+    }
+
+    &--secondary {
+        @include button-variant($secondary-color);
+    }
+
+    &--danger {
+        @include button-variant(#e53e3e);
+    }
+
+    &--outline {
+        background: transparent;
+        border: 2px solid $primary-color;
+        color: $primary-color;
+        padding: ($spacing-base * 1.5 - 2px) ($spacing-base * 3 - 2px);
+
+        &:hover {
+            background: $primary-color;
+            color: white;
+        }
+    }
+}
+
+// Functions în SASS
+@function px-to-rem($px, $base: 16px) {
+    @return ($px / $base) * 1rem;
+}
+
+.typography {
+    &--small { font-size: px-to-rem(12px); }
+    &--normal { font-size: px-to-rem(16px); }
+    &--large { font-size: px-to-rem(20px); }
+    &--xl { font-size: px-to-rem(24px); }
+}
+
+// Advanced SASS features
+%flex-center {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.modal {
+    @extend %flex-center;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.5);
+
+    &__content {
+        background: white;
+        border-radius: $border-radius;
+        padding: $spacing-base * 4;
+        max-width: 500px;
+        width: 90%;
+
+        @include responsive(mobile) {
+            padding: $spacing-base * 2;
+            margin: $spacing-base * 2;
+        }
+    }
+}
+        """, language="scss")
+
+        st.code("""
+// Component folosind SASS
+import React, { useState } from 'react';
+import './styles.scss'; // Import SASS file
+
+function SASSExample() {
+    const [isLoading, setIsLoading] = useState(false);
+    const [status, setStatus] = useState('normal'); // normal, error, success
+
+    const cardClasses = [
+        'card',
+        isLoading && 'card--loading',
+        status === 'error' && 'card--error',
+        status === 'success' && 'card--success'
+    ].filter(Boolean).join(' ');
+
+    const handleAction = (actionType) => {
+        setIsLoading(true);
+
+        setTimeout(() => {
+            setIsLoading(false);
+            setStatus(actionType === 'success' ? 'success' : 'error');
+
+            // Reset status după 3 secunde
+            setTimeout(() => setStatus('normal'), 3000);
+        }, 2000);
+    };
+
+    return (
+        <div className={cardClasses}>
+            <div className="card__header card__header--centered">
+                <h2 className="card__title card__title--large">
+                    SASS Example Card
+                </h2>
+            </div>
+
+            <div className="card__content">
+                <p>Această componentă folosește SASS pentru styling avansat.</p>
+                <p>Include nested selectors, mixins, variables și responsive design.</p>
+                <p className="typography--small">
+                    Status current: {status}
+                </p>
+            </div>
+
+            <div className="card__actions">
+                <button 
+                    className="btn btn--secondary"
+                    onClick={() => handleAction('error')}
+                    disabled={isLoading}
+                >
+                    Trigger Error
+                </button>
+                <button 
+                    className="btn btn--primary"
+                    onClick={() => handleAction('success')}
+                    disabled={isLoading}
+                >
+                    {isLoading ? 'Loading...' : 'Trigger Success'}
+                </button>
+                <button className="btn btn--outline">
+                    Outline Button
+                </button>
+            </div>
+        </div>
+    );
+}
+
+export default SASSExample;
+        """, language="javascript")
+
+    with tabs[1]:
+        st.markdown('<h2 class="section-header">CSS Modules</h2>', unsafe_allow_html=True)
+
+        st.markdown("""
+        ### Ce sunt CSS Modules?
+
+        CSS Modules oferă **scoped CSS** prin generarea automată de class names unice. 
+        Acest lucru elimină conflictele de nume și permite modularizarea stilurilor.
+        """)
+
+        st.markdown("### Configurare și Utilizare de Bază")
+
+        st.code("""
+/* Button.module.css - Fișier CSS Module */
+.container {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+}
+
+.button {
+    padding: 12px 24px;
+    border: none;
+    border-radius: 6px;
+    font-size: 16px;
+    font-weight: 500;
+    cursor: pointer;
+    transition: all 0.2s ease-in-out;
+    position: relative;
+    overflow: hidden;
+}
+
+.button:disabled {
+    opacity: 0.6;
+    cursor: not-allowed;
+}
+
+.button:focus {
+    outline: none;
+    box-shadow: 0 0 0 3px rgba(66, 153, 225, 0.5);
+}
+
+/* Button variants */
+.primary {
+    background-color: #3182ce;
+    color: white;
+}
+
+.primary:hover:not(:disabled) {
+    background-color: #2c5aa0;
+    transform: translateY(-1px);
+}
+
+.secondary {
+    background-color: #e2e8f0;
+    color: #4a5568;
+}
+
+.secondary:hover:not(:disabled) {
+    background-color: #cbd5e0;
+}
+
+.danger {
+    background-color: #e53e3e;
+    color: white;
+}
+
+.danger:hover:not(:disabled) {
+    background-color: #c53030;
+}
+
+.outline {
+    background-color: transparent;
+    border: 2px solid #3182ce;
+    color: #3182ce;
+}
+
+.outline:hover:not(:disabled) {
+    background-color: #3182ce;
+    color: white;
+}
+
+/* Size variants */
+.small {
+    padding: 8px 16px;
+    font-size: 14px;
+}
+
+.large {
+    padding: 16px 32px;
+    font-size: 18px;
+}
+
+.fullWidth {
+    width: 100%;
+    justify-content: center;
+}
+
+/* Loading state */
+.loading {
+    pointer-events: none;
+}
+
+.spinner {
+    display: inline-block;
+    width: 16px;
+    height: 16px;
+    border: 2px solid transparent;
+    border-top: 2px solid currentColor;
+    border-radius: 50%;
+    animation: spin 1s linear infinite;
+}
+
+@keyframes spin {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
+}
+
+.icon {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 20px;
+    height: 20px;
+}
+        """, language="css")
+
+        st.code("""
+// Button.jsx - Component folosind CSS Modules
+import React from 'react';
+import styles from './Button.module.css'; // Import ca obiect
+
+function Button({
+    children,
+    variant = 'primary',
+    size = 'medium',
+    fullWidth = false,
+    loading = false,
+    disabled = false,
+    icon,
+    onClick,
+    ...props
+}) {
+    // Construirea class names folosind CSS Modules
+    const buttonClasses = [
+        styles.button,              // styles.button = "Button_button__a1b2c3"
+        styles[variant],            // styles.primary = "Button_primary__d4e5f6"
+        size !== 'medium' && styles[size],
+        fullWidth && styles.fullWidth,
+        loading && styles.loading
+    ].filter(Boolean).join(' ');
+
+    const containerClasses = [
+        styles.container,
+        fullWidth && styles.fullWidth
+    ].filter(Boolean).join(' ');
+
+    return (
+        <div className={containerClasses}>
+            <button
+                className={buttonClasses}
+                disabled={disabled || loading}
+                onClick={onClick}
+                {...props}
+            >
+                {loading ? (
+                    <span className={styles.spinner} />
+                ) : icon ? (
+                    <span className={styles.icon}>{icon}</span>
+                ) : null}
+
+                {children}
+            </button>
+        </div>
+    );
+}
+
+export default Button;
+
+// Utilizarea componentei
+function App() {
+    const [loading, setLoading] = useState(false);
+
+    const handleClick = () => {
+        setLoading(true);
+        setTimeout(() => setLoading(false), 2000);
+    };
+
+    return (
+        <div>
+            <Button variant="primary" onClick={handleClick} loading={loading}>
+                Primary Button
+            </Button>
+
+            <Button variant="secondary" size="small">
+                Small Secondary
+            </Button>
+
+            <Button variant="danger" size="large" icon="🗑️">
+                Delete
+            </Button>
+
+            <Button variant="outline" fullWidth>
+                Full Width Outline
+            </Button>
+        </div>
+    );
+}
+        """, language="javascript")
+
+        st.markdown("### Composition Pattern cu CSS Modules")
+
+        st.code("""
+/* Card.module.css - Complex component styling */
+.card {
+    background: white;
+    border-radius: 12px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.07);
+    overflow: hidden;
+    transition: all 0.3s ease;
+    border: 1px solid #e2e8f0;
+}
+
+.card:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 8px 25px rgba(0, 0, 0, 0.15);
+}
+
+.header {
+    padding: 24px 24px 0 24px;
+}
+
+.headerWithImage {
+    padding: 0;
+}
+
+.image {
+    width: 100%;
+    height: 200px;
+    object-fit: cover;
+}
+
+.content {
+    padding: 24px;
+}
+
+.contentWithHeader {
+    padding-top: 16px;
+}
+
+.title {
+    font-size: 1.25rem;
+    font-weight: 600;
+    color: #2d3748;
+    margin: 0 0 8px 0;
+    line-height: 1.3;
+}
+
+.subtitle {
+    font-size: 0.875rem;
+    color: #718096;
+    margin: 0 0 16px 0;
+}
+
+.description {
+    color: #4a5568;
+    line-height: 1.6;
+    margin: 0 0 16px 0;
+}
+
+.footer {
+    padding: 0 24px 24px 24px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.footerActions {
+    display: flex;
+    gap: 12px;
+}
+
+.metadata {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+}
+
+.metadataItem {
+    font-size: 0.75rem;
+    color: #718096;
+}
+
+/* Card variants */
+.elevated {
+    box-shadow: 0 10px 15px rgba(0, 0, 0, 0.1);
+}
+
+.outlined {
+    border: 2px solid #3182ce;
+    box-shadow: none;
+}
+
+.ghost {
+    background: transparent;
+    box-shadow: none;
+    border: 1px dashed #cbd5e0;
+}
+
+/* Responsive design */
+@media (max-width: 768px) {
+    .header,
+    .content,
+    .footer {
+        padding-left: 16px;
+        padding-right: 16px;
+    }
+
+    .footer {
+        flex-direction: column;
+        gap: 12px;
+        align-items: stretch;
+    }
+
+    .footerActions {
+        justify-content: center;
+    }
+}
+        """, language="css")
+
+        st.code("""
+// Card.jsx - Complex component cu CSS Modules
+import React from 'react';
+import styles from './Card.module.css';
+import Button from './Button'; // Assume că avem componenta Button
+
+function Card({
+    title,
+    subtitle,
+    description,
+    image,
+    actions,
+    metadata,
+    variant = 'default',
+    className,
+    children,
+    ...props
+}) {
+    const cardClasses = [
+        styles.card,
+        variant !== 'default' && styles[variant],
+        className
+    ].filter(Boolean).join(' ');
+
+    const contentClasses = [
+        styles.content,
+        (title || subtitle) && styles.contentWithHeader
+    ].filter(Boolean).join(' ');
+
+    const headerClasses = [
+        styles.header,
+        image && styles.headerWithImage
+    ].filter(Boolean).join(' ');
+
+    return (
+        <div className={cardClasses} {...props}>
+            {image && (
+                <img src={image} alt={title} className={styles.image} />
+            )}
+
+            {(title || subtitle) && (
+                <div className={headerClasses}>
+                    {title && <h3 className={styles.title}>{title}</h3>}
+                    {subtitle && <p className={styles.subtitle}>{subtitle}</p>}
+                </div>
+            )}
+
+            <div className={contentClasses}>
+                {description && (
+                    <p className={styles.description}>{description}</p>
+                )}
+                {children}
+            </div>
+
+            {(actions || metadata) && (
+                <div className={styles.footer}>
+                    {metadata && (
+                        <div className={styles.metadata}>
+                            {metadata.map((item, index) => (
+                                <span key={index} className={styles.metadataItem}>
+                                    {item}
+                                </span>
+                            ))}
+                        </div>
+                    )}
+
+                    {actions && (
+                        <div className={styles.footerActions}>
+                            {actions}
+                        </div>
+                    )}
+                </div>
+            )}
+        </div>
+    );
+}
+
+// Usage examples
+function CardExamples() {
+    return (
+        <div style={{ display: 'grid', gap: '24px', maxWidth: '800px' }}>
+            {/* Basic card */}
+            <Card
+                title="Basic Card"
+                description="This is a basic card with title and description."
+                actions={[
+                    <Button key="1" variant="primary" size="small">Action</Button>
+                ]}
+            />
+
+            {/* Card with image */}
+            <Card
+                title="Card with Image"
+                subtitle="Beautiful landscape"
+                description="This card includes an image at the top."
+                image="https://picsum.photos/400/200?random=1"
+                metadata={['Photography', 'Nature', '2024']}
+                actions={[
+                    <Button key="1" variant="secondary" size="small">View</Button>,
+                    <Button key="2" variant="primary" size="small">Download</Button>
+                ]}
+            />
+
+            {/* Elevated variant */}
+            <Card
+                variant="elevated"
+                title="Elevated Card"
+                description="This card has more prominent shadow."
+            />
+
+            {/* Outlined variant */}
+            <Card
+                variant="outlined"
+                title="Outlined Card"
+                description="This card has a colored border instead of shadow."
+            />
+
+            {/* Card with custom content */}
+            <Card
+                title="Custom Content Card"
+                subtitle="Advanced example"
+                actions={[
+                    <Button key="1" variant="danger" size="small" icon="🗑️">
+                        Delete
+                    </Button>
+                ]}
+            >
+                <div style={{ 
+                    background: '#f7fafc', 
+                    padding: '16px', 
+                    borderRadius: '8px',
+                    marginBottom: '16px'
+                }}>
+                    <strong>Custom content area</strong>
+                    <p style={{ margin: '8px 0 0 0', fontSize: '14px' }}>
+                        You can add any custom content here.
+                    </p>
+                </div>
+
+                <ul style={{ margin: 0, paddingLeft: '20px' }}>
+                    <li>Feature 1</li>
+                    <li>Feature 2</li>
+                    <li>Feature 3</li>
+                </ul>
+            </Card>
+        </div>
+    );
+}
+
+export default CardExamples;
+        """, language="javascript")
+
+        st.markdown("### Composition și Global Styles")
+
+        st.code("""
+/* global.module.css - Global utilities cu CSS Modules */
+/* Typography */
+.textXs { font-size: 0.75rem; }
+.textSm { font-size: 0.875rem; }
+.textBase { font-size: 1rem; }
+.textLg { font-size: 1.125rem; }
+.textXl { font-size: 1.25rem; }
+.text2xl { font-size: 1.5rem; }
+.text3xl { font-size: 1.875rem; }
+
+.fontThin { font-weight: 100; }
+.fontLight { font-weight: 300; }
+.fontNormal { font-weight: 400; }
+.fontMedium { font-weight: 500; }
+.fontSemibold { font-weight: 600; }
+.fontBold { font-weight: 700; }
+
+/* Colors */
+.textGray100 { color: #f7fafc; }
+.textGray500 { color: #a0aec0; }
+.textGray900 { color: #1a202c; }
+.textBlue500 { color: #4299e1; }
+.textGreen500 { color: #48bb78; }
+.textRed500 { color: #f56565; }
+
+.bgWhite { background-color: #ffffff; }
+.bgGray50 { background-color: #f7fafc; }
+.bgGray100 { background-color: #edf2f7; }
+.bgBlue500 { background-color: #4299e1; }
+
+/* Spacing */
+.m0 { margin: 0; }
+.m1 { margin: 0.25rem; }
+.m2 { margin: 0.5rem; }
+.m4 { margin: 1rem; }
+.m8 { margin: 2rem; }
+
+.p0 { padding: 0; }
+.p1 { padding: 0.25rem; }
+.p2 { padding: 0.5rem; }
+.p4 { padding: 1rem; }
+.p8 { padding: 2rem; }
+
+.mt0 { margin-top: 0; }
+.mt2 { margin-top: 0.5rem; }
+.mt4 { margin-top: 1rem; }
+.mb2 { margin-bottom: 0.5rem; }
+.mb4 { margin-bottom: 1rem; }
+
+.px2 { padding-left: 0.5rem; padding-right: 0.5rem; }
+.px4 { padding-left: 1rem; padding-right: 1rem; }
+.py2 { padding-top: 0.5rem; padding-bottom: 0.5rem; }
+.py4 { padding-top: 1rem; padding-bottom: 1rem; }
+
+/* Layout */
+.flex { display: flex; }
+.inlineFlex { display: inline-flex; }
+.block { display: block; }
+.inlineBlock { display: inline-block; }
+.hidden { display: none; }
+
+.flexCol { flex-direction: column; }
+.flexRow { flex-direction: row; }
+
+.itemsCenter { align-items: center; }
+.itemsStart { align-items: flex-start; }
+.itemsEnd { align-items: flex-end; }
+
+.justifyCenter { justify-content: center; }
+.justifyBetween { justify-content: space-between; }
+.justifyAround { justify-content: space-around; }
+.justifyStart { justify-content: flex-start; }
+.justifyEnd { justify-content: flex-end; }
+
+.gap1 { gap: 0.25rem; }
+.gap2 { gap: 0.5rem; }
+.gap4 { gap: 1rem; }
+.gap8 { gap: 2rem; }
+
+/* Borders */
+.rounded { border-radius: 0.25rem; }
+.roundedMd { border-radius: 0.375rem; }
+.roundedLg { border-radius: 0.5rem; }
+.roundedXl { border-radius: 0.75rem; }
+.rounded2xl { border-radius: 1rem; }
+.roundedFull { border-radius: 9999px; }
+
+.border { border: 1px solid #e2e8f0; }
+.border2 { border: 2px solid #e2e8f0; }
+.borderGray200 { border-color: #edf2f7; }
+.borderBlue500 { border-color: #4299e1; }
+
+/* Shadows */
+.shadowSm { box-shadow: 0 1px 2px rgba(0, 0, 0, 0.05); }
+.shadow { box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1); }
+.shadowMd { box-shadow: 0 4px 6px rgba(0, 0, 0, 0.07); }
+.shadowLg { box-shadow: 0 10px 15px rgba(0, 0, 0, 0.1); }
+
+/* Position */
+.relative { position: relative; }
+.absolute { position: absolute; }
+.fixed { position: fixed; }
+
+.top0 { top: 0; }
+.right0 { right: 0; }
+.bottom0 { bottom: 0; }
+.left0 { left: 0; }
+
+/* Width & Height */
+.wFull { width: 100%; }
+.hFull { height: 100%; }
+.w32 { width: 8rem; }
+.h32 { height: 8rem; }
+
+/* Responsive utilities */
+@media (max-width: 640px) {
+    .smHidden { display: none; }
+    .smBlock { display: block; }
+    .smFlex { display: flex; }
+    .smFlexCol { flex-direction: column; }
+}
+
+@media (min-width: 768px) {
+    .mdBlock { display: block; }
+    .mdFlex { display: flex; }
+    .mdFlexRow { flex-direction: row; }
+}
+
+@media (min-width: 1024px) {
+    .lgBlock { display: block; }
+    .lgFlex { display: flex; }
+}
+        """, language="css")
+
+        st.code("""
+// utils/classNames.js - Helper pentru CSS Modules
+import globalStyles from '../styles/global.module.css';
+
+// Helper function pentru combining CSS Modules classes
+export function cn(...classNames) {
+    return classNames
+        .flat()
+        .filter(Boolean)
+        .join(' ');
+}
+
+// Helper pentru global utility classes
+export function createUtilityClass(utilityName) {
+    return globalStyles[utilityName] || '';
+}
+
+// Bulk utility class creator
+export function utils(utilityNames) {
+    if (typeof utilityNames === 'string') {
+        return utilityNames.split(' ').map(name => globalStyles[name] || '').join(' ');
+    }
+
+    if (Array.isArray(utilityNames)) {
+        return utilityNames.map(name => globalStyles[name] || '').join(' ');
+    }
+
+    return '';
+}
+
+// Advanced composition helper
+export function composeStyles(baseStyles, ...additionalStyles) {
+    const base = typeof baseStyles === 'string' ? baseStyles : 
+                 Object.values(baseStyles).join(' ');
+
+    const additional = additionalStyles
+        .flat()
+        .filter(Boolean)
+        .map(style => typeof style === 'string' ? style : Object.values(style).join(' '))
+        .join(' ');
+
+    return cn(base, additional);
+}
+
+// Usage în components
+import React from 'react';
+import styles from './UtilityExample.module.css';
+import { cn, utils, composeStyles } from '../utils/classNames';
+
+function UtilityExample() {
+    return (
+        <div className={cn(
+            styles.container,
+            utils('flex flexCol gap4 p8 bgGray50 rounded2xl shadow')
+        )}>
+            <h2 className={utils('text2xl fontBold textGray900 mb4')}>
+                Utility Classes Example
+            </h2>
+
+            <div className={utils('flex gap4 itemsCenter')}>
+                <button className={composeStyles(
+                    styles.button,
+                    utils('px4 py2 bgBlue500 textWhite roundedMd shadow')
+                )}>
+                    Primary Action
+                </button>
+
+                <button className={cn(
+                    styles.button,
+                    utils('px4 py2 border borderGray200 textGray900 roundedMd')
+                )}>
+                    Secondary Action
+                </button>
+            </div>
+
+            <div className={utils('grid gridCols2 gap4 mt8 mdGridCols4')}>
+                {[1, 2, 3, 4].map(num => (
+                    <div 
+                        key={num}
+                        className={utils('p4 bgWhite rounded border shadowSm')}
+                    >
+                        <div className={utils('w8 h8 bgBlue500 roundedFull mb2')} />
+                        <h3 className={utils('fontSemibold textGray900')}>
+                            Item {num}
+                        </h3>
+                        <p className={utils('textSm textGray500 mt1')}>
+                            Description for item {num}
+                        </p>
+                    </div>
+                ))}
+            </div>
+        </div>
+    );
+}
+        """, language="javascript")
+
+    with tabs[2]:
+        st.markdown('<h2 class="section-header">Styled Components</h2>', unsafe_allow_html=True)
+
+        st.markdown("""
+        ### CSS-in-JS cu Styled Components
+
+        Styled Components este o bibliotecă CSS-in-JS care permite scrierea CSS-ului direct în JavaScript, 
+        oferind **dynamic styling**, **theming** și **component-based architecture**.
+        """)
+
+        st.markdown("### Installation și Setup")
+
+        st.code("""
+# Installation
+npm install styled-components
+
+# TypeScript support (opțional)
+npm install --save-dev @types/styled-components
+
+# Babel plugin pentru optimizare (opțional)
+npm install --save-dev babel-plugin-styled-components
+        """, language="bash")
+
+        st.markdown("### Basic Styled Components")
+
+        st.code("""
+// Basic styled components examples
+import styled from 'styled-components';
+
+// Basic styled component
+const Button = styled.button`
+    background-color: #3182ce;
+    color: white;
+    border: none;
+    padding: 12px 24px;
+    border-radius: 6px;
+    font-size: 16px;
+    font-weight: 500;
+    cursor: pointer;
+    transition: all 0.2s ease-in-out;
+
+    &:hover {
+        background-color: #2c5aa0;
+        transform: translateY(-1px);
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.15);
+    }
+
+    &:active {
+        transform: translateY(0);
+    }
+
+    &:focus {
+        outline: none;
+        box-shadow: 0 0 0 3px rgba(66, 153, 225, 0.5);
+    }
+
+    &:disabled {
+        background-color: #a0aec0;
+        cursor: not-allowed;
+        transform: none;
+
+        &:hover {
+            background-color: #a0aec0;
+            transform: none;
+            box-shadow: none;
+        }
+    }
+`;
+
+// Styled component cu props
+const DynamicButton = styled.button`
+    background-color: ${props => {
+        switch (props.variant) {
+            case 'primary': return '#3182ce';
+            case 'secondary': return '#718096';
+            case 'danger': return '#e53e3e';
+            case 'success': return '#38a169';
+            default: return '#3182ce';
+        }
+    }};
+
+    color: ${props => props.variant === 'secondary' ? '#2d3748' : 'white'};
+    border: ${props => props.outline ? `2px solid ${props.color || '#3182ce'}` : 'none'};
+    background-color: ${props => props.outline ? 'transparent' : undefined};
+    color: ${props => props.outline ? (props.color || '#3182ce') : undefined};
+
+    padding: ${props => {
+        switch (props.size) {
+            case 'small': return '8px 16px';
+            case 'large': return '16px 32px';
+            default: return '12px 24px';
+        }
+    }};
+
+    font-size: ${props => {
+        switch (props.size) {
+            case 'small': return '14px';
+            case 'large': return '18px';
+            default: return '16px';
+        }
+    }};
+
+    width: ${props => props.fullWidth ? '100%' : 'auto'};
+
+    border-radius: 6px;
+    font-weight: 500;
+    cursor: pointer;
+    transition: all 0.2s ease-in-out;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+
+    &:hover:not(:disabled) {
+        transform: translateY(-1px);
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.15);
+
+        ${props => props.outline && `
+            background-color: ${props.color || '#3182ce'};
+            color: white;
+        `}
+    }
+
+    &:disabled {
+        opacity: 0.6;
+        cursor: not-allowed;
+        transform: none;
+    }
+
+    ${props => props.loading && `
+        pointer-events: none;
+        opacity: 0.8;
+    `}
+`;
+
+// Extending styled components
+const IconButton = styled(DynamicButton)`
+    padding: ${props => {
+        switch (props.size) {
+            case 'small': return '8px';
+            case 'large': return '16px';
+            default: return '12px';
+        }
+    }};
+
+    border-radius: 50%;
+    aspect-ratio: 1;
+`;
+
+// Container components
+const Container = styled.div`
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 16px;
+
+    @media (min-width: 768px) {
+        padding: 0 24px;
+    }
+
+    @media (min-width: 1024px) {
+        padding: 0 32px;
+    }
+`;
+
+const Card = styled.div`
+    background: white;
+    border-radius: 12px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.07);
+    padding: 24px;
+    margin: 16px 0;
+    transition: all 0.3s ease;
+    border: 1px solid #e2e8f0;
+
+    &:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 8px 25px rgba(0, 0, 0, 0.15);
+    }
+
+    ${props => props.variant === 'outlined' && `
+        border: 2px solid #3182ce;
+        box-shadow: none;
+    `}
+
+    ${props => props.variant === 'elevated' && `
+        box-shadow: 0 10px 15px rgba(0, 0, 0, 0.1);
+    `}
+`;
+
+const CardHeader = styled.div`
+    margin-bottom: 16px;
+
+    ${props => props.centered && `
+        text-align: center;
+    `}
+`;
+
+const CardTitle = styled.h3`
+    font-size: 1.25rem;
+    font-weight: 600;
+    color: #2d3748;
+    margin: 0 0 8px 0;
+    line-height: 1.3;
+
+    ${props => props.size === 'large' && `
+        font-size: 1.5rem;
+    `}
+
+    ${props => props.size === 'small' && `
+        font-size: 1rem;
+    `}
+`;
+
+const CardContent = styled.div`
+    color: #4a5568;
+    line-height: 1.6;
+    margin-bottom: 16px;
+
+    p {
+        margin-bottom: 12px;
+
+        &:last-child {
+            margin-bottom: 0;
+        }
+    }
+`;
+
+// Usage example
+function StyledComponentsBasic() {
+    const [loading, setLoading] = useState(false);
+
+    const handleClick = () => {
+        setLoading(true);
+        setTimeout(() => setLoading(false), 2000);
+    };
+
+    return (
+        <Container>
+            <Card>
+                <CardHeader centered>
+                    <CardTitle size="large">Styled Components Example</CardTitle>
+                </CardHeader>
+
+                <CardContent>
+                    <p>Această componentă demonstrează puterea Styled Components pentru styling dinamic și flexibil.</p>
+                </CardContent>
+
+                <div style={{ display: 'flex', gap: '12px', flexWrap: 'wrap' }}>
+                    <DynamicButton variant="primary" onClick={handleClick} loading={loading}>
+                        {loading ? 'Loading...' : 'Primary'}
+                    </DynamicButton>
+
+                    <DynamicButton variant="secondary" size="small">
+                        Secondary Small
+                    </DynamicButton>
+
+                    <DynamicButton variant="danger" outline>
+                        Danger Outline
+                    </DynamicButton>
+
+                    <DynamicButton variant="success" size="large" fullWidth>
+                        Success Full Width
+                    </DynamicButton>
+
+                    <IconButton variant="primary" size="small">
+                        ⚙️
+                    </IconButton>
+                </div>
+            </Card>
+
+            <Card variant="outlined">
+                <CardTitle>Outlined Card Variant</CardTitle>
+                <CardContent>
+                    <p>Această variantă de card are o bordură colorată în loc de umbră.</p>
+                </CardContent>
+            </Card>
+        </Container>
+    );
+}
+        """, language="javascript")
+
+        st.markdown("### Theming System cu Styled Components")
+
+        st.code("""
+// theme.js - Definirea theme-ului
+export const lightTheme = {
+    colors: {
+        primary: '#3182ce',
+        primaryHover: '#2c5aa0',
+        secondary: '#718096',
+        secondaryHover: '#4a5568',
+        success: '#38a169',
+        successHover: '#2f855a',
+        danger: '#e53e3e',
+        dangerHover: '#c53030',
+        warning: '#dd6b20',
+        warningHover: '#c05621',
+
+        // Grays
+        gray50: '#f7fafc',
+        gray100: '#edf2f7',
+        gray200: '#e2e8f0',
+        gray300: '#cbd5e0',
+        gray400: '#a0aec0',
+        gray500: '#718096',
+        gray600: '#4a5568',
+        gray700: '#2d3748',
+        gray800: '#1a202c',
+        gray900: '#171923',
+
+        // Semantic colors
+        background: '#ffffff',
+        surface: '#f7fafc',
+        text: '#2d3748',
+        textSecondary: '#4a5568',
+        textMuted: '#718096',
+        border: '#e2e8f0',
+
+        // Status colors
+        info: '#3182ce',
+        infoLight: '#bee3f8',
+        successLight: '#c6f6d5',
+        warningLight: '#faf089',
+        dangerLight: '#fed7d7'
+    },
+
+    fonts: {
+        body: '-apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif',
+        heading: '-apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif',
+        mono: 'SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace'
+    },
+
+    fontSizes: {
+        xs: '0.75rem',
+        sm: '0.875rem',
+        base: '1rem',
+        lg: '1.125rem',
+        xl: '1.25rem',
+        '2xl': '1.5rem',
+        '3xl': '1.875rem',
+        '4xl': '2.25rem',
+        '5xl': '3rem'
+    },
+
+    fontWeights: {
+        thin: 100,
+        light: 300,
+        normal: 400,
+        medium: 500,
+        semibold: 600,
+        bold: 700,
+        extrabold: 800,
+        black: 900
+    },
+
+    lineHeights: {
+        tight: 1.25,
+        snug: 1.375,
+        normal: 1.5,
+        relaxed: 1.625,
+        loose: 2
+    },
+
+    space: {
+        0: '0',
+        1: '0.25rem',
+        2: '0.5rem',
+        3: '0.75rem',
+        4: '1rem',
+        5: '1.25rem',
+        6: '1.5rem',
+        8: '2rem',
+        10: '2.5rem',
+        12: '3rem',
+        16: '4rem',
+        20: '5rem',
+        24: '6rem',
+        32: '8rem'
+    },
+
+    sizes: {
+        xs: '20rem',
+        sm: '24rem',
+        md: '28rem',
+        lg: '32rem',
+        xl: '36rem',
+        '2xl': '42rem',
+        '3xl': '48rem',
+        '4xl': '56rem',
+        '5xl': '64rem',
+        '6xl': '72rem',
+        full: '100%'
+    },
+
+    radii: {
+        none: '0',
+        sm: '0.125rem',
+        base: '0.25rem',
+        md: '0.375rem',
+        lg: '0.5rem',
+        xl: '0.75rem',
+        '2xl': '1rem',
+        '3xl': '1.5rem',
+        full: '9999px'
+    },
+
+    shadows: {
+        xs: '0 0 0 1px rgba(0, 0, 0, 0.05)',
+        sm: '0 1px 2px 0 rgba(0, 0, 0, 0.05)',
+        base: '0 1px 3px 0 rgba(0, 0, 0, 0.1), 0 1px 2px 0 rgba(0, 0, 0, 0.06)',
+        md: '0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06)',
+        lg: '0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05)',
+        xl: '0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04)',
+        '2xl': '0 25px 50px -12px rgba(0, 0, 0, 0.25)',
+        inner: 'inset 0 2px 4px 0 rgba(0, 0, 0, 0.06)',
+        outline: '0 0 0 3px rgba(66, 153, 225, 0.5)',
+        none: 'none'
+    },
+
+    breakpoints: {
+        sm: '640px',
+        md: '768px',
+        lg: '1024px',
+        xl: '1280px',
+        '2xl': '1536px'
+    },
+
+    zIndices: {
+        hide: -1,
+        auto: 'auto',
+        base: 0,
+        docked: 10,
+        dropdown: 1000,
+        sticky: 1100,
+        banner: 1200,
+        overlay: 1300,
+        modal: 1400,
+        popover: 1500,
+        skipLink: 1600,
+        toast: 1700,
+        tooltip: 1800
+    }
+};
+
+export const darkTheme = {
+    ...lightTheme,
+    colors: {
+        ...lightTheme.colors,
+        primary: '#4299e1',
+        primaryHover: '#3182ce',
+
+        // Dark mode specific colors
+        background: '#1a202c',
+        surface: '#2d3748',
+        text: '#ffffff',
+        textSecondary: '#e2e8f0',
+        textMuted: '#a0aec0',
+        border: '#4a5568',
+
+        // Adjusted grays for dark mode
+        gray50: '#171923',
+        gray100: '#1a202c',
+        gray200: '#2d3748',
+        gray300: '#4a5568',
+        gray400: '#718096',
+        gray500: '#a0aec0',
+        gray600: '#cbd5e0',
+        gray700: '#e2e8f0',
+        gray800: '#edf2f7',
+        gray900: '#f7fafc'
+    }
+};
+        """, language="javascript")
+
+        st.code("""
+// ThemeProvider setup și themed components
+import React, { useState, createContext, useContext } from 'react';
+import styled, { ThemeProvider, createGlobalStyle } from 'styled-components';
+import { lightTheme, darkTheme } from './theme';
+
+// Global styles cu theme support
+const GlobalStyle = createGlobalStyle`
+    * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+    }
+
+    body {
+        font-family: ${props => props.theme.fonts.body};
+        background-color: ${props => props.theme.colors.background};
+        color: ${props => props.theme.colors.text};
+        line-height: ${props => props.theme.lineHeights.normal};
+        transition: background-color 0.3s ease, color 0.3s ease;
+    }
+
+    h1, h2, h3, h4, h5, h6 {
+        font-family: ${props => props.theme.fonts.heading};
+        font-weight: ${props => props.theme.fontWeights.semibold};
+        line-height: ${props => props.theme.lineHeights.tight};
+    }
+
+    button {
+        font-family: inherit;
+    }
+
+    a {
+        color: ${props => props.theme.colors.primary};
+        text-decoration: none;
+
+        &:hover {
+            color: ${props => props.theme.colors.primaryHover};
+        }
+    }
+`;
+
+// Theme context pentru theme switching
+const ThemeContext = createContext();
+
+export function useTheme() {
+    const context = useContext(ThemeContext);
+    if (!context) {
+        throw new Error('useTheme must be used within a ThemeProvider');
+    }
+    return context;
+}
+
+export function CustomThemeProvider({ children }) {
+    const [isDark, setIsDark] = useState(false);
+    const theme = isDark ? darkTheme : lightTheme;
+
+    const toggleTheme = () => setIsDark(!isDark);
+
+    return (
+        <ThemeContext.Provider value={{ isDark, toggleTheme, theme }}>
+            <ThemeProvider theme={theme}>
+                <GlobalStyle />
+                {children}
+            </ThemeProvider>
+        </ThemeContext.Provider>
+    );
+}
+
+// Themed components
+const ThemedButton = styled.button`
+    background-color: ${props => props.theme.colors[props.variant || 'primary']};
+    color: ${props => {
+        if (props.variant === 'secondary') return props.theme.colors.text;
+        return 'white';
+    }};
+    border: ${props => props.outline ? `2px solid ${props.theme.colors[props.variant || 'primary']}` : 'none'};
+    background-color: ${props => props.outline ? 'transparent' : undefined};
+    color: ${props => props.outline ? props.theme.colors[props.variant || 'primary'] : undefined};
+
+    padding: ${props => props.theme.space[props.size === 'small' ? 2 : props.size === 'large' ? 4 : 3]} 
+             ${props => props.theme.space[props.size === 'small' ? 4 : props.size === 'large' ? 6 : 5]};
+
+    border-radius: ${props => props.theme.radii[props.rounded || 'base']};
+    font-size: ${props => props.theme.fontSizes[props.fontSize || 'base']};
+    font-weight: ${props => props.theme.fontWeights.medium};
+    font-family: ${props => props.theme.fonts.body};
+
+    cursor: pointer;
+    transition: all 0.2s ease-in-out;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: ${props => props.theme.space[2]};
+
+    &:hover:not(:disabled) {
+        background-color: ${props => props.outline 
+            ? props.theme.colors[props.variant || 'primary']
+            : props.theme.colors[`${props.variant || 'primary'}Hover`]
+        };
+        color: ${props => props.outline ? 'white' : undefined};
+        transform: translateY(-1px);
+        box-shadow: ${props => props.theme.shadows.md};
+    }
+
+    &:focus {
+        outline: none;
+        box-shadow: ${props => props.theme.shadows.outline};
+    }
+
+    &:disabled {
+        opacity: 0.6;
+        cursor: not-allowed;
+        transform: none;
+    }
+
+    ${props => props.fullWidth && 'width: 100%;'}
+`;
+
+const ThemedCard = styled.div`
+    background-color: ${props => props.theme.colors.surface};
+    border: 1px solid ${props => props.theme.colors.border};
+    border-radius: ${props => props.theme.radii[props.rounded || 'lg']};
+    box-shadow: ${props => props.theme.shadows[props.shadow || 'base']};
+    padding: ${props => props.theme.space[props.padding || 6]};
+    margin: ${props => props.theme.space[props.margin || 4]} 0;
+    transition: all 0.3s ease;
+
+    &:hover {
+        transform: translateY(-2px);
+        box-shadow: ${props => props.theme.shadows.lg};
+    }
+
+    @media (max-width: ${props => props.theme.breakpoints.md}) {
+        padding: ${props => props.theme.space[4]};
+        margin: ${props => props.theme.space[2]} 0;
+    }
+`;
+
+const ThemedTitle = styled.h2`
+    font-size: ${props => props.theme.fontSizes[props.size || '2xl']};
+    font-weight: ${props => props.theme.fontWeights[props.weight || 'semibold']};
+    color: ${props => props.theme.colors.text};
+    margin-bottom: ${props => props.theme.space[props.mb || 4]};
+    line-height: ${props => props.theme.lineHeights.tight};
+
+    ${props => props.centered && 'text-align: center;'}
+`;
+
+const ThemedText = styled.p`
+    font-size: ${props => props.theme.fontSizes[props.size || 'base']};
+    color: ${props => props.color ? props.theme.colors[props.color] : props.theme.colors.textSecondary};
+    line-height: ${props => props.theme.lineHeights[props.lineHeight || 'normal']};
+    margin-bottom: ${props => props.theme.space[props.mb || 4]};
+
+    &:last-child {
+        margin-bottom: 0;
+    }
+`;
+
+// Usage example cu theming
+function ThemedComponents() {
+    const { isDark, toggleTheme } = useTheme();
+
+    return (
+        <div style={{ padding: '20px' }}>
+            <ThemedCard shadow="lg" rounded="xl">
+                <ThemedTitle size="3xl" centered mb={6}>
+                    Themed Components Example
+                </ThemedTitle>
+
+                <ThemedText size="lg" color="textMuted" mb={6}>
+                    Aceste componente se adaptează automat la tema curentă. 
+                    Încearcă să schimbi tema pentru a vedea diferența!
+                </ThemedText>
+
+                <div style={{ 
+                    display: 'grid', 
+                    gridTemplateColumns: 'repeat(auto-fit, minmax(200px, 1fr))',
+                    gap: '16px',
+                    marginBottom: '24px'
+                }}>
+                    <ThemedButton variant="primary">Primary Button</ThemedButton>
+                    <ThemedButton variant="secondary" outline>Secondary Outline</ThemedButton>
+                    <ThemedButton variant="success" size="small">Small Success</ThemedButton>
+                    <ThemedButton variant="danger" size="large" rounded="full">Large Danger</ThemedButton>
+                </div>
+
+                <ThemedButton 
+                    variant={isDark ? 'warning' : 'info'} 
+                    fullWidth 
+                    onClick={toggleTheme}
+                >
+                    🌙 Switch to {isDark ? 'Light' : 'Dark'} Theme
+                </ThemedButton>
+            </ThemedCard>
+
+            <ThemedCard>
+                <ThemedTitle size="xl">Card cu Theme Adaptat</ThemedTitle>
+                <ThemedText>
+                    Această carte se schimbă automat între light și dark mode, 
+                    inclusiv culorile, shadows și border-urile.
+                </ThemedText>
+                <ThemedText size="sm" color="textMuted">
+                    Toate valorile vin din obiectul theme centralizat.
+                </ThemedText>
+            </ThemedCard>
+        </div>
+    );
+}
+
+// Main App cu ThemeProvider
+export function App() {
+    return (
+        <CustomThemeProvider>
+            <ThemedComponents />
+        </CustomThemeProvider>
+    );
+}
+        """, language="javascript")
+
+    with tabs[3]:
+        st.markdown('<h2 class="section-header">Tailwind CSS</h2>', unsafe_allow_html=True)
+
+        st.markdown("""
+        ### Utility-First CSS Framework
+
+        Tailwind CSS este un framework CSS utility-first care permite construirea rapidă 
+        a interfețelor prin componerea claselor mici și reutilizabile.
+        """)
+
+        st.markdown("### Installation și Configurare")
+
+        st.code("""
+# Installation în proiect React
+npm install -D tailwindcss postcss autoprefixer
+npx tailwindcss init -p
+
+# Sau folosind Create React App
+npm install -D tailwindcss
+npx tailwindcss init
+        """, language="bash")
+
+        st.code("""
+// tailwind.config.js - Configurare customizată
+module.exports = {
+    content: [
+        "./src/**/*.{js,jsx,ts,tsx}",
+        "./public/index.html"
+    ],
+    darkMode: 'class', // sau 'media' pentru system preference
+    theme: {
+        extend: {
+            // Custom colors
+            colors: {
+                brand: {
+                    50: '#eff6ff',
+                    100: '#dbeafe',
+                    200: '#bfdbfe',
+                    300: '#93c5fd',
+                    400: '#60a5fa',
+                    500: '#3b82f6',
+                    600: '#2563eb',
+                    700: '#1d4ed8',
+                    800: '#1e40af',
+                    900: '#1e3a8a',
+                },
+                gray: {
+                    50: '#f9fafb',
+                    100: '#f3f4f6',
+                    200: '#e5e7eb',
+                    300: '#d1d5db',
+                    400: '#9ca3af',
+                    500: '#6b7280',
+                    600: '#4b5563',
+                    700: '#374151',
+                    800: '#1f2937',
+                    900: '#111827',
+                }
+            },
+
+            // Custom spacing
+            spacing: {
+                '18': '4.5rem',
+                '88': '22rem',
+                '128': '32rem'
+            },
+
+            // Custom font families
+            fontFamily: {
+                'sans': ['Inter', 'system-ui', 'sans-serif'],
+                'serif': ['Georgia', 'serif'],
+                'mono': ['Fira Code', 'monospace']
+            },
+
+            // Custom font sizes
+            fontSize: {
+                'xs': ['0.75rem', { lineHeight: '1rem' }],
+                'sm': ['0.875rem', { lineHeight: '1.25rem' }],
+                'base': ['1rem', { lineHeight: '1.5rem' }],
+                'lg': ['1.125rem', { lineHeight: '1.75rem' }],
+                'xl': ['1.25rem', { lineHeight: '1.75rem' }],
+                '2xl': ['1.5rem', { lineHeight: '2rem' }],
+                '3xl': ['1.875rem', { lineHeight: '2.25rem' }],
+                '4xl': ['2.25rem', { lineHeight: '2.5rem' }],
+                '5xl': ['3rem', { lineHeight: '1' }],
+                '6xl': ['3.75rem', { lineHeight: '1' }],
+            },
+
+            // Custom breakpoints
+            screens: {
+                'xs': '475px',
+                'sm': '640px',
+                'md': '768px',
+                'lg': '1024px',
+                'xl': '1280px',
+                '2xl': '1536px',
+                '3xl': '1920px'
+            },
+
+            // Custom animations
+            animation: {
+                'fade-in': 'fadeIn 0.5s ease-in-out',
+                'slide-up': 'slideUp 0.3s ease-out',
+                'pulse-slow': 'pulse 3s cubic-bezier(0.4, 0, 0.6, 1) infinite',
+                'bounce-gentle': 'bounceGentle 2s infinite'
+            },
+
+            keyframes: {
+                fadeIn: {
+                    '0%': { opacity: '0' },
+                    '100%': { opacity: '1' }
+                },
+                slideUp: {
+                    '0%': { transform: 'translateY(10px)', opacity: '0' },
+                    '100%': { transform: 'translateY(0)', opacity: '1' }
+                },
+                bounceGentle: {
+                    '0%, 100%': { transform: 'translateY(-5%)' },
+                    '50%': { transform: 'translateY(0)' }
+                }
+            },
+
+            // Custom box shadows
+            boxShadow: {
+                'soft': '0 2px 15px -3px rgba(0, 0, 0, 0.07), 0 10px 20px -2px rgba(0, 0, 0, 0.04)',
+                'medium': '0 4px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04)',
+                'hard': '0 10px 40px -10px rgba(0, 0, 0, 0.2)',
+                'inner-soft': 'inset 0 2px 4px 0 rgba(0, 0, 0, 0.06)'
+            },
+
+            // Custom border radius
+            borderRadius: {
+                'none': '0',
+                'sm': '0.125rem',
+                'DEFAULT': '0.25rem',
+                'md': '0.375rem',
+                'lg': '0.5rem',
+                'xl': '0.75rem',
+                '2xl': '1rem',
+                '3xl': '1.5rem',
+                'full': '9999px'
+            }
+        }
+    },
+    plugins: [
+        require('@tailwindcss/forms'),      // Form styling
+        require('@tailwindcss/typography'), // Typography plugin
+        require('@tailwindcss/aspect-ratio'), // Aspect ratio utilities
+        require('@tailwindcss/line-clamp')   // Line clamp utilities
+    ]
+}
+        """, language="javascript")
+
+        st.code("""
+/* src/index.css - Import Tailwind */
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* Custom base styles */
+@layer base {
+    html {
+        scroll-behavior: smooth;
+    }
+
+    body {
+        @apply font-sans antialiased;
+    }
+
+    h1, h2, h3, h4, h5, h6 {
+        @apply font-semibold text-gray-900 dark:text-gray-100;
+    }
+
+    h1 { @apply text-4xl md:text-5xl; }
+    h2 { @apply text-3xl md:text-4xl; }
+    h3 { @apply text-2xl md:text-3xl; }
+    h4 { @apply text-xl md:text-2xl; }
+    h5 { @apply text-lg md:text-xl; }
+    h6 { @apply text-base md:text-lg; }
+}
+
+/* Custom component classes */
+@layer components {
+    .btn {
+        @apply inline-flex items-center justify-center px-4 py-2 border border-transparent 
+               text-sm font-medium rounded-md shadow-sm transition-all duration-200 
+               focus:outline-none focus:ring-2 focus:ring-offset-2 disabled:opacity-50 
+               disabled:cursor-not-allowed;
+    }
+
+    .btn-primary {
+        @apply btn bg-brand-600 text-white hover:bg-brand-700 focus:ring-brand-500;
+    }
+
+    .btn-secondary {
+        @apply btn bg-gray-600 text-white hover:bg-gray-700 focus:ring-gray-500;
+    }
+
+    .btn-outline {
+        @apply btn border-gray-300 text-gray-700 bg-white hover:bg-gray-50 
+               focus:ring-brand-500 dark:bg-gray-800 dark:text-gray-300 
+               dark:border-gray-600 dark:hover:bg-gray-700;
+    }
+
+    .btn-sm {
+        @apply px-3 py-1.5 text-xs;
+    }
+
+    .btn-lg {
+        @apply px-6 py-3 text-base;
+    }
+
+    .card {
+        @apply bg-white dark:bg-gray-800 rounded-lg shadow-soft 
+               border border-gray-200 dark:border-gray-700 
+               transition-all duration-300;
+    }
+
+    .card-hover {
+        @apply hover:shadow-medium hover:-translate-y-1;
+    }
+
+    .input {
+        @apply block w-full px-3 py-2 border border-gray-300 rounded-md 
+               shadow-sm placeholder-gray-400 
+               focus:outline-none focus:ring-brand-500 focus:border-brand-500 
+               dark:bg-gray-700 dark:border-gray-600 dark:text-white 
+               dark:placeholder-gray-400 dark:focus:ring-brand-400 
+               dark:focus:border-brand-400;
+    }
+
+    .input-error {
+        @apply border-red-300 text-red-900 placeholder-red-300 
+               focus:outline-none focus:ring-red-500 focus:border-red-500 
+               dark:border-red-600 dark:text-red-400 dark:placeholder-red-400;
+    }
+}
+
+/* Custom utilities */
+@layer utilities {
+    .text-gradient {
+        @apply bg-gradient-to-r from-brand-600 to-purple-600 bg-clip-text text-transparent;
+    }
+
+    .bg-gradient-primary {
+        @apply bg-gradient-to-r from-brand-500 to-purple-600;
+    }
+
+    .bg-gradient-secondary {
+        @apply bg-gradient-to-r from-gray-700 to-gray-900;
+    }
+
+    .animation-delay-200 {
+        animation-delay: 200ms;
+    }
+
+    .animation-delay-400 {
+        animation-delay: 400ms;
+    }
+
+    .scrollbar-hide {
+        -ms-overflow-style: none;
+        scrollbar-width: none;
+    }
+
+    .scrollbar-hide::-webkit-scrollbar {
+        display: none;
+    }
+}
+        """, language="css")
+
+        st.markdown("### Complex Components cu Tailwind")
+
+        st.code("""
+// Components folosind Tailwind utility classes
+import React, { useState } from 'react';
+
+// Button component cu multiple variants
+function TailwindButton({ 
+    children, 
+    variant = 'primary', 
+    size = 'md', 
+    loading = false, 
+    disabled = false,
+    fullWidth = false,
+    icon,
+    ...props 
+}) {
+    const baseClasses = 'inline-flex items-center justify-center font-medium rounded-lg transition-all duration-200 focus:outline-none focus:ring-2 focus:ring-offset-2 disabled:opacity-50 disabled:cursor-not-allowed';
+
+    const variantClasses = {
+        primary: 'bg-brand-600 text-white hover:bg-brand-700 focus:ring-brand-500 shadow-sm hover:shadow-md',
+        secondary: 'bg-gray-600 text-white hover:bg-gray-700 focus:ring-gray-500 shadow-sm hover:shadow-md',
+        outline: 'border-2 border-brand-600 text-brand-600 hover:bg-brand-50 focus:ring-brand-500 dark:border-brand-400 dark:text-brand-400 dark:hover:bg-brand-900/10',
+        ghost: 'text-gray-700 hover:bg-gray-100 focus:ring-gray-500 dark:text-gray-300 dark:hover:bg-gray-800',
+        danger: 'bg-red-600 text-white hover:bg-red-700 focus:ring-red-500 shadow-sm hover:shadow-md',
+        success: 'bg-green-600 text-white hover:bg-green-700 focus:ring-green-500 shadow-sm hover:shadow-md'
+    };
+
+    const sizeClasses = {
+        sm: 'px-3 py-1.5 text-xs',
+        md: 'px-4 py-2 text-sm',
+        lg: 'px-6 py-3 text-base',
+        xl: 'px-8 py-4 text-lg'
+    };
+
+    const classes = [
+        baseClasses,
+        variantClasses[variant],
+        sizeClasses[size],
+        fullWidth && 'w-full',
+        loading && 'pointer-events-none'
+    ].filter(Boolean).join(' ');
+
+    return (
+        <button
+            className={classes}
+            disabled={disabled || loading}
+            {...props}
+        >
+            {loading ? (
+                <>
+                    <svg className="animate-spin -ml-1 mr-2 h-4 w-4" fill="none" viewBox="0 0 24 24">
+                        <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4"></circle>
+                        <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
+                    </svg>
+                    Loading...
+                </>
+            ) : (
+                <>
+                    {icon && <span className="mr-2">{icon}</span>}
+                    {children}
+                </>
+            )}
+        </button>
+    );
+}
+
+// Card component cu multiple variants
+function TailwindCard({ 
+    title, 
+    subtitle, 
+    children, 
+    image, 
+    actions, 
+    variant = 'default',
+    hover = true,
+    className = '',
+    ...props 
+}) {
+    const baseClasses = 'bg-white dark:bg-gray-800 rounded-xl shadow-soft border border-gray-200 dark:border-gray-700 overflow-hidden transition-all duration-300';
+
+    const variantClasses = {
+        default: '',
+        elevated: 'shadow-medium',
+        outlined: 'border-2 border-brand-200 dark:border-brand-800 shadow-none',
+        ghost: 'bg-transparent shadow-none border-dashed'
+    };
+
+    const hoverClasses = hover ? 'hover:shadow-medium hover:-translate-y-1' : '';
+
+    const cardClasses = [
+        baseClasses,
+        variantClasses[variant],
+        hoverClasses,
+        className
+    ].filter(Boolean).join(' ');
+
+    return (
+        <div className={cardClasses} {...props}>
+            {image && (
+                <div className="aspect-w-16 aspect-h-9">
+                    <img 
+                        src={image} 
+                        alt={title} 
+                        className="w-full h-48 object-cover"
+                    />
+                </div>
+            )}
+
+            <div className="p-6">
+                {(title || subtitle) && (
+                    <div className="mb-4">
+                        {title && (
+                            <h3 className="text-xl font-semibold text-gray-900 dark:text-gray-100 mb-2">
+                                {title}
+                            </h3>
+                        )}
+                        {subtitle && (
+                            <p className="text-sm text-gray-500 dark:text-gray-400">
+                                {subtitle}
+                            </p>
+                        )}
+                    </div>
+                )}
+
+                <div className="text-gray-700 dark:text-gray-300">
+                    {children}
+                </div>
+
+                {actions && (
+                    <div className="mt-6 flex flex-wrap gap-3">
+                        {actions}
+                    </div>
+                )}
+            </div>
+        </div>
+    );
+}
+
+// Modal component cu Tailwind
+function TailwindModal({ isOpen, onClose, title, children, size = 'md' }) {
+    const sizeClasses = {
+        sm: 'max-w-md',
+        md: 'max-w-lg',
+        lg: 'max-w-2xl',
+        xl: 'max-w-4xl',
+        full: 'max-w-7xl'
+    };
+
+    if (!isOpen) return null;
+
+    return (
+        <div className="fixed inset-0 z-50 overflow-y-auto">
+            {/* Backdrop */}
+            <div 
+                className="fixed inset-0 bg-black bg-opacity-50 transition-opacity"
+                onClick={onClose}
+            />
+
+            {/* Modal */}
+            <div className="flex min-h-full items-center justify-center p-4">
+                <div className={`relative w-full ${sizeClasses[size]} bg-white dark:bg-gray-800 rounded-xl shadow-xl transform transition-all`}>
+                    {/* Header */}
+                    <div className="flex items-center justify-between p-6 border-b border-gray-200 dark:border-gray-700">
+                        <h3 className="text-lg font-semibold text-gray-900 dark:text-gray-100">
+                            {title}
+                        </h3>
+                        <button
+                            onClick={onClose}
+                            className="text-gray-400 hover:text-gray-600 dark:hover:text-gray-300 transition-colors"
+                        >
+                            <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
+                            </svg>
+                        </button>
+                    </div>
+
+                    {/* Content */}
+                    <div className="p-6">
+                        {children}
+                    </div>
+                </div>
+            </div>
+        </div>
+    );
+}
+
+// Complex Dashboard Layout
+function TailwindDashboard() {
+    const [darkMode, setDarkMode] = useState(false);
+    const [sidebarOpen, setSidebarOpen] = useState(false);
+    const [modalOpen, setModalOpen] = useState(false);
+    const [loading, setLoading] = useState(false);
+
+    const handleAction = () => {
+        setLoading(true);
+        setTimeout(() => setLoading(false), 2000);
+    };
+
+    return (
+        <div className={darkMode ? 'dark' : ''}>
+            <div className="min-h-screen bg-gray-50 dark:bg-gray-900 transition-colors">
+                {/* Sidebar */}
+                <div className={`fixed inset-y-0 left-0 z-50 w-64 bg-white dark:bg-gray-800 border-r border-gray-200 dark:border-gray-700 transform transition-transform lg:translate-x-0 ${sidebarOpen ? 'translate-x-0' : '-translate-x-full'}`}>
+                    <div className="flex items-center justify-between p-4 border-b border-gray-200 dark:border-gray-700">
+                        <h2 className="text-xl font-bold text-gray-900 dark:text-gray-100">Dashboard</h2>
+                        <button
+                            onClick={() => setSidebarOpen(false)}
+                            className="lg:hidden text-gray-500 hover:text-gray-700 dark:text-gray-400 dark:hover:text-gray-300"
+                        >
+                            <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
+                            </svg>
+                        </button>
+                    </div>
+
+                    <nav className="p-4 space-y-2">
+                        {['Dashboard', 'Analytics', 'Projects', 'Settings'].map((item, index) => (
+                            <a
+                                key={item}
+                                href="#"
+                                className={`flex items-center px-3 py-2 text-sm font-medium rounded-lg transition-colors ${
+                                    index === 0 
+                                        ? 'bg-brand-100 text-brand-700 dark:bg-brand-900/50 dark:text-brand-300' 
+                                        : 'text-gray-700 hover:bg-gray-100 dark:text-gray-300 dark:hover:bg-gray-700'
+                                }`}
+                            >
+                                {item}
+                            </a>
+                        ))}
+                    </nav>
+                </div>
+
+                {/* Main Content */}
+                <div className="lg:pl-64">
+                    {/* Top Bar */}
+                    <header className="bg-white dark:bg-gray-800 border-b border-gray-200 dark:border-gray-700 px-4 py-3">
+                        <div className="flex items-center justify-between">
+                            <div className="flex items-center space-x-4">
+                                <button
+                                    onClick={() => setSidebarOpen(true)}
+                                    className="lg:hidden text-gray-500 hover:text-gray-700 dark:text-gray-400 dark:hover:text-gray-300"
+                                >
+                                    <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 6h16M4 12h16M4 18h16" />
+                                    </svg>
+                                </button>
+                                <h1 className="text-2xl font-bold text-gray-900 dark:text-gray-100">Analytics Overview</h1>
+                            </div>
+
+                            <div className="flex items-center space-x-4">
+                                {/* Search */}
+                                <div className="relative hidden md:block">
+                                    <input
+                                        type="text"
+                                        placeholder="Search..."
+                                        className="input w-64"
+                                    />
+                                    <svg className="absolute right-3 top-2.5 w-4 h-4 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
+                                    </svg>
+                                </div>
+
+                                {/* Dark mode toggle */}
+                                <button
+                                    onClick={() => setDarkMode(!darkMode)}
+                                    className="p-2 text-gray-500 hover:text-gray-700 dark:text-gray-400 dark:hover:text-gray-300 rounded-lg hover:bg-gray-100 dark:hover:bg-gray-700 transition-colors"
+                                >
+                                    {darkMode ? '🌞' : '🌙'}
+                                </button>
+
+                                {/* Profile */}
+                                <div className="w-8 h-8 bg-brand-500 rounded-full flex items-center justify-center text-white font-medium">
+                                    JD
+                                </div>
+                            </div>
+                        </div>
+                    </header>
+
+                    {/* Page Content */}
+                    <main className="p-6">
+                        {/* Stats Grid */}
+                        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-8">
+                            {[
+                                { label: 'Total Users', value: '12,345', change: '+12%', color: 'text-green-600' },
+                                { label: 'Revenue', value: '$45,678', change: '+8%', color: 'text-green-600' },
+                                { label: 'Orders', value: '1,234', change: '-3%', color: 'text-red-600' },
+                                { label: 'Conversion', value: '3.24%', change: '+5%', color: 'text-green-600' }
+                            ].map((stat, index) => (
+                                <div key={index} className="card p-6">
+                                    <div className="flex items-center justify-between">
+                                        <div>
+                                            <p className="text-sm font-medium text-gray-600 dark:text-gray-400">
+                                                {stat.label}
+                                            </p>
+                                            <p className="text-2xl font-bold text-gray-900 dark:text-gray-100">
+                                                {stat.value}
+                                            </p>
+                                        </div>
+                                        <div className={`text-sm font-medium ${stat.color}`}>
+                                            {stat.change}
+                                        </div>
+                                    </div>
+                                </div>
+                            ))}
+                        </div>
+
+                        {/* Content Grid */}
+                        <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
+                            {/* Cards Example */}
+                            <div className="lg:col-span-2 space-y-6">
+                                <TailwindCard
+                                    title="Project Analytics"
+                                    subtitle="Real-time insights"
+                                    image="https://picsum.photos/400/200?random=1"
+                                    variant="elevated"
+                                    actions={[
+                                        <TailwindButton key="1" variant="outline" size="sm">
+                                            View Details
+                                        </TailwindButton>,
+                                        <TailwindButton key="2" variant="primary" size="sm" loading={loading} onClick={handleAction}>
+                                            Generate Report
+                                        </TailwindButton>
+                                    ]}
+                                >
+                                    <p className="mb-4">
+                                        Monitor your project performance with real-time analytics 
+                                        and insights. Track user engagement, conversion rates, 
+                                        and revenue metrics.
+                                    </p>
+                                    <div className="bg-gray-50 dark:bg-gray-700 rounded-lg p-4">
+                                        <h4 className="font-medium text-gray-900 dark:text-gray-100 mb-2">
+                                            Key Metrics
+                                        </h4>
+                                        <ul className="space-y-1 text-sm text-gray-600 dark:text-gray-400">
+                                            <li>• Active Users: 2,345</li>
+                                            <li>• Page Views: 45,678</li>
+                                            <li>• Bounce Rate: 23%</li>
+                                        </ul>
+                                    </div>
+                                </TailwindCard>
+
+                                <TailwindCard
+                                    title="Recent Activity"
+                                    variant="outlined"
+                                    hover={false}
+                                >
+                                    <div className="space-y-4">
+                                        {[
+                                            { user: 'John Doe', action: 'created a new project', time: '2 hours ago' },
+                                            { user: 'Jane Smith', action: 'updated dashboard settings', time: '4 hours ago' },
+                                            { user: 'Mike Johnson', action: 'completed task review', time: '6 hours ago' }
+                                        ].map((activity, index) => (
+                                            <div key={index} className="flex items-start space-x-3 p-3 bg-gray-50 dark:bg-gray-700 rounded-lg">
+                                                <div className="w-8 h-8 bg-brand-100 dark:bg-brand-900 text-brand-600 dark:text-brand-400 rounded-full flex items-center justify-center text-sm font-medium">
+                                                    {activity.user.split(' ').map(n => n[0]).join('')}
+                                                </div>
+                                                <div className="flex-1 min-w-0">
+                                                    <p className="text-sm text-gray-900 dark:text-gray-100">
+                                                        <span className="font-medium">{activity.user}</span> {activity.action}
+                                                    </p>
+                                                    <p className="text-xs text-gray-500 dark:text-gray-400 mt-1">
+                                                        {activity.time}
+                                                    </p>
+                                                </div>
+                                            </div>
+                                        ))}
+                                    </div>
+                                </TailwindCard>
+                            </div>
+
+                            {/* Sidebar Cards */}
+                            <div className="space-y-6">
+                                <TailwindCard
+                                    title="Quick Actions"
+                                    variant="ghost"
+                                >
+                                    <div className="space-y-3">
+                                        <TailwindButton 
+                                            variant="primary" 
+                                            fullWidth 
+                                            icon="+"
+                                            onClick={() => setModalOpen(true)}
+                                        >
+                                            Create Project
+                                        </TailwindButton>
+                                        <TailwindButton variant="outline" fullWidth icon="📊">
+                                            View Reports
+                                        </TailwindButton>
+                                        <TailwindButton variant="ghost" fullWidth icon="⚙️">
+                                            Settings
+                                        </TailwindButton>
+                                    </div>
+                                </TailwindCard>
+
+                                <TailwindCard title="Team Members">
+                                    <div className="space-y-3">
+                                        {['Alice Cooper', 'Bob Wilson', 'Carol Davis'].map((member, index) => (
+                                            <div key={index} className="flex items-center space-x-3">
+                                                <div className="w-8 h-8 bg-gradient-to-r from-brand-400 to-purple-500 rounded-full flex items-center justify-center text-white text-sm font-medium">
+                                                    {member.split(' ').map(n => n[0]).join('')}
+                                                </div>
+                                                <div className="flex-1">
+                                                    <p className="text-sm font-medium text-gray-900 dark:text-gray-100">
+                                                        {member}
+                                                    </p>
+                                                    <p className="text-xs text-gray-500 dark:text-gray-400">
+                                                        Online
+                                                    </p>
+                                                </div>
+                                                <div className="w-2 h-2 bg-green-400 rounded-full"></div>
+                                            </div>
+                                        ))}
+                                    </div>
+                                </TailwindCard>
+                            </div>
+                        </div>
+                    </main>
+                </div>
+
+                {/* Modal Example */}
+                <TailwindModal
+                    isOpen={modalOpen}
+                    onClose={() => setModalOpen(false)}
+                    title="Create New Project"
+                    size="lg"
+                >
+                    <form className="space-y-6">
+                        <div>
+                            <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
+                                Project Name
+                            </label>
+                            <input
+                                type="text"
+                                className="input"
+                                placeholder="Enter project name..."
+                            />
+                        </div>
+
+                        <div>
+                            <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
+                                Description
+                            </label>
+                            <textarea
+                                rows={4}
+                                className="input resize-none"
+                                placeholder="Project description..."
+                            />
+                        </div>
+
+                        <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                            <div>
+                                <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
+                                    Category
+                                </label>
+                                <select className="input">
+                                    <option>Web Development</option>
+                                    <option>Mobile App</option>
+                                    <option>Design</option>
+                                    <option>Marketing</option>
+                                </select>
+                            </div>
+
+                            <div>
+                                <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
+                                    Priority
+                                </label>
+                                <select className="input">
+                                    <option>High</option>
+                                    <option>Medium</option>
+                                    <option>Low</option>
+                                </select>
+                            </div>
+                        </div>
+
+                        <div className="flex justify-end space-x-3 pt-4">
+                            <TailwindButton 
+                                variant="outline" 
+                                onClick={() => setModalOpen(false)}
+                            >
+                                Cancel
+                            </TailwindButton>
+                            <TailwindButton variant="primary">
+                                Create Project
+                            </TailwindButton>
+                        </div>
+                    </form>
+                </TailwindModal>
+            </div>
+        </div>
+    );
+}
+
+export default TailwindDashboard;
+        """, language="javascript")
+
+        st.markdown("### Advanced Tailwind Patterns")
+
+        st.code("""
+// Advanced Tailwind patterns și techniques
+
+// 1. Responsive Design cu Tailwind
+function ResponsiveGrid() {
+    return (
+        <div className="container mx-auto px-4 sm:px-6 lg:px-8">
+            {/* Grid care se adaptează la toate screen sizes */}
+            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4 sm:gap-6 lg:gap-8">
+                {Array.from({ length: 8 }).map((_, index) => (
+                    <div 
+                        key={index}
+                        className="bg-white dark:bg-gray-800 rounded-lg shadow-md p-4 sm:p-6 
+                                   hover:shadow-lg transition-shadow duration-300
+                                   transform hover:-translate-y-1"
+                    >
+                        <div className="aspect-w-16 aspect-h-9 mb-4">
+                            <img 
+                                src={`https://picsum.photos/300/200?random=${index}`}
+                                alt={`Image ${index}`}
+                                className="w-full h-32 sm:h-40 object-cover rounded"
+                            />
+                        </div>
+                        <h3 className="text-lg sm:text-xl font-semibold text-gray-900 dark:text-gray-100 mb-2">
+                            Card Title {index + 1}
+                        </h3>
+                        <p className="text-sm sm:text-base text-gray-600 dark:text-gray-300 mb-4">
+                            This is a responsive card that adapts to different screen sizes.
+                        </p>
+                        <button className="w-full sm:w-auto btn-primary">
+                            Learn More
+                        </button>
+                    </div>
+                ))}
+            </div>
+        </div>
+    );
+}
+
+// 2. Dark Mode Implementation
+function DarkModeToggle() {
+    const [darkMode, setDarkMode] = useState(false);
+
+    useEffect(() => {
+        // Load saved preference
+        const saved = localStorage.getItem('darkMode');
+        if (saved) {
+            setDarkMode(JSON.parse(saved));
+        }
+    }, []);
+
+    useEffect(() => {
+        // Apply dark mode class to html element
+        if (darkMode) {
+            document.documentElement.classList.add('dark');
+        } else {
+            document.documentElement.classList.remove('dark');
+        }
+
+        // Save preference
+        localStorage.setItem('darkMode', JSON.stringify(darkMode));
+    }, [darkMode]);
+
+    return (
+        <div className="min-h-screen bg-gray-50 dark:bg-gray-900 transition-colors duration-300">
+            <div className="container mx-auto px-4 py-8">
+                {/* Header cu dark mode toggle */}
+                <header className="flex justify-between items-center mb-8">
+                    <h1 className="text-3xl font-bold text-gray-900 dark:text-gray-100">
+                        Dark Mode Example
+                    </h1>
+
+                    <button
+                        onClick={() => setDarkMode(!darkMode)}
+                        className="relative inline-flex h-6 w-11 items-center rounded-full 
+                                   bg-gray-200 dark:bg-gray-700 transition-colors duration-300
+                                   focus:outline-none focus:ring-2 focus:ring-brand-500 focus:ring-offset-2"
+                    >
+                        <span
+                            className={`inline-block h-4 w-4 transform rounded-full bg-white 
+                                       transition-transform duration-300 ${
+                                           darkMode ? 'translate-x-6' : 'translate-x-1'
+                                       }`}
+                        />
+                        <span className="sr-only">Toggle dark mode</span>
+                    </button>
+                </header>
+
+                {/* Content care se adaptează la dark mode */}
+                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                    <div className="bg-white dark:bg-gray-800 rounded-lg shadow-md p-6 
+                                    border border-gray-200 dark:border-gray-700">
+                        <h2 className="text-xl font-semibold text-gray-900 dark:text-gray-100 mb-4">
+                            Card Title
+                        </h2>
+                        <p className="text-gray-600 dark:text-gray-300 mb-4">
+                            This card automatically adapts its colors based on the current theme.
+                        </p>
+                        <div className="flex space-x-2">
+                            <button className="btn-primary">Primary</button>
+                            <button className="btn-outline">Secondary</button>
+                        </div>
+                    </div>
+
+                    <div className="bg-gradient-to-br from-brand-500 to-purple-600 rounded-lg p-6 text-white">
+                        <h2 className="text-xl font-semibold mb-4">Gradient Card</h2>
+                        <p className="mb-4 opacity-90">
+                            Gradient backgrounds work well in both light and dark modes.
+                        </p>
+                        <button className="bg-white/20 hover:bg-white/30 text-white px-4 py-2 rounded-lg transition-colors">
+                            Gradient Button
+                        </button>
+                    </div>
+
+                    <div className="bg-white dark:bg-gray-800 rounded-lg shadow-md p-6">
+                        <div className="flex items-center mb-4">
+                            <div className="w-12 h-12 bg-brand-100 dark:bg-brand-900 rounded-full flex items-center justify-center">
+                                <svg className="w-6 h-6 text-brand-600 dark:text-brand-400" fill="currentColor" viewBox="0 0 20 20">
+                                    <path fillRule="evenodd" d="M3.172 5.172a4 4 0 015.656 0L10 6.343l1.172-1.171a4 4 0 115.656 5.656L10 17.657l-6.828-6.829a4 4 0 010-5.656z" clipRule="evenodd" />
+                                </svg>
+                            </div>
+                            <div className="ml-4">
+                                <h3 className="text-lg font-medium text-gray-900 dark:text-gray-100">
+                                    Icon Card
+                                </h3>
+                                <p className="text-sm text-gray-500 dark:text-gray-400">
+                                    With adaptive colors
+                                </p>
+                            </div>
+                        </div>
+                        <p className="text-gray-600 dark:text-gray-300">
+                            Icons and backgrounds adapt automatically to the current theme.
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    );
+}
+
+// 3. Animation și Motion cu Tailwind
+function AnimatedComponents() {
+    const [isVisible, setIsVisible] = useState(false);
+    const [currentTab, setCurrentTab] = useState(0);
+
+    const tabs = ['Dashboard', 'Analytics', 'Reports', 'Settings'];
+
+    return (
+        <div className="container mx-auto px-4 py-8 space-y-8">
+            {/* Animated Cards */}
+            <section>
+                <h2 className="text-2xl font-bold text-gray-900 dark:text-gray-100 mb-6">
+                    Animated Cards
+                </h2>
+
+                <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+                    {[0, 1, 2].map((index) => (
+                        <div
+                            key={index}
+                            className="bg-white dark:bg-gray-800 rounded-lg shadow-md p-6 
+                                       transform transition-all duration-500 hover:scale-105 
+                                       hover:shadow-xl animate-fade-in"
+                            style={{ animationDelay: `${index * 200}ms` }}
+                        >
+                            <div className="w-12 h-12 bg-gradient-to-r from-brand-400 to-purple-500 
+                                           rounded-lg flex items-center justify-center mb-4
+                                           animate-bounce-gentle">
+                                <span className="text-white font-bold text-xl">{index + 1}</span>
+                            </div>
+                            <h3 className="text-lg font-semibold text-gray-900 dark:text-gray-100 mb-2">
+                                Feature {index + 1}
+                            </h3>
+                            <p className="text-gray-600 dark:text-gray-300">
+                                This card has smooth hover animations and staggered entrance effects.
+                            </p>
+                        </div>
+                    ))}
+                </div>
+            </section>
+
+            {/* Animated Tabs */}
+            <section>
+                <h2 className="text-2xl font-bold text-gray-900 dark:text-gray-100 mb-6">
+                    Animated Tabs
+                </h2>
+
+                <div className="bg-white dark:bg-gray-800 rounded-lg shadow-md overflow-hidden">
+                    <div className="flex border-b border-gray-200 dark:border-gray-700 relative">
+                        {tabs.map((tab, index) => (
+                            <button
+                                key={tab}
+                                onClick={() => setCurrentTab(index)}
+                                className={`flex-1 px-6 py-3 text-sm font-medium transition-colors relative
+                                           ${currentTab === index 
+                                               ? 'text-brand-600 dark:text-brand-400' 
+                                               : 'text-gray-500 dark:text-gray-400 hover:text-gray-700 dark:hover:text-gray-300'
+                                           }`}
+                            >
+                                {tab}
+                            </button>
+                        ))}
+
+                        {/* Animated indicator */}
+                        <div
+                            className="absolute bottom-0 h-0.5 bg-brand-600 dark:bg-brand-400 transition-all duration-300"
+                            style={{
+                                left: `${currentTab * (100 / tabs.length)}%`,
+                                width: `${100 / tabs.length}%`
+                            }}
+                        />
+                    </div>
+
+                    <div className="p-6">
+                        <div className="animate-slide-up">
+                            <h3 className="text-lg font-semibold text-gray-900 dark:text-gray-100 mb-4">
+                                {tabs[currentTab]} Content
+                            </h3>
+                            <p className="text-gray-600 dark:text-gray-300 mb-4">
+                                This is the content for the {tabs[currentTab].toLowerCase()} tab. 
+                                The content slides in smoothly when switching tabs.
+                            </p>
+                            <div className="grid grid-cols-2 gap-4">
+                                <div className="bg-gray-50 dark:bg-gray-700 rounded-lg p-4">
+                                    <h4 className="font-medium text-gray-900 dark:text-gray-100 mb-2">
+                                        Metric 1
+                                    </h4>
+                                    <p className="text-2xl font-bold text-brand-600 dark:text-brand-400">
+                                        {Math.floor(Math.random() * 1000)}
+                                    </p>
+                                </div>
+                                <div className="bg-gray-50 dark:bg-gray-700 rounded-lg p-4">
+                                    <h4 className="font-medium text-gray-900 dark:text-gray-100 mb-2">
+                                        Metric 2
+                                    </h4>
+                                    <p className="text-2xl font-bold text-green-600 dark:text-green-400">
+                                        {Math.floor(Math.random() * 100)}%
+                                    </p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            {/* Loading States */}
+            <section>
+                <h2 className="text-2xl font-bold text-gray-900 dark:text-gray-100 mb-6">
+                    Loading States
+                </h2>
+
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                    {/* Skeleton Loader */}
+                    <div className="bg-white dark:bg-gray-800 rounded-lg shadow-md p-6">
+                        <h3 className="text-lg font-semibold text-gray-900 dark:text-gray-100 mb-4">
+                            Skeleton Loader
+                        </h3>
+                        <div className="animate-pulse space-y-4">
+                            <div className="flex space-x-4">
+                                <div className="rounded-full bg-gray-200 dark:bg-gray-700 h-12 w-12"></div>
+                                <div className="flex-1 space-y-2 py-1">
+                                    <div className="h-4 bg-gray-200 dark:bg-gray-700 rounded w-3/4"></div>
+                                    <div className="h-4 bg-gray-200 dark:bg-gray-700 rounded w-1/2"></div>
+                                </div>
+                            </div>
+                            <div className="space-y-3">
+                                <div className="h-4 bg-gray-200 dark:bg-gray-700 rounded"></div>
+                                <div className="h-4 bg-gray-200 dark:bg-gray-700 rounded w-5/6"></div>
+                                <div className="h-4 bg-gray-200 dark:bg-gray-700 rounded w-4/6"></div>
+                            </div>
+                        </div>
+                    </div>
+
+                    {/* Spinner */}
+                    <div className="bg-white dark:bg-gray-800 rounded-lg shadow-md p-6 flex flex-col items-center justify-center">
+                        <div className="animate-spin rounded-full h-12 w-12 border-4 border-gray-200 border-t-brand-600 mb-4"></div>
+                        <p className="text-gray-600 dark:text-gray-300">Loading content...</p>
+                    </div>
+                </div>
+            </section>
+
+            {/* Hover Effects */}
+            <section>
+                <h2 className="text-2xl font-bold text-gray-900 dark:text-gray-100 mb-6">
+                    Interactive Elements
+                </h2>
+
+                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
+                    {['Hover me', 'Click me', 'Focus me', 'Active state'].map((text, index) => (
+                        <button
+                            key={index}
+                            className="group relative overflow-hidden bg-gradient-to-r from-brand-500 to-purple-600 
+                                       text-white px-6 py-3 rounded-lg font-medium
+                                       transform transition-all duration-300
+                                       hover:scale-105 hover:shadow-lg
+                                       focus:outline-none focus:ring-4 focus:ring-brand-300
+                                       active:scale-95"
+                        >
+                            <span className="relative z-10">{text}</span>
+                            <div className="absolute inset-0 bg-white opacity-0 group-hover:opacity-20 transition-opacity duration-300"></div>
+                            <div className="absolute inset-0 bg-gradient-to-r from-purple-600 to-brand-500 opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
+                        </button>
+                    ))}
+                </div>
+            </section>
+        </div>
+    );
+}
+
+// 4. Form Components cu Tailwind
+function TailwindForms() {
+    const [formData, setFormData] = useState({
+        name: '',
+        email: '',
+        message: '',
+        category: '',
+        notifications: false,
+        newsletter: true
+    });
+
+    const [errors, setErrors] = useState({});
+
+    const handleChange = (field, value) => {
+        setFormData(prev => ({ ...prev, [field]: value }));
+        // Clear error când user începe să tasteze
+        if (errors[field]) {
+            setErrors(prev => ({ ...prev, [field]: null }));
+        }
+    };
+
+    const validateForm = () => {
+        const newErrors = {};
+
+        if (!formData.name.trim()) {
+            newErrors.name = 'Name is required';
+        }
+
+        if (!formData.email.trim()) {
+            newErrors.email = 'Email is required';
+        } else if (!/\S+@\S+\.\S+/.test(formData.email)) {
+            newErrors.email = 'Email is invalid';
+        }
+
+        if (!formData.message.trim()) {
+            newErrors.message = 'Message is required';
+        } else if (formData.message.length < 10) {
+            newErrors.message = 'Message must be at least 10 characters';
+        }
+
+        if (!formData.category) {
+            newErrors.category = 'Please select a category';
+        }
+
+        setErrors(newErrors);
+        return Object.keys(newErrors).length === 0;
+    };
+
+    const handleSubmit = (e) => {
+        e.preventDefault();
+        if (validateForm()) {
+            console.log('Form submitted:', formData);
+            // Reset form
+            setFormData({
+                name: '', email: '', message: '', category: '',
+                notifications: false, newsletter: true
+            });
+        }
+    };
+
+    return (
+        <div className="max-w-2xl mx-auto bg-white dark:bg-gray-800 rounded-xl shadow-lg p-8">
+            <h2 className="text-2xl font-bold text-gray-900 dark:text-gray-100 mb-6">
+                Contact Form
+            </h2>
+
+            <form onSubmit={handleSubmit} className="space-y-6">
+                {/* Name Field */}
+                <div>
+                    <label htmlFor="name" className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
+                        Full Name
+                    </label>
+                    <input
+                        type="text"
+                        id="name"
+                        value={formData.name}
+                        onChange={(e) => handleChange('name', e.target.value)}
+                        className={`input ${errors.name ? 'input-error' : ''}`}
+                        placeholder="Enter your full name"
+                    />
+                    {errors.name && (
+                        <p className="mt-1 text-sm text-red-600 dark:text-red-400">
+                            {errors.name}
+                        </p>
+                    )}
+                </div>
+
+                {/* Email Field */}
+                <div>
+                    <label htmlFor="email" className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
+                        Email Address
+                    </label>
+                    <input
+                        type="email"
+                        id="email"
+                        value={formData.email}
+                        onChange={(e) => handleChange('email', e.target.value)}
+                        className={`input ${errors.email ? 'input-error' : ''}`}
+                        placeholder="Enter your email address"
+                    />
+                    {errors.email && (
+                        <p className="mt-1 text-sm text-red-600 dark:text-red-400">
+                            {errors.email}
+                        </p>
+                    )}
+                </div>
+
+                {/* Category Select */}
+                <div>
+                    <label htmlFor="category" className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
+                        Category
+                    </label>
+                    <select
+                        id="category"
+                        value={formData.category}
+                        onChange={(e) => handleChange('category', e.target.value)}
+                        className={`input ${errors.category ? 'input-error' : ''}`}
+                    >
+                        <option value="">Select a category</option>
+                        <option value="general">General Inquiry</option>
+                        <option value="support">Technical Support</option>
+                        <option value="billing">Billing Question</option>
+                        <option value="feedback">Feedback</option>
+                    </select>
+                    {errors.category && (
+                        <p className="mt-1 text-sm text-red-600 dark:text-red-400">
+                            {errors.category}
+                        </p>
+                    )}
+                </div>
+
+                {/* Message Textarea */}
+                <div>
+                    <label htmlFor="message" className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
+                        Message
+                    </label>
+                    <textarea
+                        id="message"
+                        rows={4}
+                        value={formData.message}
+                        onChange={(e) => handleChange('message', e.target.value)}
+                        className={`input resize-none ${errors.message ? 'input-error' : ''}`}
+                        placeholder="Enter your message..."
+                    />
+                    {errors.message && (
+                        <p className="mt-1 text-sm text-red-600 dark:text-red-400">
+                            {errors.message}
+                        </p>
+                    )}
+                    <p className="mt-1 text-sm text-gray-500 dark:text-gray-400">
+                        {formData.message.length}/500 characters
+                    </p>
+                </div>
+
+                {/* Checkboxes */}
+                <div className="space-y-4">
+                    <div className="flex items-start">
+                        <input
+                            id="notifications"
+                            type="checkbox"
+                            checked={formData.notifications}
+                            onChange={(e) => handleChange('notifications', e.target.checked)}
+                            className="mt-1 h-4 w-4 text-brand-600 border-gray-300 rounded focus:ring-brand-500"
+                        />
+                        <label htmlFor="notifications" className="ml-3 text-sm text-gray-700 dark:text-gray-300">
+                            Send me notifications about updates and important announcements
+                        </label>
+                    </div>
+
+                    <div className="flex items-start">
+                        <input
+                            id="newsletter"
+                            type="checkbox"
+                            checked={formData.newsletter}
+                            onChange={(e) => handleChange('newsletter', e.target.checked)}
+                            className="mt-1 h-4 w-4 text-brand-600 border-gray-300 rounded focus:ring-brand-500"
+                        />
+                        <label htmlFor="newsletter" className="ml-3 text-sm text-gray-700 dark:text-gray-300">
+                            Subscribe to our newsletter for tips, tutorials, and product updates
+                        </label>
+                    </div>
+                </div>
+
+                {/* Submit Button */}
+                <div className="flex justify-end space-x-4">
+                    <button
+                        type="button"
+                        className="btn-outline"
+                        onClick={() => setFormData({
+                            name: '', email: '', message: '', category: '',
+                            notifications: false, newsletter: true
+                        })}
+                    >
+                        Reset
+                    </button>
+                    <button
+                        type="submit"
+                        className="btn-primary"
+                    >
+                        Send Message
+                    </button>
+                </div>
+            </form>
+        </div>
+    );
+}
+        """, language="javascript")
+
+        st.markdown("### Comparația Metodelor de Styling")
+
+        comparison_data = {
+            "Aspect": [
+                "Curba de învățare",
+                "Performanță",
+                "Bundle size",
+                "Customizare",
+                "Maintainabilitate",
+                "Scoping",
+                "Dynamic styling",
+                "Responsive design",
+                "Dark mode",
+                "Team collaboration",
+                "Debugging",
+                "Production ready"
+            ],
+            "CSS Clasic": [
+                "🟢 Ușor", "🟢 Excelent", "🟢 Mic", "🟡 Mediu",
+                "🔴 Dificil", "🔴 Global", "🔴 Limitat", "🟢 Excelent",
+                "🟡 Manual", "🟡 Mediu", "🟡 CSS DevTools", "🟢 Da"
+            ],
+            "CSS Modules": [
+                "🟡 Mediu", "🟢 Excelent", "🟡 Mic", "🟢 Bun",
+                "🟢 Bun", "🟢 Scoped", "🔴 Limitat", "🟢 Excelent",
+                "🟡 Manual", "🟢 Bun", "🟢 Ușor", "🟢 Da"
+            ],
+            "Styled Components": [
+                "🟡 Mediu", "🟡 Bun", "🔴 Mare", "🟢 Excelent",
+                "🟢 Bun", "🟢 Scoped", "🟢 Excelent", "🟢 Excelent",
+                "🟢 Ușor", "🟢 Bun", "🟢 React DevTools", "🟢 Da"
+            ],
+            "Tailwind CSS": [
+                "🔴 Dificil", "🟢 Excelent", "🟡 Optimizat", "🟢 Excelent",
+                "🟢 Bun", "🟢 Utility", "🟡 Limitat", "🟢 Excelent",
+                "🟢 Built-in", "🟢 Excelent", "🟢 Browser DevTools", "🟢 Da"
+            ]
+        }
+
+        st.table(comparison_data)
+
+        st.markdown("### Recomandări pentru Alegerea Metodei")
+
+        st.markdown("""
+        **CSS Clasic - Când să folosești:**
+        - Proiecte mici și simple
+        - Echipe cu experiență CSS mare
+        - Când ai nevoie de control total asupra CSS-ului
+        - Aplicații cu cerințe specifice de styling
+
+        **CSS Modules - Când să folosești:**
+        - Proiecte medii și mari
+        - Când vrei scoping automat fără overhead-ul CSS-in-JS
+        - Echipe care preferă CSS tradițional dar vor modularitate
+        - Când performanța este critică
+
+        **Styled Components - Când să folosești:**
+        - Aplicații React cu styling dinamic complex
+        - Când vrei theming avansat
+        - Echipe care preferă JavaScript pentru styling
+        - Aplicații cu multe componente reutilizabile
+
+        **Tailwind CSS - Când să folosești:**
+        - Prototipare rapidă
+        - Echipe care vor consistență în design
+        - Proiecte cu design system bine definit
+        - Când vrei productivitate maximă în dezvoltare
+
+        ### Best Practices Generale
+
+        **Performance:**
+        - Minimizează CSS-ul nefolosit
+        - Folosește CSS-in-JS doar când e necesar
+        - Optimizează pentru Critical CSS
+        - Compresia și caching pentru assets
+
+        **Maintainabilitate:**
+        - Organizează CSS-ul în module logice
+        - Folosește naming conventions consistente
+        - Documentează componentele complexe
+        - Evită nested selectors prea adânci
+
+        **Accessibility:**
+        - Asigură-te că focus states sunt vizibile
+        - Folosește culori cu contrast suficient
+        - Testează cu screen readers
+        - Respectă WCAG guidelines
+
+        **Responsive Design:**
+        - Mobile-first approach
+        - Testează pe device-uri reale
+        - Optimizează pentru touch interfaces
+        - Consideră performance pe conexiuni lente
+        """)
+
+    st.markdown("""
+    <div class="summary-box">
+    <h3>Rezumat Styling în React</h3>
+    <p>Ai învățat toate metodele principale de stilizare în React: de la CSS clasic la soluții moderne 
+    ca Styled Components și Tailwind CSS. Fiecare metodă are avantajele și cazurile sale de utilizare. 
+    Alegerea depinde de complexitatea proiectului, preferințele echipei și cerințele de performance. 
+    Pentru majoritatea proiectelor moderne, o combinație între CSS Modules pentru componente de bază 
+    și Tailwind pentru rapid prototyping oferă cel mai bun echilibru între productivitate și maintainabilitate.</p>
+    </div>
+    """, unsafe_allow_html=True)
 
 
 def deploy_page():
@@ -12595,46 +27872,8 @@ def deploy_page():
     # Add deployment content here
 
 
-def glossary_page():
-    """Glossary of terms"""
-    st.markdown('<h1 class="chapter-header">Glosar de Termeni</h1>', unsafe_allow_html=True)
-
-    st.markdown("""
-    <div class="info-box">
-        <h3>Dicționar complet al termenilor din React</h3>
-        <p>Toate termenele importante cu explicații clare.</p>
-    </div>
-    """, unsafe_allow_html=True)
-
-    # Add glossary content here
 
 
-def quiz_page():
-    """Interactive quiz"""
-    st.markdown('<h1 class="chapter-header">Quiz React</h1>', unsafe_allow_html=True)
-
-    st.markdown("""
-    <div class="quiz-container">
-        <h2>Testează-ți cunoștințele!</h2>
-        <p>Răspunde la întrebări pentru a-ți testa înțelegerea.</p>
-    </div>
-    """, unsafe_allow_html=True)
-
-    # Add quiz content here
-
-
-def resources_page():
-    """Additional resources"""
-    st.markdown('<h1 class="chapter-header">Resurse și Legături Utile</h1>', unsafe_allow_html=True)
-
-    st.markdown("""
-    <div class="info-box">
-        <h2>Resurse pentru continuarea învățării</h2>
-        <p>Toate resursele pentru a-ți continua călătoria în React.</p>
-    </div>
-    """, unsafe_allow_html=True)
-
-    # Add resources content here
 
 
 # MAIN APPLICATION
@@ -12654,15 +27893,14 @@ def main():
         "javascript": javascript_page,
         "intro_react": intro_react_page,
         "components": components_page,
+        "components_basic": components_basic_page,
         "state_props": state_props_page,
         "events": events_page,
         "hooks": hooks_page,
         "blog_app": blog_app_page,
         "styling": styling_page,
         "deploy": deploy_page,
-        "glossary": glossary_page,
-        "quiz": quiz_page,
-        "resources": resources_page
+
     }
 
     # Execute the appropriate page function
