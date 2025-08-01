@@ -221,9 +221,8 @@ def home_page():
 
     st.markdown("""
     <div class="info-box">
-        <h2>Hlelo</h2>
-        <p>Această aplicație interactivă te va ghida de la zero 
-        absolut până la construirea unei aplicații React complete.</p>
+        <h2>Hello</h2>
+    >
     </div>
     """, unsafe_allow_html=True)
 
